@@ -9,7 +9,7 @@ import {
   HeartIcon,
   HomeIcon,
   SparklesIcon,
-  CoffeeIcon,
+  BeakerIcon,
   BookOpenIcon,
   UserGroupIcon,
   ClockIcon,
@@ -169,7 +169,7 @@ export default function FoodLifestylePage() {
             className="text-center max-w-4xl mx-auto"
           >
             <div className="flex items-center justify-center space-x-3 mb-6">
-              <CoffeeIcon className="w-12 h-12 text-green-600 dark:text-green-400" />
+              <BeakerIcon className="w-12 h-12 text-green-600 dark:text-green-400" />
               <SparklesIcon className="w-8 h-8 text-blue-600 dark:text-blue-400" />
             </div>
             <h1 className="text-5xl md:text-6xl font-serif font-bold text-gray-900 dark:text-white mb-6">
@@ -437,7 +437,7 @@ export default function FoodLifestylePage() {
       {filteredStories.length === 0 && (
         <section className="py-16">
           <div className="container mx-auto px-4 text-center">
-            <CoffeeIcon className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+            <BeakerIcon className="w-16 h-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
               No Stories Found
             </h3>
