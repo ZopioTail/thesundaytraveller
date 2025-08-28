@@ -1,5 +1,5 @@
 import React from 'react';
-import { JotformConfig } from '../types';
+import type { JotformConfig } from '../types';
 
 export class JotformService {
   private static config: JotformConfig = {
@@ -33,11 +33,10 @@ export class JotformService {
   // Generate Jotform iframe HTML
   static getIframeHtml(formType: keyof JotformConfig, options: {
     height?: number;
-    width?: string;
     className?: string;
     theme?: 'light' | 'dark';
   } = {}): string {
-    const { height = 500, width = '100%', className = '', theme = 'light' } = options;
+    const { height = 500, className = '', theme = 'light' } = options;
     const embedUrl = this.getEmbedUrl(formType, { height, theme });
     
     return `

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { User } from 'firebase/auth';
+import type { User } from 'firebase/auth';
 import { AuthService } from '../services/auth';
-import { User as AppUser } from '../types';
+import type { User as AppUser } from '../types';
 
 interface AuthContextType {
   currentUser: User | null;
@@ -122,14 +122,14 @@ export function useAuth() {
 }
 
 // Protected Route Component
-export function ProtectedRoute({ 
-  children, 
-  adminOnly = false 
-}: { 
-  children: React.ReactNode; 
+export function ProtectedRoute({
+  children,
+  adminOnly = false
+}: {
+  children: React.ReactNode;
   adminOnly?: boolean;
 }) {
-  const { currentUser, userProfile, loading, isAdmin } = useAuth();
+  const { currentUser, loading, isAdmin } = useAuth();
 
   if (loading) {
     return (

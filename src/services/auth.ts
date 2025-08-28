@@ -3,13 +3,13 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  User,
   updateProfile,
   sendPasswordResetEmail,
+  type User,
 } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../lib/firebase';
-import { User as AppUser } from '../types';
+import type { User as AppUser } from '../types';
 
 export class AuthService {
   static async signIn(email: string, password: string): Promise<User> {

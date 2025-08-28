@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   AcademicCapIcon,
@@ -8,7 +8,7 @@ import {
   BuildingOfficeIcon,
   GlobeAltIcon,
   EyeIcon,
-  DownloadIcon,
+  ArrowDownTrayIcon,
 } from '@heroicons/react/24/outline';
 
 // Mock certificates data
@@ -260,7 +260,7 @@ export default function Certificates() {
                           View
                         </button>
                         <button className="flex-1 flex items-center justify-center px-3 py-2 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200">
-                          <DownloadIcon className="mr-1 h-3 w-3" />
+                          <ArrowDownTrayIcon className="mr-1 h-3 w-3" />
                           Download
                         </button>
                       </div>
@@ -378,7 +378,7 @@ export default function Certificates() {
                     View Certificate
                   </button>
                   <button className="btn-secondary flex-1 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
-                    <DownloadIcon className="mr-2 h-5 w-5" />
+                    <ArrowDownTrayIcon className="mr-2 h-5 w-5" />
                     Download PDF
                   </button>
                 </div>

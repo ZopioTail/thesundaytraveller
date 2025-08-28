@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   DocumentTextIcon,
   GlobeAltIcon,
-  BookOpenIcon,
   AcademicCapIcon,
   UsersIcon,
   ChartBarIcon,
@@ -11,7 +10,6 @@ import {
   EyeIcon,
 } from '@heroicons/react/24/outline';
 import { useAuth } from '../../contexts/AuthContext';
-import { DatabaseService } from '../../services/database';
 
 interface DashboardStats {
   totalPosts: number;
@@ -240,7 +238,7 @@ export default function AdminDashboard() {
             { label: 'Add Destination', icon: GlobeAltIcon, href: '/admin/destinations/new' },
             { label: 'Upload Certificate', icon: AcademicCapIcon, href: '/admin/certificates/new' },
             { label: 'View Analytics', icon: ChartBarIcon, href: '/admin/analytics' },
-          ].map((action, index) => {
+          ].map((action) => {
             const Icon = action.icon;
             return (
               <button

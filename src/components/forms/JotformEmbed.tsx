@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { JotformService } from '../../services/jotform';
-import { JotformConfig } from '../../types';
+import type { JotformConfig } from '../../types';
 
 interface JotformEmbedProps {
   formType: keyof JotformConfig;

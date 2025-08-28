@@ -11,12 +11,12 @@ import {
   orderBy,
   limit,
   startAfter,
-  QueryDocumentSnapshot,
-  DocumentData,
   Timestamp,
+  type QueryDocumentSnapshot,
+  type DocumentData,
 } from 'firebase/firestore';
 import { db } from '../lib/firebase';
-import { Post, Destination, Book, Author, Certificate } from '../types';
+import type { Post, Destination, Book, Author, Certificate } from '../types';
 
 export class DatabaseService {
   // Posts CRUD operations
