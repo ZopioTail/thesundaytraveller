@@ -9,7 +9,7 @@ import {
   CalendarIcon,
   ClockIcon,
   TagIcon,
-  TrendingUpIcon,
+  ArrowTrendingUpIcon,
   GlobeAltIcon,
   ExclamationTriangleIcon,
   InformationCircleIcon,
@@ -112,7 +112,7 @@ export default function NewsPage() {
       case 'alert':
         return ExclamationTriangleIcon
       case 'update':
-        return TrendingUpIcon
+        return ArrowTrendingUpIcon
       case 'guide':
         return InformationCircleIcon
       default:

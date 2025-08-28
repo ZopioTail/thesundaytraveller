@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
-  MountainIcon,
+  MapIcon,
   FireIcon,
   BoltIcon,
   GlobeAltIcon,
@@ -66,7 +66,7 @@ const adventures = [
 ]
 
 const categories = [
-  { name: 'Mountain', icon: MountainIcon, color: 'from-green-500 to-emerald-600' },
+  { name: 'Mountain', icon: MapIcon, color: 'from-green-500 to-emerald-600' },
   { name: 'Water', icon: GlobeAltIcon, color: 'from-blue-500 to-cyan-600' },
   { name: 'Desert', icon: FireIcon, color: 'from-yellow-500 to-orange-600' },
   { name: 'Trekking', icon: BoltIcon, color: 'from-purple-500 to-pink-600' },
@@ -92,7 +92,7 @@ export default function AdventurePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <BoltIcon className="w-16 h-16 mx-auto mb-6 opacity-80" />
+            <MapIcon className="w-16 h-16 mx-auto mb-6 opacity-80" />
             <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 text-shadow-lg">
               Adventure Awaits
             </h1>
@@ -101,7 +101,7 @@ export default function AdventurePage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="#adventures" className="btn-primary">
-                <MountainIcon className="mr-2 icon-md" />
+                <MapIcon className="mr-2 icon-md" />
                 View Adventures
               </Link>
               <Link href="/contact" className="btn-secondary">
@@ -298,7 +298,7 @@ export default function AdventurePage() {
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
               {[
-                { value: '47', label: 'Mountains Climbed', icon: MountainIcon },
+                { value: '47', label: 'Mountains Climbed', icon: MapIcon },
                 { value: '23', label: 'Extreme Sports', icon: BoltIcon },
                 { value: '156', label: 'Adventure Days', icon: FireIcon },
                 { value: '12', label: 'Countries Explored', icon: GlobeAltIcon },
