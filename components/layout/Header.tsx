@@ -17,14 +17,10 @@ import { cn } from '@/lib/utils'
 const navigation = [
   { name: 'Home', href: '/' },
   { name: 'Destinations', href: '/destinations' },
-  { name: 'Adventure', href: '/adventure' },
-  { name: 'Culture', href: '/culture' },
-  { name: 'Food & Lifestyle', href: '/food-lifestyle' },
-  { name: 'Blog', href: '/blog' },
-  { name: 'Travel News', href: '/news' },
   { name: 'Book', href: '/book' },
   { name: 'About', href: '/about' },
   { name: 'Contact', href: '/contact' },
+  { name: 'Blog', href: '/blog' },
 ]
 
 export default function Header() {

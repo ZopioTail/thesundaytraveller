@@ -43,7 +43,7 @@ const countries = [
     continent: 'Asia',
     visited: true,
     visitDate: new Date('2025-08-18'),
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: '/images/optimized/hero-main.jpg',
     description: 'Home country with diverse landscapes from Himalayas to coastal plains, rich in culture and adventure.',
     highlights: ['Himalayan Treks', 'Rajasthan Deserts', 'Kerala Backwaters', 'Goa Beaches'],
     blogPosts: 12,
@@ -88,7 +88,7 @@ const countries = [
     continent: 'Asia',
     visited: true,
     visitDate: new Date('2025-08-12'),
-    image: 'https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: '/images/optimized/thailand-main.jpg',
     description: 'Land of smiles with tropical beaches, ancient temples, and incredible street food.',
     highlights: ['Bangkok Temples', 'Phuket Beaches', 'Chiang Mai Culture', 'Thai Street Food'],
     blogPosts: 7,
@@ -110,7 +110,7 @@ const countries = [
     continent: 'South America',
     visited: true,
     visitDate: new Date('2023-07-22'),
-    image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: '/images/optimized/peru-main.jpg',
     description: 'Home to Machu Picchu and rich Incan heritage in the heart of South America.',
     highlights: ['Machu Picchu', 'Sacred Valley', 'Lima Food Scene', 'Amazon Rainforest'],
     blogPosts: 9,
@@ -137,15 +137,175 @@ const countries = [
       'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
     ]
   },
+  {
+    id: 6,
+    name: 'Nicaragua',
+    flag: '🇳🇮',
+    continent: 'North America',
+    visited: true,
+    visitDate: new Date('2025-07-15'),
+    image: '/images/optimized/nicaragua-main.jpg',
+    description: 'Land of lakes and volcanoes with colonial charm and pristine beaches.',
+    highlights: ['Granada Colonial', 'Ometepe Island', 'San Juan del Sur', 'Masaya Volcano'],
+    blogPosts: 4,
+    gallery: [
+      '/images/optimized/nicaragua-main.jpg',
+    ],
+    childDestinations: [
+      { name: 'Granada', flag: '🏛️', description: 'Colonial city with colorful architecture' },
+      { name: 'Ometepe', flag: '🌋', description: 'Volcanic island in Lake Nicaragua' },
+      { name: 'San Juan del Sur', flag: '🏄‍♂️', description: 'Pacific coast surfing destination' }
+    ]
+  },
+  {
+    id: 7,
+    name: 'Panama',
+    flag: '🇵🇦',
+    continent: 'North America',
+    visited: true,
+    visitDate: new Date('2025-06-20'),
+    image: '/images/optimized/panama-main.jpg',
+    description: 'Bridge between continents with engineering marvels and tropical biodiversity.',
+    highlights: ['Panama Canal', 'Casco Viejo', 'Bocas del Toro', 'San Blas Islands'],
+    blogPosts: 3,
+    gallery: [
+      '/images/optimized/panama-main.jpg',
+    ],
+    childDestinations: [
+      { name: 'Panama City', flag: '🏙️', description: 'Modern capital with historic quarter' },
+      { name: 'Bocas del Toro', flag: '🐠', description: 'Caribbean archipelago paradise' },
+      { name: 'San Blas', flag: '🏝️', description: 'Indigenous Guna territory islands' }
+    ]
+  },
+  {
+    id: 8,
+    name: 'Qatar',
+    flag: '🇶🇦',
+    continent: 'Asia',
+    visited: true,
+    visitDate: new Date('2025-05-10'),
+    image: '/images/optimized/qatar-main.jpg',
+    description: 'Modern Gulf state blending tradition with futuristic architecture.',
+    highlights: ['Doha Skyline', 'Souq Waqif', 'Museum of Islamic Art', 'Desert Safari'],
+    blogPosts: 2,
+    gallery: [
+      '/images/optimized/qatar-main.jpg',
+    ],
+    childDestinations: [
+      { name: 'Doha', flag: '🏙️', description: 'Ultra-modern capital city' },
+      { name: 'Al Wakrah', flag: '🏖️', description: 'Traditional fishing town' },
+      { name: 'Inland Sea', flag: '🏜️', description: 'Desert oasis experience' }
+    ]
+  },
+  {
+    id: 9,
+    name: 'Rwanda',
+    flag: '🇷🇼',
+    continent: 'Africa',
+    visited: true,
+    visitDate: new Date('2025-04-25'),
+    image: '/images/optimized/rwanda-main.jpg',
+    description: 'Land of a thousand hills with incredible wildlife and inspiring resilience.',
+    highlights: ['Mountain Gorillas', 'Volcanoes National Park', 'Kigali Memorial', 'Lake Kivu'],
+    blogPosts: 5,
+    gallery: [
+      '/images/optimized/rwanda-main.jpg',
+    ],
+    childDestinations: [
+      { name: 'Volcanoes NP', flag: '🦍', description: 'Home to mountain gorillas' },
+      { name: 'Kigali', flag: '🏛️', description: 'Clean, modern capital city' },
+      { name: 'Lake Kivu', flag: '🏞️', description: 'Beautiful freshwater lake' }
+    ]
+  },
+  {
+    id: 10,
+    name: 'Serbia',
+    flag: '🇷🇸',
+    continent: 'Europe',
+    visited: true,
+    visitDate: new Date('2025-03-18'),
+    image: '/images/optimized/serbia-main.jpg',
+    description: 'Balkan crossroads with rich history, vibrant nightlife, and warm hospitality.',
+    highlights: ['Belgrade Fortress', 'Novi Sad', 'Studenica Monastery', 'Danube River'],
+    blogPosts: 3,
+    gallery: [
+      '/images/optimized/serbia-main.jpg',
+    ],
+    childDestinations: [
+      { name: 'Belgrade', flag: '🏰', description: 'Historic capital at river confluence' },
+      { name: 'Novi Sad', flag: '🎭', description: 'Cultural capital of Vojvodina' },
+      { name: 'Niš', flag: '🏛️', description: 'Ancient city with Roman heritage' }
+    ]
+  },
+  {
+    id: 11,
+    name: 'South Korea',
+    flag: '🇰🇷',
+    continent: 'Asia',
+    visited: true,
+    visitDate: new Date('2025-02-14'),
+    image: '/images/optimized/south-korea-main.jpg',
+    description: 'Dynamic blend of ancient traditions and cutting-edge technology.',
+    highlights: ['Seoul Palaces', 'Jeju Island', 'Busan Beaches', 'DMZ Experience'],
+    blogPosts: 6,
+    gallery: [
+      '/images/optimized/south-korea-main.jpg',
+    ],
+    childDestinations: [
+      { name: 'Seoul', flag: '🏙️', description: 'Mega-city with palaces and K-culture' },
+      { name: 'Jeju Island', flag: '🌺', description: 'Volcanic island paradise' },
+      { name: 'Busan', flag: '🏖️', description: 'Coastal city with beaches and temples' }
+    ]
+  },
+  {
+    id: 12,
+    name: 'Turkey',
+    flag: '🇹🇷',
+    continent: 'Europe',
+    visited: true,
+    visitDate: new Date('2025-01-20'),
+    image: '/images/optimized/turkey-main.jpg',
+    description: 'Transcontinental nation bridging Europe and Asia with incredible history.',
+    highlights: ['Hagia Sophia', 'Cappadocia', 'Pamukkale', 'Turkish Riviera'],
+    blogPosts: 8,
+    gallery: [
+      '/images/optimized/turkey-main.jpg',
+    ],
+    childDestinations: [
+      { name: 'Istanbul', flag: '🕌', description: 'Historic city spanning two continents' },
+      { name: 'Cappadocia', flag: '🎈', description: 'Fairy chimneys and hot air balloons' },
+      { name: 'Antalya', flag: '🏖️', description: 'Mediterranean coast resort city' }
+    ]
+  },
+  {
+    id: 13,
+    name: 'UAE',
+    flag: '🇦🇪',
+    continent: 'Asia',
+    visited: true,
+    visitDate: new Date('2024-12-15'),
+    image: '/images/optimized/uae-main.jpg',
+    description: 'Modern marvel in the desert with luxury, innovation, and cultural diversity.',
+    highlights: ['Burj Khalifa', 'Dubai Mall', 'Sheikh Zayed Mosque', 'Desert Safari'],
+    blogPosts: 4,
+    gallery: [
+      '/images/optimized/uae-main.jpg',
+    ],
+    childDestinations: [
+      { name: 'Dubai', flag: '🏗️', description: 'Ultra-modern city of superlatives' },
+      { name: 'Abu Dhabi', flag: '🕌', description: 'Capital with cultural landmarks' },
+      { name: 'Sharjah', flag: '🎨', description: 'Cultural capital of the UAE' }
+    ]
+  },
 ]
 
 const continents = [
-  { name: 'Europe', color: 'bg-blue-400', count: 15 },
-  { name: 'Asia', color: 'bg-orange-400', count: 12 },
-  { name: 'Africa', color: 'bg-yellow-400', count: 8 },
-  { name: 'South America', color: 'bg-red-400', count: 6 },
-  { name: 'North America', color: 'bg-green-400', count: 4 },
-  { name: 'Oceania', color: 'bg-purple-400', count: 2 },
+  { name: 'Europe', color: 'bg-blue-400', count: 4 },
+  { name: 'Asia', color: 'bg-orange-400', count: 6 },
+  { name: 'Africa', color: 'bg-yellow-400', count: 1 },
+  { name: 'South America', color: 'bg-red-400', count: 1 },
+  { name: 'North America', color: 'bg-green-400', count: 2 },
+  { name: 'Oceania', color: 'bg-purple-400', count: 0 },
 ]
 
 export default function DestinationsPage() {

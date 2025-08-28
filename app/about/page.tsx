@@ -94,8 +94,8 @@ export default function AboutPage() {
             className="mb-8"
           >
             <Image
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
-              alt="The Sunday Traveller"
+              src="/images/optimized/author-profile.jpg"
+              alt="Vineet Kumar - The Sunday Traveller"
               width={160}
               height={160}
               className="w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto mb-6 border-4 border-white shadow-2xl object-cover flex-shrink-0"
@@ -303,8 +303,8 @@ export default function AboutPage() {
             >
               <div className="relative">
                 <Image
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-                  alt="Travel Author"
+                  src="/images/optimized/author-profile.jpg"
+                  alt="Vineet Kumar - Travel Author"
                   width={600}
                   height={400}
                   className="w-full rounded-2xl shadow-2xl"

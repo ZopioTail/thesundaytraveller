@@ -21,22 +21,22 @@ import StatsChart from '@/components/ui/StatsChart'
 // Hero carousel images
 const heroImages = [
   {
-    url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-    alt: 'Himalayan mountain landscape',
+    url: '/images/optimized/hero-main.jpg',
+    alt: 'Rabindra Sahu - The Sunday Traveller',
     title: 'The Sunday Traveller',
     subtitle: 'Where military discipline meets wanderlust - discover extraordinary destinations through the eyes of a soldier-explorer who finds profound lessons in every journey'
   },
   {
-    url: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+    url: '/images/optimized/hero-adventure.jpg',
     alt: 'Adventure sports and extreme activities',
     title: 'Adventure Beyond Limits',
     subtitle: 'From rappelling down 200-foot cliffs to navigating Grade IV rapids - every adrenaline-fueled adventure teaches courage, resilience, and the art of calculated risk'
   },
   {
-    url: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-    alt: 'Peaceful lifestyle and cultural moments',
+    url: '/images/optimized/hero-military.jpg',
+    alt: 'Military service and professional life',
     title: 'Life Beyond the Uniform',
-    subtitle: 'Discovering beauty in simplicity - from morning coffee rituals to minimalist living, explore how military precision informs intentional civilian life'
+    subtitle: 'Discovering beauty in simplicity - from military precision to civilian adventures, explore how discipline informs intentional living and meaningful connections'
   },
   {
     url: 'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',

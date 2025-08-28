@@ -19,7 +19,7 @@ const blogPosts = [
     id: 1,
     title: 'What Adventure Sports Taught This Soldier About Life',
     excerpt: 'The crisp salute, the well-creased uniform, the structured life of the armed forces – these have been my constants for years. But beyond the discipline and duty, there\'s another side to my story that involves adrenaline, risk, and the raw beauty of pushing human limits.',
-    image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: '/images/optimized/gallery-2.jpg',
     category: 'Adventure',
     readTime: 8,
     createdAt: new Date('2025-08-28'),
@@ -32,7 +32,7 @@ const blogPosts = [
     id: 2,
     title: 'Life Beyond the Uniform: Curtains, Coffee & Calm',
     excerpt: 'They say a uniform defines you. It speaks of duty, discipline, and perhaps a certain seriousness that comes with the responsibility of serving your nation. But what happens when you step out of that uniform? What defines you then?',
-    image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: '/images/optimized/gallery-8.jpg',
     category: 'Culture',
     readTime: 6,
     createdAt: new Date('2025-08-26'),
@@ -45,7 +45,7 @@ const blogPosts = [
     id: 3,
     title: 'Flying Drones, Teaching Peace & Trading Stocks',
     excerpt: 'Most days, you\'ll find me in uniform, focused on the critical responsibilities that come with serving in the armed forces. But life has taught me that passion projects and diverse interests don\'t just enrich your personal life – they make you a better professional.',
-    image: 'https://images.unsplash.com/photo-1473968512647-3e447244af8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: '/images/optimized/drone-photography.jpg',
     category: 'Food & Lifestyle',
     readTime: 10,
     createdAt: new Date('2025-08-24'),
@@ -71,7 +71,7 @@ const blogPosts = [
     id: 5,
     title: 'The Art of Military Photography: Capturing Stories Beyond Combat',
     excerpt: 'Military photography is about more than documenting operations. It\'s about capturing the human stories, the quiet moments, and the profound experiences that shape those who serve.',
-    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: '/images/optimized/gallery-6.jpg',
     category: 'Culture',
     readTime: 9,
     createdAt: new Date('2025-08-20'),
@@ -84,7 +84,7 @@ const blogPosts = [
     id: 6,
     title: 'Himalayan Trek: Lessons from 18,000 Feet',
     excerpt: 'The thin air at high altitude teaches you things about yourself that sea-level living never could. Here are the profound lessons learned during my solo trek through the Himalayas.',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: '/images/optimized/gallery-1.jpg',
     category: 'Adventure',
     readTime: 12,
     createdAt: new Date('2025-08-18'),
@@ -146,7 +146,7 @@ export default function BlogPage() {
       {/* Hero Section */}
       <section className="relative h-96 flex items-center justify-center overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
+          src="/images/optimized/hero-main.jpg"
           alt="Travel blog"
           fill
           className="object-cover"

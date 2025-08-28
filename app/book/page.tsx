@@ -107,18 +107,18 @@ export default function BookPage() {
               >
                 <div className="relative w-80 h-96 mx-auto lg:mx-0 shadow-2xl rounded-lg overflow-hidden">
                   <Image
-                    src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-                    alt="The Sunday Traveller Book"
+                    src="/images/optimized/book-cover.jpg"
+                    alt="The Sunday Traveller Book by Vineet Kumar"
                     fill
                     className="object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                   <div className="absolute bottom-6 left-6 text-white">
                     <h3 className="text-2xl font-serif font-bold mb-2">
-                      The Sunday Traveller's Guide
+                      The Sunday Traveller
                     </h3>
                     <p className="text-sm opacity-90">
-                      A Journey Through 47 Countries
+                      A Soldier's Journey Through Life and Adventure
                     </p>
                   </div>
                 </div>
@@ -142,15 +142,15 @@ export default function BookPage() {
                   ))}
                 </div>
                 <span className="text-lg font-semibold">4.9/5</span>
-                <span className="text-white/80">(2,847 reviews)</span>
+                <span className="text-white/80">(156 reviews)</span>
               </div>
 
               <h1 className="text-4xl md:text-5xl font-serif font-bold mb-6">
-                The Ultimate Travel Guide
+                The Sunday Traveller
               </h1>
-              
+
               <p className="text-xl mb-8 opacity-90">
-                Six years of travel wisdom condensed into one comprehensive guide. Learn the secrets of budget travel, cultural immersion, and creating unforgettable adventures.
+                A compelling memoir that weaves together military service, extreme adventures, and profound life lessons. From serving in challenging terrains to exploring 47+ countries, discover how military discipline meets wanderlust.
               </p>
 
               {/* Format Selection */}

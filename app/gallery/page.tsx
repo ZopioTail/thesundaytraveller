@@ -17,7 +17,7 @@ import {
 const galleryImages = [
   {
     id: 1,
-    src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    src: '/images/optimized/gallery-1.jpg',
     title: 'Himalayan Sunrise',
     location: 'Himalayas, Nepal',
     date: '2025-08-18',
@@ -29,7 +29,7 @@ const galleryImages = [
   },
   {
     id: 2,
-    src: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    src: '/images/optimized/gallery-2.jpg',
     title: 'Rappelling Adventure',
     location: 'Western Ghats, India',
     date: '2025-08-15',
@@ -41,7 +41,7 @@ const galleryImages = [
   },
   {
     id: 3,
-    src: 'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    src: '/images/optimized/gallery-3.jpg',
     title: 'Portuguese Coastline',
     location: 'Algarve, Portugal',
     date: '2025-08-22',
@@ -53,7 +53,7 @@ const galleryImages = [
   },
   {
     id: 4,
-    src: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    src: '/images/optimized/gallery-4.jpg',
     title: 'Morning Coffee Ritual',
     location: 'Home Base, India',
     date: '2025-08-26',
@@ -65,7 +65,7 @@ const galleryImages = [
   },
   {
     id: 5,
-    src: 'https://images.unsplash.com/photo-1473968512647-3e447244af8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    src: '/images/optimized/gallery-5.jpg',
     title: 'Drone Photography Session',
     location: 'Various Locations',
     date: '2025-08-24',
@@ -77,7 +77,7 @@ const galleryImages = [
   },
   {
     id: 6,
-    src: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    src: '/images/optimized/gallery-6.jpg',
     title: 'Military Photography',
     location: 'Classified Location',
     date: '2025-08-20',
@@ -122,6 +122,42 @@ const galleryImages = [
     likes: 134,
     camera: 'Canon EOS 5D Mark IV',
     settings: 'f/5.6, 1/160s, ISO 320'
+  },
+  {
+    id: 10,
+    src: '/images/optimized/gallery-7.jpg',
+    title: 'Scenic Overlook',
+    location: 'Mountain Vista, India',
+    date: '2025-08-10',
+    category: 'Travel',
+    description: 'Breathtaking views from high altitude - nature\'s grandest theater.',
+    likes: 198,
+    camera: 'Canon EOS R5',
+    settings: 'f/11, 1/125s, ISO 100'
+  },
+  {
+    id: 11,
+    src: '/images/optimized/gallery-8.jpg',
+    title: 'Yoga Practice',
+    location: 'Rishikesh, India',
+    date: '2025-08-05',
+    category: 'Lifestyle',
+    description: 'Finding inner peace through ancient practices - mind, body, spirit alignment.',
+    likes: 156,
+    camera: 'Sony A7 III',
+    settings: 'f/4, 1/60s, ISO 200'
+  },
+  {
+    id: 12,
+    src: '/images/optimized/gallery-9.jpg',
+    title: 'Meditation Moment',
+    location: 'Himalayan Foothills',
+    date: '2025-07-30',
+    category: 'Lifestyle',
+    description: 'Solitude and reflection in nature\'s embrace - the journey within.',
+    likes: 187,
+    camera: 'Fujifilm X-T4',
+    settings: 'f/5.6, 1/80s, ISO 160'
   }
 ]
 

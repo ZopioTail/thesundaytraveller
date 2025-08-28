@@ -18,11 +18,11 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: 'The Sunday Traveller - Explore the World with Expert Travel Guides',
-  description: 'Join me on incredible journeys around the world. Discover hidden gems, cultural insights, and travel tips from a passionate explorer.',
-  keywords: 'travel, adventure, destinations, travel blog, travel guides, world explorer',
-  authors: [{ name: 'The Sunday Traveller' }],
-  creator: 'The Sunday Traveller',
+  title: 'The Sunday Traveller - A Soldier\'s Journey Through Life and Adventure',
+  description: 'Follow Vineet Kumar\'s extraordinary journey from military service to global exploration. Discover 47+ countries through the eyes of a soldier-explorer who finds profound lessons in every adventure.',
+  keywords: 'travel, adventure, military, soldier, destinations, travel blog, memoir, Vineet Kumar, extreme sports, cultural exploration',
+  authors: [{ name: 'Vineet Kumar' }],
+  creator: 'Vineet Kumar',
   publisher: 'The Sunday Traveller',
   openGraph: {
     title: 'The Sunday Traveller - Explore the World',
