@@ -24,31 +24,37 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = AuthService.onAuthStateChanged(async (user) => {
-      setCurrentUser(user);
-      
-      if (user) {
-        try {
-          const profile = await AuthService.getCurrentUser();
-          setUserProfile(profile);
-          
-          // Check admin role
-          const adminStatus = await AuthService.checkAdminRole(user.uid);
-          setIsAdmin(adminStatus);
-        } catch (error) {
-          console.error('Error fetching user profile:', error);
+    try {
+      const unsubscribe = AuthService.onAuthStateChanged(async (user) => {
+        setCurrentUser(user);
+
+        if (user) {
+          try {
+            const profile = await AuthService.getCurrentUser();
+            setUserProfile(profile);
+
+            // Check admin role
+            const adminStatus = await AuthService.checkAdminRole(user.uid);
+            setIsAdmin(adminStatus);
+          } catch (error) {
+            console.error('Error fetching user profile:', error);
+            setUserProfile(null);
+            setIsAdmin(false);
+          }
+        } else {
           setUserProfile(null);
           setIsAdmin(false);
         }
-      } else {
-        setUserProfile(null);
-        setIsAdmin(false);
-      }
-      
-      setLoading(false);
-    });
 
-    return unsubscribe;
+        setLoading(false);
+      });
+
+      return unsubscribe;
+    } catch (error) {
+      console.error('Auth initialization error:', error);
+      setLoading(false);
+      return () => {}; // Return empty cleanup function
+    }
   }, []);
 
   const signIn = async (email: string, password: string): Promise<User> => {

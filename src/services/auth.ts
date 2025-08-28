@@ -13,6 +13,7 @@ import type { User as AppUser } from '../types';
 
 export class AuthService {
   static async signIn(email: string, password: string): Promise<User> {
+    if (!auth) throw new Error('Firebase not configured');
     const result = await signInWithEmailAndPassword(auth, email, password);
     return result.user;
   }
@@ -56,6 +57,11 @@ export class AuthService {
   }
 
   static onAuthStateChanged(callback: (user: User | null) => void) {
+    if (!auth) {
+      // Return a dummy unsubscribe function if auth is not available
+      callback(null);
+      return () => {};
+    }
     return onAuthStateChanged(auth, callback);
   }
 

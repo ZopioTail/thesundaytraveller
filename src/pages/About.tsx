@@ -72,7 +72,7 @@ const achievements = [
   { icon: HeartIcon, label: 'Lives Inspired', value: '10K+' },
 ];
 
-export default function About() {
+function About() {
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 300], [0, -50]);
   const y2 = useTransform(scrollY, [0, 300], [0, -100]);
@@ -350,3 +350,5 @@ export default function About() {
     </div>
   );
 }
+
+export default About;
