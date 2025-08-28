@@ -2,11 +2,18 @@
   "/_not-found": "app/_not-found.js",
   "/about/page": "app/about/page.js",
   "/adventure/page": "app/adventure/page.js",
-  "/blog/page": "app/blog/page.js",
+  "/art-lifestyle/page": "app/art-lifestyle/page.js",
   "/book/page": "app/book/page.js",
+  "/blog/page": "app/blog/page.js",
   "/contact/page": "app/contact/page.js",
   "/destinations/page": "app/destinations/page.js",
   "/news/page": "app/news/page.js",
   "/page": "app/page.js",
-  "/lifestyle/page": "app/lifestyle/page.js"
+  "/profession/page": "app/profession/page.js",
+  "/lifestyle/page": "app/lifestyle/page.js",
+  "/travel/page": "app/travel/page.js",
+  "/admin/posts/page": "app/admin/posts/page.js",
+  "/admin/posts/new/page": "app/admin/posts/new/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/admin/media/page": "app/admin/media/page.js"
 }

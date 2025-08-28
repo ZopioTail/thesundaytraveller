@@ -66,10 +66,10 @@ const adventures = [
 ]
 
 const categories = [
-  { name: 'Mountain', icon: MapIcon, color: 'from-green-500 to-emerald-600' },
-  { name: 'Water', icon: GlobeAltIcon, color: 'from-blue-500 to-cyan-600' },
-  { name: 'Desert', icon: FireIcon, color: 'from-yellow-500 to-orange-600' },
-  { name: 'Trekking', icon: BoltIcon, color: 'from-purple-500 to-pink-600' },
+  { name: 'Extreme Sports', icon: BoltIcon, color: 'from-red-500 to-orange-600' },
+  { name: 'Water Sports', icon: GlobeAltIcon, color: 'from-blue-500 to-cyan-600' },
+  { name: 'Mountain Sports', icon: MapIcon, color: 'from-green-500 to-emerald-600' },
+  { name: 'Air Sports', icon: FireIcon, color: 'from-purple-500 to-pink-600' },
 ]
 
 export default function AdventurePage() {

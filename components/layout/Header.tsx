@@ -19,8 +19,10 @@ const navigation = [
   { name: 'About', href: '/about' },
   { name: 'Destinations', href: '/destinations' },
   { name: 'Blog', href: '/blog' },
+  { name: 'Travel', href: '/travel' },
+  { name: 'Art & Lifestyle', href: '/art-lifestyle' },
+  { name: 'Profession', href: '/profession' },
   { name: 'Adventure', href: '/adventure' },
-  { name: 'Lifestyle', href: '/lifestyle' },
   { name: 'News', href: '/news' },
   { name: 'Book', href: '/book' },
 ]
