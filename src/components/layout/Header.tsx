@@ -93,9 +93,9 @@ export default function Header() {
               aria-label="Toggle theme"
             >
               {isDark ? (
-                <SunIcon className="h-5 w-5 text-yellow-500" />
+                <SunIcon className="icon-md text-yellow-500" />
               ) : (
-                <MoonIcon className="h-5 w-5 text-gray-700" />
+                <MoonIcon className="icon-md text-gray-700" />
               )}
             </button>
 
@@ -105,9 +105,9 @@ export default function Header() {
               aria-label="Toggle menu"
             >
               {isOpen ? (
-                <XMarkIcon className="h-6 w-6" />
+                <XMarkIcon className="icon-lg" />
               ) : (
-                <Bars3Icon className="h-6 w-6" />
+                <Bars3Icon className="icon-lg" />
               )}
             </button>
           </div>

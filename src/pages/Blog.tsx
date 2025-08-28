@@ -158,7 +158,7 @@ export default function Blog() {
           <div className="flex flex-col lg:flex-row gap-6 items-center justify-between mb-8">
             {/* Search Bar */}
             <div className="relative flex-1 max-w-md">
-              <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 icon-md text-gray-400" />
               <input
                 type="text"
                 placeholder="Search stories..."
@@ -173,7 +173,7 @@ export default function Blog() {
               onClick={() => setShowFilters(!showFilters)}
               className="flex items-center space-x-2 px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-200"
             >
-              <FunnelIcon className="h-5 w-5" />
+              <FunnelIcon className="icon-md" />
               <span>Filters</span>
             </button>
           </div>
@@ -248,16 +248,16 @@ export default function Blog() {
                       {/* Category and Meta */}
                       <div className="flex items-center justify-between mb-3">
                         <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary-100 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400">
-                          <TagIcon className="mr-1 h-3 w-3" />
+                          <TagIcon className="mr-1 icon-xs" />
                           {post.category}
                         </span>
                         <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 space-x-3">
                           <div className="flex items-center">
-                            <CalendarIcon className="mr-1 h-3 w-3" />
+                            <CalendarIcon className="mr-1 icon-xs" />
                             {post.createdAt.toLocaleDateString()}
                           </div>
                           <div className="flex items-center">
-                            <ClockIcon className="mr-1 h-3 w-3" />
+                            <ClockIcon className="mr-1 icon-xs" />
                             {post.readTime} min
                           </div>
                         </div>
@@ -288,7 +288,7 @@ export default function Blog() {
                       {/* Read More */}
                       <div className="flex items-center text-primary-600 dark:text-primary-400 font-medium text-sm group-hover:text-primary-700 dark:group-hover:text-primary-300">
                         Read More
-                        <svg className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="ml-2 icon-sm group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                       </div>
@@ -307,7 +307,7 @@ export default function Blog() {
               className="text-center py-16"
             >
               <div className="text-gray-400 mb-4">
-                <MagnifyingGlassIcon className="h-16 w-16 mx-auto" />
+                <MagnifyingGlassIcon className="w-16 h-16 mx-auto" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                 No stories found

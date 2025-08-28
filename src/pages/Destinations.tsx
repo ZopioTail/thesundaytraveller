@@ -166,7 +166,7 @@ export default function Destinations() {
             transition={{ duration: 0.6 }}
             className="text-center text-white"
           >
-            <GlobeAltIcon className="h-16 w-16 mx-auto mb-6 opacity-80" />
+            <GlobeAltIcon className="w-16 h-16 mx-auto mb-6 opacity-80" />
             <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6">
               Destinations
             </h1>
@@ -463,12 +463,12 @@ export default function Destinations() {
                               <div className="flex items-center space-x-4">
                                 {country.visited && (
                                   <div className="flex items-center">
-                                    <CalendarIcon className="mr-1 h-4 w-4" />
+                                    <CalendarIcon className="mr-1 icon-sm" />
                                     {country.visitDate?.toLocaleDateString()}
                                   </div>
                                 )}
                                 <div className="flex items-center">
-                                  <PhotoIcon className="mr-1 h-4 w-4" />
+                                  <PhotoIcon className="mr-1 icon-sm" />
                                   {country.gallery.length} photos
                                 </div>
                               </div>
@@ -480,7 +480,7 @@ export default function Destinations() {
                             {/* View Details Button */}
                             <div className="mt-4 flex items-center text-primary-600 dark:text-primary-400 font-medium text-sm group-hover:text-primary-700 dark:group-hover:text-primary-300">
                               View Details
-                              <svg className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="ml-2 icon-sm group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                               </svg>
                             </div>
@@ -528,7 +528,7 @@ export default function Destinations() {
                   </div>
                   {selectedCountry.visited && (
                     <div className="flex items-center text-sm opacity-90">
-                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      <CalendarIcon className="mr-2 icon-sm" />
                       Visited on {selectedCountry.visitDate?.toLocaleDateString()}
                     </div>
                   )}
@@ -537,7 +537,7 @@ export default function Destinations() {
                   onClick={() => setSelectedCountry(null)}
                   className="absolute top-4 right-4 p-2 bg-black/20 hover:bg-black/40 rounded-full text-white transition-colors duration-200"
                 >
-                  <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="icon-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
@@ -596,11 +596,11 @@ export default function Destinations() {
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button className="btn-primary flex-1">
-                    <MapPinIcon className="mr-2 h-5 w-5" />
+                    <MapPinIcon className="mr-2 icon-md" />
                     View on Map
                   </button>
                   <button className="btn-secondary flex-1">
-                    <PhotoIcon className="mr-2 h-5 w-5" />
+                    <PhotoIcon className="mr-2 icon-md" />
                     View All Photos
                   </button>
                 </div>

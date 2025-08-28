@@ -5,18 +5,24 @@ interface LogoProps {
 }
 
 export default function Logo({ variant = 'dark', size = 'md', className = '' }: LogoProps) {
-  const sizeClasses = {
-    sm: 'h-8 w-auto',
-    md: 'h-10 w-auto',
-    lg: 'h-12 w-auto'
+  const iconSizeClasses = {
+    sm: 'w-8 h-8',
+    md: 'w-10 h-10',
+    lg: 'w-12 h-12'
+  };
+
+  const textSizeClasses = {
+    sm: 'text-sm',
+    md: 'text-base',
+    lg: 'text-lg'
   };
 
   const textColor = variant === 'light' ? 'text-white' : 'text-gray-900 dark:text-white';
 
   return (
-    <div className={`flex items-center space-x-3 ${className}`}>
+    <div className={`flex items-center space-x-2 ${className}`}>
       {/* Logo Icon */}
-      <div className={`${sizeClasses[size]} flex items-center justify-center`}>
+      <div className={`${iconSizeClasses[size]} flex-shrink-0`}>
         <svg
           viewBox="0 0 40 40"
           fill="none"
@@ -79,10 +85,10 @@ export default function Logo({ variant = 'dark', size = 'md', className = '' }: 
       
       {/* Logo Text */}
       <div className="flex flex-col">
-        <span className={`font-serif font-bold text-lg leading-tight ${textColor}`}>
+        <span className={`font-serif font-bold ${textSizeClasses[size]} leading-tight ${textColor}`}>
           The Sunday
         </span>
-        <span className={`font-serif font-bold text-lg leading-tight ${textColor}`}>
+        <span className={`font-serif font-bold ${textSizeClasses[size]} leading-tight ${textColor}`}>
           Traveller
         </span>
       </div>
@@ -102,13 +108,13 @@ export function LogoDark({ size = 'md', className = '' }: Omit<LogoProps, 'varia
 // Icon only version
 export function LogoIcon({ variant = 'dark', size = 'md', className = '' }: LogoProps) {
   const sizeClasses = {
-    sm: 'h-8 w-8',
-    md: 'h-10 w-10',
-    lg: 'h-12 w-12'
+    sm: 'w-8 h-8',
+    md: 'w-10 h-10',
+    lg: 'w-12 h-12'
   };
 
   return (
-    <div className={`${sizeClasses[size]} ${className}`}>
+    <div className={`${sizeClasses[size]} flex-shrink-0 ${className}`}>
       <svg
         viewBox="0 0 40 40"
         fill="none"

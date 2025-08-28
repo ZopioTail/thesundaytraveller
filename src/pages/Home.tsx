@@ -180,13 +180,13 @@ export default function Home() {
           onClick={() => setCurrentSlide((prev) => (prev - 1 + heroImages.length) % heroImages.length)}
           className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 p-2 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-colors duration-200"
         >
-          <ChevronLeftIcon className="h-6 w-6 text-white" />
+          <ChevronLeftIcon className="icon-lg text-white" />
         </button>
         <button
           onClick={() => setCurrentSlide((prev) => (prev + 1) % heroImages.length)}
           className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 p-2 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-colors duration-200"
         >
-          <ChevronRightIcon className="h-6 w-6 text-white" />
+          <ChevronRightIcon className="icon-lg text-white" />
         </button>
 
         {/* Carousel Indicators */}
@@ -368,7 +368,7 @@ export default function Home() {
                   className="text-center"
                 >
                   <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 dark:bg-primary-900/20 rounded-full mb-4">
-                    <Icon className="h-8 w-8 text-primary-600 dark:text-primary-400" />
+                    <Icon className="icon-xl text-primary-600 dark:text-primary-400" />
                   </div>
                   <motion.div
                     className="text-3xl font-bold text-gray-900 dark:text-white mb-2"
@@ -505,7 +505,7 @@ export default function Home() {
                     </p>
                     <div className="flex items-center text-sm font-medium">
                       <span>Explore</span>
-                      <ArrowRightIcon className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
+                      <ArrowRightIcon className="ml-2 icon-sm group-hover:translate-x-1 transition-transform duration-200" />
                     </div>
                   </div>
                 </Link>
@@ -546,7 +546,7 @@ export default function Home() {
                 <div className="glass-card p-8 md:p-12">
                   <div className="flex justify-center mb-6">
                     {[...Array(5)].map((_, i) => (
-                      <StarIcon key={i} className="h-6 w-6 text-yellow-400 fill-current" />
+                      <StarIcon key={i} className="icon-lg text-yellow-400 fill-current" />
                     ))}
                   </div>
                   <blockquote className="text-xl md:text-2xl font-light text-gray-700 dark:text-gray-300 mb-8 italic">
@@ -606,7 +606,7 @@ export default function Home() {
               transition={{ duration: 0.3 }}
             >
               <div className="w-32 h-40 bg-white rounded-lg shadow-2xl mx-auto flex items-center justify-center">
-                <BookOpenIcon className="h-16 w-16 text-primary-600" />
+                <BookOpenIcon className="w-16 h-16 text-primary-600" />
               </div>
             </motion.div>
             <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6">
@@ -620,7 +620,7 @@ export default function Home() {
               to="/book"
               className="inline-flex items-center px-8 py-4 bg-white text-primary-600 font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
             >
-              <BookOpenIcon className="mr-2 h-5 w-5" />
+              <BookOpenIcon className="mr-2 icon-md" />
               Get the Book
             </Link>
           </motion.div>
@@ -639,7 +639,7 @@ export default function Home() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
-            <ArrowUpIcon className="h-6 w-6" />
+            <ArrowUpIcon className="icon-lg" />
           </motion.button>
         )}
       </AnimatePresence>

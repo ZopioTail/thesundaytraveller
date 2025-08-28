@@ -108,7 +108,7 @@ function About() {
               <img
                 src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
                 alt="The Sunday Traveller"
-                className="w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto mb-6 border-4 border-white shadow-2xl object-cover"
+                className="w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto mb-6 border-4 border-white shadow-2xl object-cover flex-shrink-0"
               />
             </motion.div>
 
@@ -165,7 +165,7 @@ function About() {
                   className="text-center group"
                 >
                   <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <Icon className="h-8 w-8 text-white" />
+                    <Icon className="icon-xl text-white" />
                   </div>
                   <div className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                     {achievement.value}

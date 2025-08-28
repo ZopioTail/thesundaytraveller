@@ -41,11 +41,19 @@
   }
 
   .btn-primary {
-    @apply px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300;
+    @apply inline-flex items-center justify-center px-8 py-4 text-base font-bold rounded-lg text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-4 focus:ring-primary-300 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl border-2 border-primary-600 hover:border-primary-700;
   }
 
   .btn-secondary {
-    @apply px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300;
+    @apply inline-flex items-center justify-center px-8 py-4 text-base font-bold rounded-lg text-gray-900 dark:text-white bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-primary-500 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-semibold rounded-lg text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-800 border-2 border-transparent hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-200;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center px-8 py-4 text-base font-bold rounded-lg text-primary-600 dark:text-primary-400 bg-transparent border-2 border-primary-600 dark:border-primary-400 hover:bg-primary-600 hover:text-white dark:hover:bg-primary-400 dark:hover:text-gray-900 focus:outline-none focus:ring-4 focus:ring-primary-300 transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg;
   }
 
   .section-padding {
@@ -54,6 +62,82 @@
 
   .container-custom {
     @apply max-w-7xl mx-auto;
+  }
+
+  /* Icon Sizing System */
+  .icon-xs {
+    @apply w-3 h-3 flex-shrink-0;
+  }
+
+  .icon-sm {
+    @apply w-4 h-4 flex-shrink-0;
+  }
+
+  .icon-md {
+    @apply w-5 h-5 flex-shrink-0;
+  }
+
+  .icon-lg {
+    @apply w-6 h-6 flex-shrink-0;
+  }
+
+  .icon-xl {
+    @apply w-8 h-8 flex-shrink-0;
+  }
+
+  .icon-2xl {
+    @apply w-10 h-10 flex-shrink-0;
+  }
+
+  .icon-3xl {
+    @apply w-12 h-12 flex-shrink-0;
+  }
+
+  /* Image Sizing System */
+  .img-avatar-sm {
+    @apply w-8 h-8 rounded-full object-cover flex-shrink-0;
+  }
+
+  .img-avatar-md {
+    @apply w-12 h-12 rounded-full object-cover flex-shrink-0;
+  }
+
+  .img-avatar-lg {
+    @apply w-16 h-16 rounded-full object-cover flex-shrink-0;
+  }
+
+  .img-card {
+    @apply w-full h-48 object-cover rounded-lg;
+  }
+
+  .img-hero {
+    @apply w-full h-64 md:h-80 lg:h-96 object-cover;
+  }
+
+  /* Card System */
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02];
+  }
+
+  .card-body {
+    @apply p-6;
+  }
+
+  /* Layout Utilities */
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .grid-auto-fit {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .grid-auto-fill {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   }
 }
 
