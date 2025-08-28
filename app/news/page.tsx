@@ -18,39 +18,42 @@ import {
 const newsArticles = [
   {
     id: 1,
-    title: 'New Visa-Free Travel Agreements Open Up Southeast Asia',
-    excerpt: 'Recent diplomatic agreements make it easier than ever to explore multiple countries in Southeast Asia without visa hassles.',
-    image: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    category: 'Visa Updates',
-    type: 'update',
-    publishedAt: new Date('2024-01-20'),
-    readTime: 5,
-    tags: ['Visa', 'Southeast Asia', 'Travel Policy'],
+    title: 'Military Tourism: Exploring Historical Battlefields Responsibly',
+    excerpt: 'A growing trend in military tourism allows visitors to explore historical battlefields while honoring the sacrifices made. Learn about responsible battlefield tourism and its impact on local communities.',
+    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    category: 'Military Tourism',
+    type: 'guide',
+    publishedAt: new Date('2025-08-28'),
+    readTime: 6,
+    tags: ['Military History', 'Battlefield Tourism', 'Responsible Travel', 'Heritage'],
     urgent: false,
+    author: 'Rabindra Sahu'
   },
   {
     id: 2,
-    title: 'Climate Change Impact on Popular Destinations',
-    excerpt: 'How rising sea levels and changing weather patterns are affecting some of the world\'s most beloved travel destinations.',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    category: 'Environment',
+    title: 'Adventure Sports Safety: New International Guidelines Released',
+    excerpt: 'International Adventure Sports Association releases updated safety guidelines for extreme sports tourism, focusing on risk management and emergency protocols.',
+    image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    category: 'Safety',
     type: 'alert',
-    publishedAt: new Date('2024-01-18'),
-    readTime: 8,
-    tags: ['Climate Change', 'Environment', 'Sustainability'],
+    publishedAt: new Date('2025-08-26'),
+    readTime: 5,
+    tags: ['Adventure Sports', 'Safety Guidelines', 'Risk Management', 'Tourism'],
     urgent: true,
+    author: 'Rabindra Sahu'
   },
   {
     id: 3,
-    title: 'Best Travel Apps of 2024: Complete Guide',
-    excerpt: 'Essential mobile apps that will make your travels smoother, safer, and more enjoyable this year.',
-    image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    title: 'Portugal Launches New Digital Nomad Hub in Porto',
+    excerpt: 'Portugal announces a new state-of-the-art digital nomad hub in Porto, featuring co-working spaces, networking events, and integration programs for remote workers.',
+    image: 'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     category: 'Technology',
-    type: 'guide',
-    publishedAt: new Date('2024-01-15'),
-    readTime: 12,
-    tags: ['Technology', 'Apps', 'Travel Tips'],
+    type: 'update',
+    publishedAt: new Date('2025-08-24'),
+    readTime: 4,
+    tags: ['Portugal', 'Digital Nomads', 'Porto', 'Remote Work', 'Co-working'],
     urgent: false,
+    author: 'Rabindra Sahu'
   },
   {
     id: 4,
@@ -90,7 +93,7 @@ const newsArticles = [
   },
 ]
 
-const categories = ['All', 'Visa Updates', 'Safety', 'Technology', 'Environment', 'Sustainability', 'Finance']
+const categories = ['All', 'Military Tourism', 'Safety', 'Technology', 'Environment', 'Sustainability', 'Finance']
 const types = ['All', 'Alert', 'Update', 'Guide', 'Tip']
 
 export default function NewsPage() {

@@ -60,13 +60,26 @@ const chapters = [
 ]
 
 export default function BookPage() {
-  const [selectedFormat, setSelectedFormat] = useState('hardcover')
+  const [selectedFormat, setSelectedFormat] = useState('paperback')
+  const [showBuyPopup, setShowBuyPopup] = useState(false)
 
   const formats = {
-    hardcover: { price: 29.99, originalPrice: 39.99 },
-    paperback: { price: 19.99, originalPrice: 24.99 },
-    ebook: { price: 12.99, originalPrice: 16.99 },
-    audiobook: { price: 24.99, originalPrice: 29.99 }
+    kindle: {
+      price: 149,
+      originalPrice: null,
+      currency: '₹',
+      format: 'Kindle Edition',
+      availability: 'Available instantly',
+      description: 'Digital edition with instant download'
+    },
+    paperback: {
+      price: 399,
+      originalPrice: 499,
+      currency: '₹',
+      format: 'Paperback',
+      availability: 'Ships within 2-3 business days',
+      description: 'Physical book with high-quality printing'
+    }
   }
 
   return (
@@ -143,22 +156,39 @@ export default function BookPage() {
               {/* Format Selection */}
               <div className="mb-8">
                 <h3 className="text-lg font-semibold mb-4">Choose Your Format</h3>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-3">
                   {Object.entries(formats).map(([format, pricing]) => (
                     <button
                       key={format}
                       onClick={() => setSelectedFormat(format)}
-                      className={`p-4 rounded-lg border-2 transition-all duration-200 ${
+                      className={`w-full p-4 rounded-lg border-2 transition-all duration-200 ${
                         selectedFormat === format
                           ? 'border-white bg-white/10'
                           : 'border-white/30 hover:border-white/50'
                       }`}
                     >
-                      <div className="text-left">
-                        <div className="font-semibold capitalize">{format}</div>
-                        <div className="flex items-center space-x-2">
-                          <span className="text-lg font-bold">${pricing.price}</span>
-                          <span className="text-sm line-through opacity-60">${pricing.originalPrice}</span>
+                      <div className="flex items-center justify-between">
+                        <div className="text-left">
+                          <div className="font-semibold">{pricing.format}</div>
+                          <div className="text-sm opacity-80">{pricing.availability}</div>
+                        </div>
+                        <div className="text-right">
+                          <div className="flex items-center space-x-2">
+                            {pricing.originalPrice && (
+                              <span className="text-sm line-through opacity-60">
+                                {pricing.currency}{pricing.originalPrice}
+                              </span>
+                            )}
+                            <span className="text-lg font-bold">
+                              {pricing.currency}{pricing.price}
+                            </span>
+                          </div>
+                          {pricing.originalPrice && (
+                            <div className="text-sm text-green-300">
+                              Save {pricing.currency}{pricing.originalPrice - pricing.price} (20%)
+                            </div>
+                          )}
+                          <div className="text-xs opacity-70">incl. GST</div>
                         </div>
                       </div>
                     </button>
@@ -168,9 +198,12 @@ export default function BookPage() {
 
               {/* Purchase Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="btn-secondary flex-1">
+                <button
+                  onClick={() => setShowBuyPopup(true)}
+                  className="btn-secondary flex-1"
+                >
                   <ShoppingCartIcon className="mr-2 icon-md" />
-                  Buy Now - ${formats[selectedFormat as keyof typeof formats].price}
+                  Buy Now - {formats[selectedFormat as keyof typeof formats].currency}{formats[selectedFormat as keyof typeof formats].price}
                 </button>
                 <button className="btn-outline">
                   <GiftIcon className="mr-2 icon-md" />
@@ -179,7 +212,7 @@ export default function BookPage() {
               </div>
 
               <div className="mt-6 text-sm opacity-80">
-                ✨ Limited time: Save 25% with code ADVENTURE25
+                ✨ {selectedFormat === 'paperback' ? 'Save ₹100 (20% off)' : 'Available instantly'} - Free shipping on orders above ₹500
               </div>
             </motion.div>
           </div>
@@ -350,7 +383,10 @@ export default function BookPage() {
               Join thousands of travelers who have transformed their adventures with this comprehensive guide.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="btn-primary">
+              <button
+                onClick={() => setShowBuyPopup(true)}
+                className="btn-primary"
+              >
                 <ShoppingCartIcon className="mr-2 icon-md" />
                 Get Your Copy Now
               </button>
@@ -360,11 +396,97 @@ export default function BookPage() {
               </button>
             </div>
             <div className="mt-6 text-sm opacity-80">
-              30-day money-back guarantee • Instant digital delivery
+              30-day money-back guarantee • Free shipping on orders above ₹500
             </div>
           </motion.div>
         </div>
       </section>
+
+      {/* Buy Popup */}
+      {showBuyPopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-6"
+          >
+            <div className="text-center mb-6">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                Choose Your Edition
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Select your preferred format to continue
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              {Object.entries(formats).map(([format, pricing]) => (
+                <div
+                  key={format}
+                  className={`border-2 rounded-lg p-4 cursor-pointer transition-colors duration-200 ${
+                    selectedFormat === format
+                      ? 'border-orange-500 bg-orange-50 dark:bg-orange-900/20'
+                      : 'border-gray-200 dark:border-gray-700 hover:border-orange-300 dark:hover:border-orange-600'
+                  }`}
+                  onClick={() => setSelectedFormat(format)}
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="font-semibold text-gray-900 dark:text-white">
+                        {pricing.format}
+                      </h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        {pricing.availability}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <div className="flex items-center space-x-2">
+                        {pricing.originalPrice && (
+                          <span className="text-sm text-gray-500 dark:text-gray-400 line-through">
+                            {pricing.currency}{pricing.originalPrice}
+                          </span>
+                        )}
+                        <span className="text-xl font-bold text-gray-900 dark:text-white">
+                          {pricing.currency}{pricing.price}
+                        </span>
+                      </div>
+                      {pricing.originalPrice && (
+                        <div className="text-sm text-green-600 dark:text-green-400">
+                          Save {pricing.currency}{pricing.originalPrice - pricing.price} (20%)
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex space-x-3 mt-6">
+              <button
+                onClick={() => setShowBuyPopup(false)}
+                className="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+              >
+                Cancel
+              </button>
+              <button className="flex-1 px-4 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors duration-200 font-semibold">
+                <ShoppingCartIcon className="w-5 h-5 inline mr-2" />
+                Buy Now
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Sticky Buy Button */}
+      <div className="fixed bottom-6 right-6 z-40">
+        <button
+          onClick={() => setShowBuyPopup(true)}
+          className="bg-orange-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-orange-700 transition-all duration-200 hover:scale-105"
+        >
+          <ShoppingCartIcon className="w-5 h-5 inline mr-2" />
+          Buy Book
+        </button>
+      </div>
     </div>
   )
 }

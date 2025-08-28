@@ -16,70 +16,91 @@ import {
 const countries = [
   {
     id: 1,
-    name: 'Japan',
-    flag: '🇯🇵',
-    continent: 'Asia',
+    name: 'Portugal',
+    flag: '🇵🇹',
+    continent: 'Europe',
     visited: true,
-    visitDate: new Date('2023-03-15'),
-    image: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    description: 'Land of the rising sun, where ancient traditions meet cutting-edge technology.',
-    highlights: ['Cherry Blossoms in Kyoto', 'Tokyo Street Food', 'Mount Fuji Sunrise', 'Traditional Ryokans'],
-    blogPosts: 8,
+    visitDate: new Date('2025-08-22'),
+    image: 'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    description: 'A digital nomad\'s paradise with stunning coastlines, rich history, and vibrant culture.',
+    highlights: ['Lisbon Trams', 'Porto Wine Cellars', 'Algarve Beaches', 'Sintra Palaces'],
+    blogPosts: 5,
     gallery: [
-      'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-      'https://images.unsplash.com/photo-1528164344705-47542687000d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-      'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1513735711674-6abc9eca3d4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1526392060635-9d6019884377?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+    ],
+    childDestinations: [
+      { name: 'Lisbon', flag: '🏛️', description: 'Capital city with historic trams and vibrant neighborhoods' },
+      { name: 'Porto', flag: '🍷', description: 'Wine capital with stunning architecture' },
+      { name: 'Algarve', flag: '🏖️', description: 'Southern coast with beautiful beaches' }
     ]
   },
   {
     id: 2,
-    name: 'Iceland',
-    flag: '🇮🇸',
-    continent: 'Europe',
+    name: 'India',
+    flag: '🇮🇳',
+    continent: 'Asia',
     visited: true,
-    visitDate: new Date('2022-09-20'),
+    visitDate: new Date('2025-08-18'),
     image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    description: 'A Nordic island of fire and ice, featuring dramatic landscapes and natural wonders.',
-    highlights: ['Northern Lights', 'Blue Lagoon', 'Golden Circle', 'Glacier Hiking'],
-    blogPosts: 6,
+    description: 'Home country with diverse landscapes from Himalayas to coastal plains, rich in culture and adventure.',
+    highlights: ['Himalayan Treks', 'Rajasthan Deserts', 'Kerala Backwaters', 'Goa Beaches'],
+    blogPosts: 12,
     gallery: [
       'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-      'https://images.unsplash.com/photo-1531168556467-80aace4d0144?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-      'https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1512813195386-6cf811ad3542?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+    ],
+    childDestinations: [
+      { name: 'Himalayas', flag: '🏔️', description: 'World\'s highest mountain range for trekking' },
+      { name: 'Rajasthan', flag: '🏰', description: 'Land of kings with magnificent palaces' },
+      { name: 'Kerala', flag: '🌴', description: 'God\'s own country with backwaters' },
+      { name: 'Goa', flag: '🏖️', description: 'Coastal paradise with Portuguese heritage' }
     ]
   },
   {
     id: 3,
-    name: 'New Zealand',
-    flag: '🇳🇿',
-    continent: 'Oceania',
+    name: 'Nepal',
+    flag: '🇳🇵',
+    continent: 'Asia',
     visited: true,
-    visitDate: new Date('2023-11-10'),
-    image: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    description: 'Adventure capital with stunning landscapes, from fjords to mountains.',
-    highlights: ['Milford Sound', 'Queenstown Adventures', 'Hobbiton', 'Franz Josef Glacier'],
-    blogPosts: 12,
+    visitDate: new Date('2025-08-16'),
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    description: 'Home to Mount Everest and incredible trekking adventures in the Himalayas.',
+    highlights: ['Everest Base Camp', 'Annapurna Circuit', 'Kathmandu Temples', 'Pokhara Lakes'],
+    blogPosts: 8,
     gallery: [
-      'https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-      'https://images.unsplash.com/photo-1507041957456-9c397ce39c97?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-      'https://images.unsplash.com/photo-1464822759844-d150baec0494?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1544735716-392fe2489ffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1571771019784-3ff35f4f4277?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+    ],
+    childDestinations: [
+      { name: 'Everest Region', flag: '🏔️', description: 'World\'s highest peak and base camp trek' },
+      { name: 'Annapurna', flag: '⛰️', description: 'Stunning mountain circuit trek' },
+      { name: 'Kathmandu', flag: '🏛️', description: 'Historic capital with ancient temples' }
     ]
   },
   {
     id: 4,
-    name: 'Morocco',
-    flag: '🇲🇦',
-    continent: 'Africa',
+    name: 'Thailand',
+    flag: '🇹🇭',
+    continent: 'Asia',
     visited: true,
-    visitDate: new Date('2022-05-18'),
+    visitDate: new Date('2025-08-12'),
     image: 'https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    description: 'A gateway to Africa with vibrant markets, ancient cities, and Sahara adventures.',
-    highlights: ['Marrakech Souks', 'Sahara Desert', 'Atlas Mountains', 'Chefchaouen Blue City'],
-    blogPosts: 10,
+    description: 'Land of smiles with tropical beaches, ancient temples, and incredible street food.',
+    highlights: ['Bangkok Temples', 'Phuket Beaches', 'Chiang Mai Culture', 'Thai Street Food'],
+    blogPosts: 7,
     gallery: [
       'https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-      'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-      'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1528181304800-259b08848526?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+    ],
+    childDestinations: [
+      { name: 'Bangkok', flag: '🏙️', description: 'Vibrant capital with temples and street food' },
+      { name: 'Phuket', flag: '🏖️', description: 'Tropical island paradise' },
+      { name: 'Chiang Mai', flag: '🏛️', description: 'Cultural heart of northern Thailand' }
     ]
   },
   {
@@ -289,6 +310,26 @@ export default function DestinationsPage() {
                         ))}
                       </div>
                     </div>
+
+                    {/* Child Destinations */}
+                    {country.childDestinations && (
+                      <div className="mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">
+                          Popular Destinations
+                        </h4>
+                        <div className="space-y-2">
+                          {country.childDestinations.slice(0, 2).map((child, index) => (
+                            <div key={index} className="flex items-center space-x-2 p-2 bg-gray-50 dark:bg-gray-700/50 rounded-md">
+                              <span className="text-sm">{child.flag}</span>
+                              <div>
+                                <p className="text-xs font-medium text-gray-900 dark:text-white">{child.name}</p>
+                                <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{child.description}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
 
                     {/* Meta Info */}
                     <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">

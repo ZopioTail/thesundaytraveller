@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import {
@@ -20,6 +20,16 @@ export default function ContactPage() {
     message: ''
   })
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [showAutoPopup, setShowAutoPopup] = useState(false)
+
+  // Auto-open popup after 10 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowAutoPopup(true)
+    }, 10000)
+
+    return () => clearTimeout(timer)
+  }, [])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -324,6 +334,51 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+
+      {/* Auto-opening Contact Popup */}
+      {showAutoPopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-6"
+          >
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 bg-orange-100 dark:bg-orange-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <EnvelopeIcon className="w-8 h-8 text-orange-600 dark:text-orange-400" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                Stay Connected!
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Have questions about travel, adventure, or military life? I'd love to help!
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <button
+                onClick={() => {
+                  setShowAutoPopup(false)
+                  document.getElementById('name')?.focus()
+                }}
+                className="w-full bg-orange-600 text-white py-3 rounded-lg hover:bg-orange-700 transition-colors duration-200 font-semibold"
+              >
+                Send a Message
+              </button>
+              <button
+                onClick={() => setShowAutoPopup(false)}
+                className="w-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 py-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+              >
+                Maybe Later
+              </button>
+            </div>
+
+            <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-4">
+              This popup won't show again during this session
+            </p>
+          </motion.div>
+        </div>
+      )}
     </div>
   )
 }

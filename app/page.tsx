@@ -21,28 +21,28 @@ import StatsChart from '@/components/ui/StatsChart'
 // Hero carousel images
 const heroImages = [
   {
-    url: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-    alt: 'Mountain landscape with lake',
-    title: 'Explore the Mountains',
-    subtitle: 'Discover breathtaking peaks and serene lakes'
-  },
-  {
     url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-    alt: 'Tropical beach paradise',
-    title: 'Tropical Paradise',
-    subtitle: 'Unwind on pristine beaches and crystal waters'
+    alt: 'Himalayan mountain landscape',
+    title: 'The Sunday Traveller',
+    subtitle: 'Where military discipline meets wanderlust - discover extraordinary destinations through the eyes of a soldier-explorer who finds profound lessons in every journey'
   },
   {
-    url: 'https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-    alt: 'Ancient architecture',
-    title: 'Cultural Heritage',
-    subtitle: 'Journey through history and ancient civilizations'
+    url: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+    alt: 'Adventure sports and extreme activities',
+    title: 'Adventure Beyond Limits',
+    subtitle: 'From rappelling down 200-foot cliffs to navigating Grade IV rapids - every adrenaline-fueled adventure teaches courage, resilience, and the art of calculated risk'
   },
   {
-    url: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-    alt: 'Desert landscape',
-    title: 'Desert Adventures',
-    subtitle: 'Experience the magic of endless horizons'
+    url: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+    alt: 'Peaceful lifestyle and cultural moments',
+    title: 'Life Beyond the Uniform',
+    subtitle: 'Discovering beauty in simplicity - from morning coffee rituals to minimalist living, explore how military precision informs intentional civilian life'
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+    alt: 'Portugal travel destination',
+    title: 'Destinations That Transform',
+    subtitle: 'From Portugal\'s cobblestone streets to Nepal\'s towering peaks - each destination offers unique lessons in culture, adventure, and personal growth'
   }
 ]
 
@@ -55,32 +55,32 @@ const stats = [
 
 const categories = [
   {
+    name: 'Destinations',
+    description: 'Explore breathtaking locations and hidden gems around the world',
+    image: 'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    href: '/destinations',
+    color: 'from-blue-500 to-cyan-500'
+  },
+  {
     name: 'Adventure',
-    description: 'Thrilling outdoor experiences and extreme sports',
+    description: 'Thrilling outdoor experiences and extreme sports that push boundaries',
     image: 'https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     href: '/adventure',
     color: 'from-orange-500 to-red-500'
   },
   {
     name: 'Culture',
-    description: 'Deep dives into local traditions and heritage',
+    description: 'Deep dives into local traditions, art, and meaningful life experiences',
     image: 'https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
     href: '/culture',
     color: 'from-purple-500 to-pink-500'
   },
   {
-    name: 'Nature',
-    description: 'Pristine landscapes and wildlife encounters',
-    image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    href: '/nature',
-    color: 'from-green-500 to-teal-500'
-  },
-  {
-    name: 'Food',
-    description: 'Culinary adventures and local delicacies',
+    name: 'Food & Lifestyle',
+    description: 'Culinary adventures, minimalist living, and intentional lifestyle choices',
     image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    href: '/food',
-    color: 'from-yellow-500 to-orange-500'
+    href: '/food-lifestyle',
+    color: 'from-green-500 to-teal-500'
   }
 ]
 

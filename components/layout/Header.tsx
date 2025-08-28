@@ -16,15 +16,15 @@ import { cn } from '@/lib/utils'
 
 const navigation = [
   { name: 'Home', href: '/' },
-  { name: 'About', href: '/about' },
   { name: 'Destinations', href: '/destinations' },
-  { name: 'Blog', href: '/blog' },
-  { name: 'Travel', href: '/travel' },
-  { name: 'Art & Lifestyle', href: '/art-lifestyle' },
-  { name: 'Profession', href: '/profession' },
   { name: 'Adventure', href: '/adventure' },
-  { name: 'News', href: '/news' },
+  { name: 'Culture', href: '/culture' },
+  { name: 'Food & Lifestyle', href: '/food-lifestyle' },
+  { name: 'Blog', href: '/blog' },
+  { name: 'Travel News', href: '/news' },
   { name: 'Book', href: '/book' },
+  { name: 'About', href: '/about' },
+  { name: 'Contact', href: '/contact' },
 ]
 
 export default function Header() {
