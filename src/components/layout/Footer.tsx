@@ -2,7 +2,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-  GlobeAltIcon,
   EnvelopeIcon,
   PhoneIcon,
   MapPinIcon,
@@ -15,6 +14,7 @@ import {
   TwitterIcon,
 } from '../icons/SocialIcons';
 import { JotformButton } from '../forms/JotformEmbed';
+import Logo from '../Logo';
 
 const footerLinks = {
   explore: [
@@ -87,11 +87,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Brand Section */}
           <div className="lg:col-span-2">
-            <Link to="/" className="flex items-center space-x-2 mb-4">
-              <GlobeAltIcon className="h-8 w-8 text-primary-500" />
-              <span className="text-xl font-serif font-bold">
-                The Sunday Traveller
-              </span>
+            <Link to="/" className="flex items-center mb-4">
+              <Logo size="md" />
             </Link>
             <p className="text-gray-400 mb-6 max-w-md">
               Exploring the world one story at a time. Join me on this incredible journey 

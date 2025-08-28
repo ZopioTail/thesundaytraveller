@@ -1,24 +1,25 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Bars3Icon, 
-  XMarkIcon, 
-  SunIcon, 
-  MoonIcon,
-  GlobeAltIcon
+import {
+  Bars3Icon,
+  XMarkIcon,
+  SunIcon,
+  MoonIcon
 } from '@heroicons/react/24/outline';
 import { useTheme } from '../../contexts/ThemeContext';
 import { cn } from '../../lib/utils';
+import Logo from '../Logo';
 
 const navigation = [
   { name: 'Home', href: '/' },
-  { name: 'About', href: '/about' },
+  { name: 'About Me', href: '/about' },
   { name: 'News', href: '/news' },
   { name: 'Blog', href: '/blog' },
+  { name: 'My Book', href: '/book' },
   { name: 'Destinations', href: '/destinations' },
-  { name: 'Book', href: '/book' },
-  { name: 'Certificates', href: '/certificates' },
+  { name: 'Get Inspired', href: '/lifestyle' },
+  { name: 'Travel Guides', href: '/adventure' },
 ];
 
 export default function Header() {
@@ -54,11 +55,8 @@ export default function Header() {
       <nav className="container-custom section-padding py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <GlobeAltIcon className="h-8 w-8 text-primary-600" />
-            <span className="text-xl font-serif font-bold gradient-text">
-              The Sunday Traveller
-            </span>
+          <Link to="/" className="flex items-center">
+            <Logo size="md" />
           </Link>
 
           {/* Desktop Navigation */}

@@ -13,6 +13,7 @@ import {
   StarIcon,
 } from '@heroicons/react/24/outline';
 import CountUpAnimation from '../components/ui/CountUpAnimation';
+import StatsChart, { ProgressRing } from '../components/ui/StatsChart';
 
 // Hero carousel images from Unsplash
 const heroImages = [
@@ -384,6 +385,73 @@ export default function Home() {
                 </motion.div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* Analytics Section */}
+      <section className="section-padding bg-gray-50 dark:bg-gray-800">
+        <div className="container-custom">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6">
+              Growing Community
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+              Join thousands of fellow travelers who follow my journey and get inspired to explore the world.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                <StatsChart />
+              </motion.div>
+            </div>
+
+            <div className="space-y-6">
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center"
+              >
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                  Travel Goals 2024
+                </h3>
+                <ProgressRing progress={75} color="#e35d05" />
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-4">
+                  Countries Visited This Year
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center"
+              >
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                  Content Creation
+                </h3>
+                <ProgressRing progress={92} color="#0284c7" />
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-4">
+                  Monthly Publishing Goal
+                </p>
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>
