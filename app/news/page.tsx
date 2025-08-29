@@ -41,7 +41,7 @@ const newsArticles = [
     readTime: 6,
     tags: ['Military History', 'Battlefield Tourism', 'Responsible Travel', 'Heritage'],
     urgent: false,
-    author: 'Rabindra Sahu',
+    author: 'Vineet Kumar',
     views: 3247,
     trending: true,
     featured: true
@@ -57,7 +57,7 @@ const newsArticles = [
     readTime: 5,
     tags: ['Adventure Sports', 'Safety Guidelines', 'Risk Management', 'Tourism'],
     urgent: true,
-    author: 'Rabindra Sahu'
+    author: 'Vineet Kumar'
   },
   {
     id: 3,
@@ -70,7 +70,7 @@ const newsArticles = [
     readTime: 4,
     tags: ['Portugal', 'Digital Nomads', 'Porto', 'Remote Work', 'Co-working'],
     urgent: false,
-    author: 'Rabindra Sahu'
+    author: 'Vineet Kumar'
   },
   {
     id: 4,

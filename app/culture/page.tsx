@@ -26,7 +26,7 @@ const culturalStories = [
     publishedAt: new Date('2025-08-26'),
     tags: ['Lifestyle', 'Personal', 'Home', 'Balance', 'Mindfulness'],
     featured: true,
-    author: 'Rabindra Sahu',
+    author: 'Vineet Kumar',
     slug: 'life-beyond-the-uniform-curtains-coffee-calm',
     likes: 234,
     comments: 45
@@ -41,7 +41,7 @@ const culturalStories = [
     publishedAt: new Date('2025-08-20'),
     tags: ['Photography', 'Military', 'Storytelling', 'Art', 'Documentation'],
     featured: true,
-    author: 'Rabindra Sahu',
+    author: 'Vineet Kumar',
     slug: 'military-photography-capturing-stories-beyond-combat',
     likes: 189,
     comments: 32
@@ -56,7 +56,7 @@ const culturalStories = [
     publishedAt: new Date('2025-08-16'),
     tags: ['Diplomacy', 'Military', 'Peace-building', 'International Relations', 'Leadership'],
     featured: false,
-    author: 'Rabindra Sahu',
+    author: 'Vineet Kumar',
     slug: 'building-bridges-military-diplomacy-in-action',
     likes: 156,
     comments: 28
@@ -71,7 +71,7 @@ const culturalStories = [
     publishedAt: new Date('2025-08-14'),
     tags: ['Culture', 'Community', 'Service', 'Learning', 'Diversity'],
     featured: false,
-    author: 'Rabindra Sahu',
+    author: 'Vineet Kumar',
     slug: 'cultural-exchange-through-service-learning-from-local-communities',
     likes: 143,
     comments: 22
@@ -86,7 +86,7 @@ const culturalStories = [
     publishedAt: new Date('2025-08-12'),
     tags: ['Minimalism', 'Philosophy', 'Simple Living', 'Military Life', 'Wisdom'],
     featured: false,
-    author: 'Rabindra Sahu',
+    author: 'Vineet Kumar',
     slug: 'philosophy-of-simple-living-lessons-from-military-life',
     likes: 167,
     comments: 31
@@ -101,7 +101,7 @@ const culturalStories = [
     publishedAt: new Date('2025-08-10'),
     tags: ['Traditional Arts', 'Modern Art', 'Culture', 'Heritage', 'Expression'],
     featured: false,
-    author: 'Rabindra Sahu',
+    author: 'Vineet Kumar',
     slug: 'traditional-arts-and-modern-expression-finding-balance',
     likes: 134,
     comments: 19

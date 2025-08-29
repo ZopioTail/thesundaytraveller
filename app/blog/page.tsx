@@ -40,7 +40,7 @@ const blogPosts = [
     createdAt: new Date('2025-08-28'),
     tags: ['Military', 'Adventure Sports', 'Life Lessons', 'Leadership', 'Resilience'],
     featured: true,
-    author: 'Rabindra Sahu',
+    author: 'Vineet Kumar',
     slug: 'what-adventure-sports-taught-this-soldier-about-life',
     views: 2847,
     likes: 156,
@@ -58,7 +58,7 @@ const blogPosts = [
     createdAt: new Date('2025-08-26'),
     tags: ['Lifestyle', 'Personal', 'Home', 'Balance', 'Mindfulness'],
     featured: true,
-    author: 'Rabindra Sahu',
+    author: 'Vineet Kumar',
     slug: 'life-beyond-the-uniform-curtains-coffee-calm',
     views: 1923,
     likes: 89,
@@ -76,7 +76,7 @@ const blogPosts = [
     createdAt: new Date('2025-08-24'),
     tags: ['Technology', 'Teaching', 'Finance', 'Drones', 'Peace-building', 'Trading'],
     featured: false,
-    author: 'Rabindra Sahu',
+    author: 'Vineet Kumar',
     slug: 'flying-drones-teaching-peace-trading-stocks'
   },
   {
@@ -89,7 +89,7 @@ const blogPosts = [
     createdAt: new Date('2025-08-22'),
     tags: ['Portugal', 'Digital Nomad', 'Remote Work', 'Europe', 'Lifestyle'],
     featured: false,
-    author: 'Rabindra Sahu',
+    author: 'Vineet Kumar',
     slug: 'exploring-portugal-digital-nomad-paradise'
   },
   {
@@ -102,7 +102,7 @@ const blogPosts = [
     createdAt: new Date('2025-08-20'),
     tags: ['Photography', 'Military', 'Storytelling', 'Art', 'Documentation'],
     featured: false,
-    author: 'Rabindra Sahu',
+    author: 'Vineet Kumar',
     slug: 'military-photography-capturing-stories-beyond-combat'
   },
   {
@@ -115,7 +115,7 @@ const blogPosts = [
     createdAt: new Date('2025-08-18'),
     tags: ['Himalayas', 'Trekking', 'Solo Travel', 'Mountain Climbing', 'Self-Discovery'],
     featured: false,
-    author: 'Rabindra Sahu',
+    author: 'Vineet Kumar',
     slug: 'himalayan-trek-lessons-from-18000-feet'
   },
   {
@@ -128,7 +128,7 @@ const blogPosts = [
     createdAt: new Date('2025-08-16'),
     tags: ['Diplomacy', 'Military', 'Peace-building', 'International Relations', 'Leadership'],
     featured: false,
-    author: 'Rabindra Sahu',
+    author: 'Vineet Kumar',
     slug: 'building-bridges-military-diplomacy-in-action'
   },
   {
@@ -141,7 +141,7 @@ const blogPosts = [
     createdAt: new Date('2025-08-14'),
     tags: ['Minimalism', 'Military Life', 'Philosophy', 'Simple Living', 'Travel'],
     featured: false,
-    author: 'Rabindra Sahu',
+    author: 'Vineet Kumar',
     slug: 'minimalist-soldier-living-with-less-experiencing-more'
   }
 ]
@@ -465,7 +465,7 @@ export default function BlogPage() {
                     transition={{ duration: 0.6, delay: index * 0.1 }}
                     className="group"
                   >
-                    <Link href={`/blog/${post.id}`}>
+                    <Link href={`/blog/${post.slug}`}>
                       <div className="card card-hover">
                         <div className="relative h-64 overflow-hidden">
                           <Image
@@ -549,7 +549,7 @@ export default function BlogPage() {
                     transition={{ duration: 0.6, delay: index * 0.1 }}
                     className="group"
                   >
-                    <Link href={`/blog/${post.id}`}>
+                    <Link href={`/blog/${post.slug}`}>
                       <div className="card card-hover">
                         <div className="relative h-48 overflow-hidden">
                           <Image

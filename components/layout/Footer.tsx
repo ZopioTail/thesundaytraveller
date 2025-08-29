@@ -8,6 +8,7 @@ import {
   EnvelopeIcon,
   PhoneIcon,
   GlobeAltIcon,
+  HeartIcon,
 } from '@heroicons/react/24/outline'
 import Logo from '@/components/Logo'
 
@@ -241,15 +242,28 @@ export default function Footer() {
             transition={{ duration: 0.6 }}
             className="flex flex-col md:flex-row items-center justify-between"
           >
-            <motion.p
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-gray-400 text-base font-medium"
-            >
-              © 2024 The Sunday Traveller. All rights reserved. Made with ❤️ for travelers.
-            </motion.p>
+            <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-6">
+              <motion.p
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="text-gray-400 text-base font-medium"
+              >
+                © 2024 The Sunday Traveller. All rights reserved. Made with ❤️ for travelers.
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="flex items-center space-x-2 text-gray-500 text-sm"
+              >
+                <span>Website design by</span>
+                <HeartIcon className="w-4 h-4 text-red-400" />
+                <span className="font-semibold text-orange-400">Rabindra</span>
+              </motion.div>
+            </div>
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}

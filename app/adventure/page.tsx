@@ -29,7 +29,7 @@ const adventures = [
     readTime: 12,
     publishedAt: new Date('2025-08-18'),
     tags: ['Himalayas', 'Trekking', 'Solo Travel', 'Mountain Climbing', 'Self-Discovery'],
-    author: 'Rabindra Sahu',
+    author: 'Vineet Kumar',
     slug: 'himalayan-trek-lessons-from-18000-feet'
   },
   {
@@ -46,7 +46,7 @@ const adventures = [
     readTime: 6,
     publishedAt: new Date('2025-08-15'),
     tags: ['Rock Climbing', 'Rappelling', 'Fear Management', 'Adventure'],
-    author: 'Rabindra Sahu',
+    author: 'Vineet Kumar',
     slug: 'rappelling-down-cliff-faces-conquering-fear'
   },
   {

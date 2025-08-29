@@ -69,7 +69,7 @@ The mountains, rivers, and cliffs have been my teachers just as much as my comma
     category: 'Adventure',
     categorySlug: 'adventure',
     tags: ['Military', 'Adventure Sports', 'Life Lessons', 'Leadership', 'Resilience'],
-    author: 'Rabindra Sahu',
+    author: 'Vineet Kumar',
     publishedAt: new Date('2025-08-28'),
     updatedAt: new Date('2025-08-28'),
     readTime: 8,
@@ -167,7 +167,7 @@ Both are necessary. Both are beautiful. Both are part of the complete picture of
     category: 'Culture',
     categorySlug: 'culture',
     tags: ['Lifestyle', 'Personal', 'Home', 'Balance', 'Mindfulness'],
-    author: 'Rabindra Sahu',
+    author: 'Vineet Kumar',
     publishedAt: new Date('2025-08-26'),
     updatedAt: new Date('2025-08-26'),
     readTime: 6,
@@ -191,7 +191,7 @@ const mockNews = [
     readTime: 6,
     tags: ['Military History', 'Battlefield Tourism', 'Responsible Travel', 'Heritage'],
     urgent: false,
-    author: 'Rabindra Sahu',
+    author: 'Vineet Kumar',
     views: 3247,
     trending: true,
     featured: true
@@ -208,7 +208,7 @@ const mockNews = [
     readTime: 5,
     tags: ['Adventure Sports', 'Safety Guidelines', 'Risk Management', 'Tourism'],
     urgent: true,
-    author: 'Rabindra Sahu'
+    author: 'Vineet Kumar'
   }
 ]
 

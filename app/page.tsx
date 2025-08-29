@@ -38,7 +38,7 @@ import TravelPath from '@/components/TravelPath'
 const heroImages = [
   {
     url: '/images/optimized/hero-main.jpg',
-    alt: 'Rabindra Sahu - The Sunday Traveller',
+    alt: 'Vineet Kumar - The Sunday Traveller',
     title: 'The Sunday Traveller',
     subtitle: 'Where military discipline meets wanderlust - discover extraordinary destinations through the eyes of a soldier-explorer who finds profound lessons in every journey',
     badge: 'Featured Story',
