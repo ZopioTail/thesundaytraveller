@@ -25,7 +25,7 @@ const blogPosts = [
     createdAt: new Date('2025-08-28'),
     tags: ['Military', 'Adventure Sports', 'Life Lessons', 'Leadership', 'Resilience'],
     featured: true,
-    author: 'Rabindra Sahu',
+    author: 'Vineet Kumar',
     slug: 'what-adventure-sports-taught-this-soldier-about-life'
   },
   {

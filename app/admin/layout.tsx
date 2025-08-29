@@ -35,7 +35,7 @@ export default function AdminLayout({
   children: React.ReactNode
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [user, setUser] = useState({ name: 'Rabindra Sahu', email: 'rabindra@thesundaytraveller.com', avatar: '/images/avatar.jpg' })
+  const [user, setUser] = useState({ name: 'Vineet Kumar', email: 'vineet@thesundaytraveller.com', avatar: '/images/avatar.jpg' })
   const pathname = usePathname()
 
   return (

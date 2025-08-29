@@ -29,6 +29,33 @@ export default function Header() {
   const { theme, setTheme } = useTheme()
   const pathname = usePathname()
 
+  // Determine header style based on page and scroll position
+  const getHeaderStyle = () => {
+    // Pages with dark hero sections that need white header initially
+    const darkHeroPages = ['/', '/about', '/book']
+    const isDarkHeroPage = darkHeroPages.includes(pathname)
+
+    if (isDarkHeroPage && !isScrolled) {
+      return {
+        bg: 'bg-transparent',
+        text: 'text-white',
+        border: 'border-white/20',
+        logo: 'text-white',
+        mobile: 'bg-black/95 backdrop-blur-md'
+      }
+    } else {
+      return {
+        bg: 'bg-white/95 backdrop-blur-md dark:bg-gray-900/95',
+        text: 'text-gray-900 dark:text-white',
+        border: 'border-gray-200 dark:border-gray-700',
+        logo: 'text-gray-900 dark:text-white',
+        mobile: 'bg-white dark:bg-gray-900'
+      }
+    }
+  }
+
+  const headerStyle = getHeaderStyle()
+
   const isDark = theme === 'dark'
 
   const toggleTheme = () => {
@@ -57,18 +84,21 @@ export default function Header() {
       transition={{ duration: 0.6 }}
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        isScrolled
-          ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-lg'
-          : 'bg-transparent'
+        headerStyle.bg,
+        isScrolled ? 'shadow-lg' : ''
       )}
     >
       <nav className="container-custom">
-        <div className="flex items-center justify-between h-16 lg:h-20">
+        <div className={cn(
+          "flex items-center justify-between h-16 lg:h-20 border-b transition-colors duration-300",
+          headerStyle.border,
+          !isScrolled && pathname === '/' ? 'border-transparent' : ''
+        )}>
           {/* Logo */}
           <Link href="/" className="flex-shrink-0">
-            <Logo 
-              variant={isScrolled ? 'dark' : 'light'} 
-              size="md" 
+            <Logo
+              variant={headerStyle.text.includes('white') ? 'light' : 'dark'}
+              size="md"
             />
           </Link>
 
@@ -82,9 +112,9 @@ export default function Header() {
                   'px-3 py-2 text-sm font-semibold rounded-lg transition-all duration-200 hover:scale-105',
                   isActive(item.href)
                     ? 'text-orange-600 dark:text-orange-400 bg-orange-100 dark:bg-orange-900/20'
-                    : isScrolled
-                    ? 'text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 hover:bg-gray-100 dark:hover:bg-gray-800'
-                    : 'text-white hover:text-orange-300 hover:bg-white/10'
+                    : headerStyle.text.includes('white')
+                    ? 'text-white hover:text-orange-300 hover:bg-white/10'
+                    : 'text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 hover:bg-gray-100 dark:hover:bg-gray-800'
                 )}
               >
                 {item.name}
@@ -99,16 +129,16 @@ export default function Header() {
               onClick={toggleTheme}
               className={cn(
                 'p-2 rounded-lg transition-colors duration-200',
-                isScrolled
-                  ? 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700'
-                  : 'bg-white/10 hover:bg-white/20'
+                headerStyle.text.includes('white')
+                  ? 'bg-white/10 hover:bg-white/20'
+                  : 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700'
               )}
               aria-label="Toggle theme"
             >
               {isDark ? (
                 <SunIcon className="icon-md text-yellow-500" />
               ) : (
-                <MoonIcon className={cn('icon-md', isScrolled ? 'text-gray-700' : 'text-white')} />
+                <MoonIcon className={cn('icon-md', headerStyle.text.includes('white') ? 'text-white' : 'text-gray-700')} />
               )}
             </button>
 
@@ -117,16 +147,16 @@ export default function Header() {
               onClick={() => setIsOpen(!isOpen)}
               className={cn(
                 'lg:hidden p-2 rounded-lg transition-colors duration-200',
-                isScrolled
-                  ? 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700'
-                  : 'bg-white/10 hover:bg-white/20'
+                headerStyle.text.includes('white')
+                  ? 'bg-white/10 hover:bg-white/20'
+                  : 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700'
               )}
               aria-label="Toggle menu"
             >
               {isOpen ? (
-                <XMarkIcon className="icon-lg" />
+                <XMarkIcon className={cn('icon-lg', headerStyle.text)} />
               ) : (
-                <Bars3Icon className="icon-lg" />
+                <Bars3Icon className={cn('icon-lg', headerStyle.text)} />
               )}
             </button>
           </div>
@@ -141,7 +171,7 @@ export default function Header() {
               exit={{ opacity: 0, height: 0 }}
               className="lg:hidden mt-4 overflow-hidden"
             >
-              <div className="glass-card p-4 space-y-2">
+              <div className={cn('p-4 space-y-2 rounded-lg', headerStyle.mobile)}>
                 {navigation.map((item) => (
                   <Link
                     key={item.name}

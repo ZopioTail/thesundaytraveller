@@ -17,6 +17,7 @@ import {
 } from '@heroicons/react/24/outline'
 import CountUpAnimation from '@/components/ui/CountUpAnimation'
 import StatsChart from '@/components/ui/StatsChart'
+import TravelPath from '@/components/TravelPath'
 
 // Hero carousel images
 const heroImages = [
@@ -261,6 +262,36 @@ export default function HomePage() {
               )
             })}
           </div>
+        </div>
+      </section>
+
+      {/* Travel Path Section */}
+      <section className="section-padding">
+        <div className="container-custom">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              My Global <span className="gradient-text">Journey</span>
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+              Follow the path of adventure across 38+ countries and 6 continents. Each flag represents a unique story,
+              cultural discovery, and unforgettable experience that shaped this incredible journey.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <TravelPath />
+          </motion.div>
         </div>
       </section>
 
