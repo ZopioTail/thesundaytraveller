@@ -105,7 +105,7 @@ export default function BookPage() {
                 transition={{ duration: 0.3 }}
                 style={{ perspective: 1000 }}
               >
-                <div className="relative w-320 h-384 mx-auto lg:mx-0 shadow-2xl rounded-lg overflow-hidden">
+                <div className="relative w-84 h-96 mx-auto lg:mx-0 shadow-2xl rounded-lg overflow-hidden">
                   <Image
                     src="/images/optimized/book-cover.jpg"
                     alt="The Sunday Traveller Book by Vineet Kumar"
