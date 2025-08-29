@@ -82,133 +82,201 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-10 left-10 w-32 h-32 bg-orange-500 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-20 right-20 w-40 h-40 bg-pink-500 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-purple-500 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+      </div>
+
       {/* Newsletter Section */}
-      <section className="border-b border-gray-800">
-        <div className="container-custom py-16">
+      <section className="relative border-b border-gray-700/50">
+        <div className="container-custom py-20">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8 }}
             className="max-w-4xl mx-auto text-center"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Join the Journey
-            </h2>
-            <p className="text-xl text-gray-300 mb-8">
-              Get exclusive travel tips, destination guides, and behind-the-scenes stories delivered to your inbox.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-              />
-              <button className="btn-primary whitespace-nowrap">
+            <motion.div
+              initial={{ scale: 0.8 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mb-8"
+            >
+              <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-orange-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+                Join the Journey
+              </h2>
+              <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
+                Get exclusive travel tips, destination guides, and behind-the-scenes stories delivered to your inbox.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto"
+            >
+              <div className="relative flex-1">
+                <input
+                  type="email"
+                  placeholder="Enter your email address"
+                  className="w-full px-6 py-4 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 focus:bg-white/20"
+                />
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-500/20 to-pink-500/20 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+              </div>
+              <motion.button
+                whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(249, 115, 22, 0.3)" }}
+                whileTap={{ scale: 0.95 }}
+                className="btn-primary whitespace-nowrap px-8 py-4 text-lg font-bold shadow-2xl"
+              >
                 <EnvelopeIcon className="mr-2 icon-sm" />
-                Subscribe
-              </button>
-            </div>
+                Subscribe Now
+              </motion.button>
+            </motion.div>
           </motion.div>
         </div>
       </section>
 
       {/* Main Footer */}
-      <div className="container-custom py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+      <div className="relative container-custom py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           {/* Brand Section */}
-          <div className="lg:col-span-2">
-            <Logo variant="light" size="lg" className="mb-6" />
-            <p className="text-gray-300 mb-6 max-w-md">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-2"
+          >
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="mb-8"
+            >
+              <Logo variant="light" size="xl" className="mb-6" />
+            </motion.div>
+            <p className="text-gray-300 mb-8 max-w-md text-lg leading-relaxed">
               Exploring the world one destination at a time. Join me on incredible journeys filled with adventure, culture, and unforgettable experiences.
             </p>
             <div className="flex space-x-4">
-              {socialLinks.map((social) => (
-                <a
+              {socialLinks.map((social, index) => (
+                <motion.a
                   key={social.name}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 bg-gray-800 hover:bg-orange-600 rounded-lg transition-colors duration-200"
+                  initial={{ opacity: 0, scale: 0 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  whileHover={{
+                    scale: 1.2,
+                    rotate: 5,
+                    boxShadow: "0 10px 30px rgba(249, 115, 22, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.9 }}
+                  className="p-4 bg-gradient-to-br from-gray-800 to-gray-700 hover:from-orange-600 hover:to-pink-600 rounded-xl transition-all duration-300 shadow-lg hover:shadow-2xl border border-gray-700 hover:border-orange-500"
                   aria-label={social.name}
                 >
                   {social.icon}
-                </a>
+                </motion.a>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Links Sections */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Explore</h3>
-            <ul className="space-y-2">
-              {footerLinks.explore.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-gray-300 hover:text-orange-400 transition-colors duration-200"
+          {[
+            { title: 'Explore', links: footerLinks.explore },
+            { title: 'Content', links: footerLinks.content },
+            { title: 'About', links: footerLinks.company }
+          ].map((section, sectionIndex) => (
+            <motion.div
+              key={section.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 + sectionIndex * 0.1 }}
+            >
+              <h3 className="text-xl font-bold mb-6 bg-gradient-to-r from-orange-400 to-pink-400 bg-clip-text text-transparent">
+                {section.title}
+              </h3>
+              <ul className="space-y-4">
+                {section.links.map((link, linkIndex) => (
+                  <motion.li
+                    key={link.name}
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: 0.3 + sectionIndex * 0.1 + linkIndex * 0.05 }}
                   >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Content</h3>
-            <ul className="space-y-2">
-              {footerLinks.content.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-gray-300 hover:text-orange-400 transition-colors duration-200"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-semibold mb-4">About</h3>
-            <ul className="space-y-2">
-              {footerLinks.company.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-gray-300 hover:text-orange-400 transition-colors duration-200"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+                    <Link
+                      href={link.href}
+                      className="group flex items-center text-gray-300 hover:text-white transition-all duration-300 text-base"
+                    >
+                      <span className="w-2 h-2 bg-orange-500 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <span className="group-hover:translate-x-2 transition-transform duration-300">
+                        {link.name}
+                      </span>
+                    </Link>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
         </div>
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-gray-800">
-        <div className="container-custom py-6">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <p className="text-gray-400 text-sm">
-              © 2024 The Sunday Traveller. All rights reserved.
-            </p>
-            <div className="flex items-center space-x-6 mt-4 md:mt-0">
-              <Link href="/privacy" className="text-gray-400 hover:text-orange-400 text-sm transition-colors duration-200">
-                Privacy Policy
-              </Link>
-              <Link href="/terms" className="text-gray-400 hover:text-orange-400 text-sm transition-colors duration-200">
-                Terms of Service
-              </Link>
-              <Link href="/sitemap" className="text-gray-400 hover:text-orange-400 text-sm transition-colors duration-200">
-                Sitemap
-              </Link>
-            </div>
-          </div>
+      <div className="relative border-t border-gray-700/50 bg-gray-900/50 backdrop-blur-sm">
+        <div className="container-custom py-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col md:flex-row items-center justify-between"
+          >
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-gray-400 text-base font-medium"
+            >
+              © 2024 The Sunday Traveller. All rights reserved. Made with ❤️ for travelers.
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="flex items-center space-x-8 mt-4 md:mt-0"
+            >
+              {[
+                { name: 'Privacy Policy', href: '/privacy' },
+                { name: 'Terms of Service', href: '/terms' },
+                { name: 'Sitemap', href: '/sitemap' }
+              ].map((link, index) => (
+                <motion.div
+                  key={link.name}
+                  whileHover={{ y: -2 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Link
+                    href={link.href}
+                    className="text-gray-400 hover:text-orange-400 text-base transition-all duration-300 hover:underline underline-offset-4"
+                  >
+                    {link.name}
+                  </Link>
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </footer>

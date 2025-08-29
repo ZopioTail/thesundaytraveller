@@ -71,181 +71,322 @@ export default function TravelPath() {
   const pathData = generatePath()
 
   return (
-    <div className="relative w-full h-96 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <svg width="100%" height="100%" className="absolute inset-0">
-          <defs>
-            <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="currentColor" strokeWidth="0.5"/>
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#grid)" />
-        </svg>
+    <div className="relative w-full h-[600px] lg:h-[700px] bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 rounded-3xl overflow-hidden shadow-2xl border border-white/10">
+      {/* Animated background pattern */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.3),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(255,119,198,0.2),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(255,184,0,0.2),transparent_50%)]" />
       </div>
 
-      <svg 
-        viewBox="0 0 100 80" 
-        className="w-full h-full"
+      {/* Floating particles */}
+      <div className="absolute inset-0">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-white rounded-full opacity-30"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -20, 0],
+              opacity: [0.3, 0.8, 0.3],
+            }}
+            transition={{
+              duration: 3 + Math.random() * 2,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+            }}
+          />
+        ))}
+      </div>
+      {/* Main SVG Container */}
+      <svg
+        viewBox="0 0 100 80"
+        className="relative w-full h-full z-10"
         preserveAspectRatio="xMidYMid meet"
       >
         <defs>
-          {/* Gradient for the path */}
+          {/* Enhanced gradient for the path */}
           <linearGradient id="pathGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#3B82F6" />
-            <stop offset="25%" stopColor="#8B5CF6" />
-            <stop offset="50%" stopColor="#EC4899" />
-            <stop offset="75%" stopColor="#F59E0B" />
-            <stop offset="100%" stopColor="#10B981" />
+            <stop offset="0%" stopColor="#60A5FA" />
+            <stop offset="20%" stopColor="#A78BFA" />
+            <stop offset="40%" stopColor="#F472B6" />
+            <stop offset="60%" stopColor="#FBBF24" />
+            <stop offset="80%" stopColor="#34D399" />
+            <stop offset="100%" stopColor="#60A5FA" />
           </linearGradient>
-          
+
+          {/* Glowing effect gradient */}
+          <linearGradient id="glowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#60A5FA" stopOpacity="0.8" />
+            <stop offset="50%" stopColor="#F472B6" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#34D399" stopOpacity="0.8" />
+          </linearGradient>
+
+          {/* Filter for glow effect */}
+          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+
           {/* Animated dash pattern */}
-          <pattern id="dashPattern" patternUnits="userSpaceOnUse" width="4" height="1">
-            <rect width="2" height="1" fill="url(#pathGradient)" />
-            <rect x="2" width="2" height="1" fill="transparent" />
+          <pattern id="dashPattern" patternUnits="userSpaceOnUse" width="6" height="2">
+            <rect width="3" height="2" fill="url(#pathGradient)" />
+            <rect x="3" width="3" height="2" fill="transparent" />
           </pattern>
         </defs>
 
-        {/* Animated Travel Path */}
+        {/* Glowing background path */}
+        <motion.path
+          d={pathData}
+          fill="none"
+          stroke="url(#glowGradient)"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          filter="url(#glow)"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{
+            pathLength: 1,
+            opacity: 0.6
+          }}
+          transition={{
+            pathLength: { duration: 4, ease: "easeInOut" },
+            opacity: { duration: 2 }
+          }}
+        />
+
+        {/* Main animated travel path */}
         <motion.path
           d={pathData}
           fill="none"
           stroke="url(#pathGradient)"
-          strokeWidth="0.8"
-          strokeDasharray="2 1"
+          strokeWidth="1.2"
+          strokeDasharray="3 2"
           strokeLinecap="round"
           strokeLinejoin="round"
           initial={{ pathLength: 0, opacity: 0 }}
-          animate={{ 
-            pathLength: 1, 
+          animate={{
+            pathLength: 1,
             opacity: 1,
-            strokeDashoffset: [0, -3]
+            strokeDashoffset: [0, -5]
           }}
-          transition={{ 
-            pathLength: { duration: 3, ease: "easeInOut" },
-            opacity: { duration: 1 },
-            strokeDashoffset: { 
-              duration: 2, 
-              repeat: Infinity, 
-              ease: "linear" 
+          transition={{
+            pathLength: { duration: 4, ease: "easeInOut" },
+            opacity: { duration: 2 },
+            strokeDashoffset: {
+              duration: 3,
+              repeat: Infinity,
+              ease: "linear"
             }
           }}
         />
 
-        {/* Country Flags */}
+        {/* Country Flags with Enhanced Animations */}
         {countries.map((country, index) => (
           <g key={country.code}>
-            {/* Flag Circle Background */}
+            {/* Outer glow ring */}
             <motion.circle
               cx={country.x}
               cy={country.y}
-              r={hoveredCountry === country.code ? 2.5 : 1.8}
-              fill="white"
+              r={3}
+              fill="none"
               stroke="url(#pathGradient)"
-              strokeWidth="0.3"
-              className="drop-shadow-sm cursor-pointer"
+              strokeWidth="0.2"
+              opacity={0.4}
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.4, 0.8, 0.4]
+              }}
+              transition={{
+                delay: index * 0.15 + 2,
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+
+            {/* Flag Circle Background with gradient */}
+            <motion.circle
+              cx={country.x}
+              cy={country.y}
+              r={hoveredCountry === country.code ? 3 : 2.2}
+              fill="rgba(255,255,255,0.95)"
+              stroke="url(#pathGradient)"
+              strokeWidth="0.4"
+              className="drop-shadow-lg cursor-pointer"
+              filter="url(#glow)"
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ 
-                delay: index * 0.1 + 1,
-                duration: 0.5,
+              transition={{
+                delay: index * 0.15 + 1.5,
+                duration: 0.8,
                 type: "spring",
-                stiffness: 200
+                stiffness: 150
               }}
-              whileHover={{ scale: 1.4 }}
+              whileHover={{
+                scale: 1.3,
+                boxShadow: "0 0 20px rgba(255,255,255,0.8)"
+              }}
               onMouseEnter={() => setHoveredCountry(country.code)}
               onMouseLeave={() => setHoveredCountry(null)}
             />
-            
-            {/* Flag Emoji */}
+
+            {/* Flag Emoji with enhanced styling */}
             <motion.text
               x={country.x}
               y={country.y}
               textAnchor="middle"
               dominantBaseline="central"
-              fontSize="1.2"
+              fontSize={hoveredCountry === country.code ? "1.8" : "1.5"}
               className="cursor-pointer select-none"
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ 
-                delay: index * 0.1 + 1.2,
-                duration: 0.3
+              style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))' }}
+              initial={{ scale: 0, opacity: 0, rotate: -180 }}
+              animate={{
+                scale: 1,
+                opacity: 1,
+                rotate: 0,
+                y: [0, -1, 0]
               }}
-              whileHover={{ scale: 1.2 }}
+              transition={{
+                scale: { delay: index * 0.15 + 1.8, duration: 0.5 },
+                opacity: { delay: index * 0.15 + 1.8, duration: 0.5 },
+                rotate: { delay: index * 0.15 + 1.8, duration: 0.8 },
+                y: {
+                  delay: index * 0.15 + 3,
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }
+              }}
+              whileHover={{
+                scale: 1.4,
+                rotate: [0, -10, 10, 0],
+                transition: { rotate: { duration: 0.5 } }
+              }}
               onMouseEnter={() => setHoveredCountry(country.code)}
               onMouseLeave={() => setHoveredCountry(null)}
             >
               {country.flag}
             </motion.text>
 
-            {/* Country Name Tooltip */}
+            {/* Enhanced Country Name Tooltip */}
             {hoveredCountry === country.code && (
               <motion.g
-                initial={{ opacity: 0, y: 2 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 2 }}
+                initial={{ opacity: 0, y: 3, scale: 0.8 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 3, scale: 0.8 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
               >
+                {/* Tooltip background with gradient */}
                 <rect
-                  x={country.x - country.name.length * 0.3}
-                  y={country.y - 4}
-                  width={country.name.length * 0.6}
-                  height={1.5}
-                  fill="rgba(0,0,0,0.8)"
-                  rx="0.3"
+                  x={country.x - country.name.length * 0.4}
+                  y={country.y - 5.5}
+                  width={country.name.length * 0.8}
+                  height={2.5}
+                  fill="url(#pathGradient)"
+                  rx="0.5"
+                  filter="url(#glow)"
                 />
+                <rect
+                  x={country.x - country.name.length * 0.4 + 0.1}
+                  y={country.y - 5.4}
+                  width={country.name.length * 0.8 - 0.2}
+                  height={2.3}
+                  fill="rgba(0,0,0,0.9)"
+                  rx="0.4"
+                />
+                {/* Tooltip text */}
                 <text
                   x={country.x}
-                  y={country.y - 3.2}
+                  y={country.y - 4.2}
                   textAnchor="middle"
                   dominantBaseline="central"
-                  fontSize="0.8"
+                  fontSize="1"
                   fill="white"
-                  className="font-medium"
+                  className="font-bold"
+                  style={{ filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.5))' }}
                 >
                   {country.name}
                 </text>
+                {/* Tooltip arrow */}
+                <path
+                  d={`M ${country.x - 0.5} ${country.y - 3} L ${country.x} ${country.y - 2} L ${country.x + 0.5} ${country.y - 3} Z`}
+                  fill="rgba(0,0,0,0.9)"
+                />
               </motion.g>
             )}
 
-            {/* Pulsing Animation for Recent Countries */}
-            {index < 5 && (
-              <motion.circle
-                cx={country.x}
-                cy={country.y}
-                r={1.8}
-                fill="none"
-                stroke="url(#pathGradient)"
-                strokeWidth="0.2"
-                opacity={0.6}
-                animate={{
-                  r: [1.8, 3.5, 1.8],
-                  opacity: [0.6, 0, 0.6]
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  delay: index * 0.4
-                }}
-              />
+            {/* Enhanced Pulsing Animation for Recent Countries */}
+            {index < 8 && (
+              <>
+                <motion.circle
+                  cx={country.x}
+                  cy={country.y}
+                  r={2.2}
+                  fill="none"
+                  stroke="url(#pathGradient)"
+                  strokeWidth="0.3"
+                  opacity={0.8}
+                  animate={{
+                    r: [2.2, 4.5, 2.2],
+                    opacity: [0.8, 0, 0.8],
+                    strokeWidth: [0.3, 0.1, 0.3]
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    delay: index * 0.5,
+                    ease: "easeInOut"
+                  }}
+                />
+                <motion.circle
+                  cx={country.x}
+                  cy={country.y}
+                  r={2.2}
+                  fill="none"
+                  stroke="rgba(255,255,255,0.6)"
+                  strokeWidth="0.2"
+                  animate={{
+                    r: [2.2, 3.8, 2.2],
+                    opacity: [0.6, 0, 0.6]
+                  }}
+                  transition={{
+                    duration: 2.5,
+                    repeat: Infinity,
+                    delay: index * 0.5 + 0.5,
+                    ease: "easeInOut"
+                  }}
+                />
+              </>
             )}
           </g>
         ))}
 
-        {/* Animated Travel Plane */}
+        {/* Enhanced Animated Travel Plane */}
         <motion.g
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 2 }}
+          transition={{ delay: 4 }}
         >
+          {/* Plane trail */}
           <motion.path
-            d="M-1,-0.5 L1,0 L-1,0.5 L-0.5,0 Z"
-            fill="#3B82F6"
-            transform-origin="0 0"
+            d="M-2,0 L-0.5,0"
+            stroke="url(#pathGradient)"
+            strokeWidth="0.3"
+            strokeLinecap="round"
+            opacity={0.6}
             animate={{
               offsetDistance: ["0%", "100%"]
             }}
             transition={{
-              duration: 8,
+              duration: 12,
               repeat: Infinity,
               ease: "linear"
             }}
@@ -254,39 +395,167 @@ export default function TravelPath() {
               offsetRotate: "auto"
             }}
           />
+
+          {/* Main plane */}
+          <motion.path
+            d="M-1.5,-0.3 L1.5,0 L-1.5,0.3 L-0.8,0 Z"
+            fill="url(#pathGradient)"
+            stroke="white"
+            strokeWidth="0.1"
+            transform-origin="0 0"
+            filter="url(#glow)"
+            animate={{
+              offsetDistance: ["0%", "100%"]
+            }}
+            transition={{
+              duration: 12,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            style={{
+              offsetPath: `path('${pathData}')`,
+              offsetRotate: "auto"
+            }}
+          />
+
+          {/* Plane glow effect */}
+          <motion.circle
+            r="0.8"
+            fill="rgba(96, 165, 250, 0.3)"
+            animate={{
+              offsetDistance: ["0%", "100%"],
+              r: [0.8, 1.2, 0.8]
+            }}
+            transition={{
+              offsetDistance: {
+                duration: 12,
+                repeat: Infinity,
+                ease: "linear"
+              },
+              r: {
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }
+            }}
+            style={{
+              offsetPath: `path('${pathData}')`,
+            }}
+          />
         </motion.g>
       </svg>
 
-      {/* Stats Overlay */}
-      <div className="absolute bottom-4 left-4 right-4">
-        <div className="flex justify-between items-center text-sm">
-          <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg px-3 py-2">
-            <span className="text-gray-600 dark:text-gray-400">Countries Visited:</span>
-            <span className="font-bold text-blue-600 dark:text-blue-400 ml-2">{countries.length}</span>
-          </div>
-          <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg px-3 py-2">
-            <span className="text-gray-600 dark:text-gray-400">Continents:</span>
-            <span className="font-bold text-green-600 dark:text-green-400 ml-2">6</span>
-          </div>
-          <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg px-3 py-2">
-            <span className="text-gray-600 dark:text-gray-400">Miles Traveled:</span>
-            <span className="font-bold text-purple-600 dark:text-purple-400 ml-2">250K+</span>
-          </div>
+      {/* Enhanced Stats Overlay */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 5 }}
+        className="absolute bottom-6 left-6 right-6"
+      >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {[
+            {
+              label: 'Countries Visited',
+              value: countries.length,
+              color: 'from-blue-500 to-cyan-500',
+              icon: '🌍'
+            },
+            {
+              label: 'Continents Explored',
+              value: '6',
+              color: 'from-green-500 to-emerald-500',
+              icon: '🗺️'
+            },
+            {
+              label: 'Miles Traveled',
+              value: '250K+',
+              color: 'from-purple-500 to-pink-500',
+              icon: '✈️'
+            }
+          ].map((stat, index) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 5.2 + index * 0.1 }}
+              whileHover={{ scale: 1.05, y: -2 }}
+              className="bg-white/20 backdrop-blur-xl rounded-2xl p-4 border border-white/30 shadow-2xl"
+            >
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-2xl">{stat.icon}</span>
+                <div className={`w-3 h-3 rounded-full bg-gradient-to-r ${stat.color} animate-pulse`} />
+              </div>
+              <div className={`text-2xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-1`}>
+                {stat.value}
+              </div>
+              <div className="text-white/80 text-sm font-medium">
+                {stat.label}
+              </div>
+            </motion.div>
+          ))}
         </div>
-      </div>
+      </motion.div>
 
-      {/* Legend */}
-      <div className="absolute top-4 right-4">
-        <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg p-3 text-xs">
-          <div className="flex items-center space-x-2 mb-2">
-            <div className="w-3 h-0.5 bg-gradient-to-r from-blue-500 to-green-500 rounded"></div>
-            <span className="text-gray-600 dark:text-gray-400">Travel Route</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <span className="text-lg">🇮🇳</span>
-            <span className="text-gray-600 dark:text-gray-400">Hover for details</span>
+      {/* Enhanced Legend */}
+      <motion.div
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, delay: 4.5 }}
+        className="absolute top-6 right-6"
+      >
+        <div className="bg-white/20 backdrop-blur-xl rounded-2xl p-4 border border-white/30 shadow-2xl">
+          <h4 className="text-white font-bold mb-3 text-sm">Journey Legend</h4>
+          <div className="space-y-3">
+            <div className="flex items-center space-x-3">
+              <div className="w-6 h-1 bg-gradient-to-r from-blue-400 via-pink-400 to-green-400 rounded-full animate-pulse" />
+              <span className="text-white/90 text-xs font-medium">Travel Route</span>
+            </div>
+            <div className="flex items-center space-x-3">
+              <div className="flex space-x-1">
+                <span className="text-sm animate-bounce" style={{ animationDelay: '0s' }}>🇮🇳</span>
+                <span className="text-sm animate-bounce" style={{ animationDelay: '0.2s' }}>🇲🇽</span>
+                <span className="text-sm animate-bounce" style={{ animationDelay: '0.4s' }}>🇧🇷</span>
+              </div>
+              <span className="text-white/90 text-xs font-medium">Hover flags for details</span>
+            </div>
+            <div className="flex items-center space-x-3">
+              <div className="w-3 h-3 rounded-full bg-gradient-to-r from-blue-400 to-pink-400 animate-ping" />
+              <span className="text-white/90 text-xs font-medium">Recent destinations</span>
+            </div>
           </div>
         </div>
+      </motion.div>
+
+      {/* Running Flag Animation at the bottom */}
+      <div className="absolute bottom-0 left-0 right-0 h-16 overflow-hidden">
+        <motion.div
+          animate={{ x: ['-100%', '100%'] }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          className="flex items-center space-x-4 h-full"
+        >
+          {countries.concat(countries).map((country, index) => (
+            <motion.div
+              key={`${country.code}-${index}`}
+              className="flex-shrink-0 text-3xl"
+              animate={{
+                rotate: [0, 10, -10, 0],
+                scale: [1, 1.1, 1]
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                delay: index * 0.1,
+                ease: "easeInOut"
+              }}
+            >
+              {country.flag}
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </div>
   )
