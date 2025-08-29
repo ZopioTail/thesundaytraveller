@@ -33,6 +33,7 @@ import {
 import CountUpAnimation from '@/components/ui/CountUpAnimation'
 import StatsChart from '@/components/ui/StatsChart'
 import SimpleTravelStats from '@/components/SimpleTravelStats'
+import MayanRouteJourney from '@/components/MayanRouteJourney'
 
 // Enhanced Hero carousel images with more data
 const heroImages = [
@@ -629,6 +630,39 @@ export default function HomePage() {
             transition={{ duration: 1, delay: 0.3 }}
           >
             <SimpleTravelStats />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Mayan Routes Book Section */}
+      <MayanRouteJourney />
+
+      {/* Enhanced Categories Section */}
+      <section className="relative section-padding bg-gradient-to-br from-white via-gray-50 to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        <div className="container-custom">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <motion.div
+              initial={{ scale: 0.8 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="inline-flex items-center space-x-2 bg-blue-100 dark:bg-blue-900/30 rounded-full px-6 py-3 mb-8 border border-blue-200 dark:border-blue-800"
+            >
+              <SparklesIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+              <span className="text-blue-800 dark:text-blue-200 font-semibold">Explore Categories</span>
+            </motion.div>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+              Journey <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Categories</span>
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
+              Discover diverse travel experiences across different themes and destinations
+            </p>
           </motion.div>
 
           {/* Journey Highlights */}
