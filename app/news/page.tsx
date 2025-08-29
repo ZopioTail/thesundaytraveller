@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
@@ -13,7 +13,21 @@ import {
   GlobeAltIcon,
   ExclamationTriangleIcon,
   InformationCircleIcon,
+  SparklesIcon,
+  FireIcon,
+  BellIcon,
+  EyeIcon,
+  ArrowRightIcon,
+  MegaphoneIcon,
+  ShieldCheckIcon,
+  LightBulbIcon,
+  TrophyIcon,
 } from '@heroicons/react/24/outline'
+import {
+  ExclamationTriangleIcon as ExclamationTriangleIconSolid,
+  BellIcon as BellIconSolid,
+  FireIcon as FireIconSolid,
+} from '@heroicons/react/24/solid'
 
 const newsArticles = [
   {
@@ -27,7 +41,10 @@ const newsArticles = [
     readTime: 6,
     tags: ['Military History', 'Battlefield Tourism', 'Responsible Travel', 'Heritage'],
     urgent: false,
-    author: 'Rabindra Sahu'
+    author: 'Rabindra Sahu',
+    views: 3247,
+    trending: true,
+    featured: true
   },
   {
     id: 2,
@@ -138,8 +155,32 @@ export default function NewsPage() {
 
   return (
     <div className="pt-20">
-      {/* Hero Section */}
-      <section className="relative h-96 flex items-center justify-center overflow-hidden">
+      {/* Enhanced Hero Section */}
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 z-0">
+          {[...Array(25)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-white rounded-full opacity-30"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -25, 0],
+                opacity: [0.3, 0.7, 0.3],
+                scale: [1, 1.3, 1],
+              }}
+              transition={{
+                duration: 3 + Math.random() * 2,
+                repeat: Infinity,
+                delay: Math.random() * 2,
+              }}
+            />
+          ))}
+        </div>
+
         <Image
           src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
           alt="Travel news"
@@ -147,23 +188,150 @@ export default function NewsPage() {
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-orange-500/80 via-pink-500/80 to-purple-600/80" />
-        
-        <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
+        <div className="absolute inset-0 bg-gradient-to-br from-red-500/60 via-orange-500/60 to-pink-500/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+
+        <div className="relative z-20 text-center text-white px-6 max-w-6xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="space-y-8"
           >
-            <NewspaperIcon className="w-16 h-16 mx-auto mb-6 opacity-80" />
-            <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6">
+            {/* Breaking News Badge */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="inline-flex items-center space-x-2 bg-red-500/90 backdrop-blur-md rounded-full px-6 py-3 border border-red-400/50"
+            >
+              <motion.div
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                <BellIconSolid className="w-5 h-5 text-white" />
+              </motion.div>
+              <span className="text-sm font-bold tracking-wide">
+                BREAKING NEWS & UPDATES
+              </span>
+            </motion.div>
+
+            {/* Main Title */}
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-6xl md:text-8xl lg:text-9xl font-bold mb-6 text-shadow-xl bg-gradient-to-r from-white via-red-100 to-orange-100 bg-clip-text text-transparent leading-tight"
+            >
               Travel News
-            </h1>
-            <p className="text-xl md:text-2xl max-w-3xl mx-auto opacity-90">
-              Stay updated with the latest travel news, safety alerts, and industry insights
-            </p>
+            </motion.h1>
+
+            {/* Subtitle */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="text-xl md:text-2xl lg:text-3xl mb-10 text-shadow-lg max-w-4xl mx-auto leading-relaxed text-gray-100"
+            >
+              Stay informed with breaking travel news, safety alerts, and expert insights from around the globe
+            </motion.p>
+
+            {/* Live Stats */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="grid grid-cols-3 gap-6 max-w-2xl mx-auto mb-10"
+            >
+              {[
+                { number: 'LIVE', label: 'Updates', icon: FireIconSolid },
+                { number: '24/7', label: 'Coverage', icon: GlobeAltIcon },
+                { number: '100+', label: 'Sources', icon: NewspaperIcon }
+              ].map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 1 + index * 0.1 }}
+                  className="text-center"
+                >
+                  <div className="flex items-center justify-center mb-2">
+                    <stat.icon className="w-6 h-6 text-red-400 mr-2" />
+                    <div className="text-2xl md:text-3xl font-bold text-red-400">
+                      {stat.number}
+                    </div>
+                  </div>
+                  <div className="text-sm md:text-base text-gray-300">
+                    {stat.label}
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.2 }}
+              className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+            >
+              <button
+                onClick={() => document.getElementById('urgent-news')?.scrollIntoView({ behavior: 'smooth' })}
+                className="btn-primary group bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600"
+              >
+                <ExclamationTriangleIconSolid className="mr-3 w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
+                View Urgent Updates
+                <ArrowRightIcon className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
+              </button>
+              <button
+                onClick={() => document.getElementById('all-news')?.scrollIntoView({ behavior: 'smooth' })}
+                className="btn-outline group"
+              >
+                <NewspaperIcon className="mr-3 w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
+                Browse All News
+              </button>
+            </motion.div>
+
+            {/* Live Indicator */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 1.4 }}
+              className="flex items-center justify-center space-x-2 text-sm text-gray-300 mt-8"
+            >
+              <motion.div
+                animate={{ scale: [1, 1.2, 1], opacity: [1, 0.5, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="w-3 h-3 bg-red-500 rounded-full"
+              />
+              <span>Live updates • Last updated 2 minutes ago</span>
+            </motion.div>
           </motion.div>
         </div>
+
+        {/* Scroll Down Indicator */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 2 }}
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30"
+        >
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="flex flex-col items-center text-white/70 hover:text-white transition-colors duration-300 cursor-pointer"
+            onClick={() => document.getElementById('urgent-news')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            <span className="text-sm mb-2">Latest Updates</span>
+            <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
+              <motion.div
+                animate={{ y: [0, 12, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="w-1 h-3 bg-white/50 rounded-full mt-2"
+              />
+            </div>
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* Urgent News Banner */}

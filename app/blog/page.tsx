@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
@@ -12,7 +12,22 @@ import {
   TagIcon,
   BookOpenIcon,
   ArrowRightIcon,
+  SparklesIcon,
+  FireIcon,
+  HeartIcon,
+  EyeIcon,
+  UserIcon,
+  GlobeAltIcon,
+  CameraIcon,
+  MapPinIcon,
+  StarIcon,
+  TrophyIcon,
 } from '@heroicons/react/24/outline'
+import {
+  HeartIcon as HeartIconSolid,
+  StarIcon as StarIconSolid,
+  BookmarkIcon as BookmarkIconSolid,
+} from '@heroicons/react/24/solid'
 
 const blogPosts = [
   {
@@ -25,8 +40,13 @@ const blogPosts = [
     createdAt: new Date('2025-08-28'),
     tags: ['Military', 'Adventure Sports', 'Life Lessons', 'Leadership', 'Resilience'],
     featured: true,
-    author: 'Vineet Kumar',
-    slug: 'what-adventure-sports-taught-this-soldier-about-life'
+    author: 'Rabindra Sahu',
+    slug: 'what-adventure-sports-taught-this-soldier-about-life',
+    views: 2847,
+    likes: 156,
+    comments: 23,
+    difficulty: 'Intermediate',
+    location: 'Himalayas, India'
   },
   {
     id: 2,
@@ -39,7 +59,12 @@ const blogPosts = [
     tags: ['Lifestyle', 'Personal', 'Home', 'Balance', 'Mindfulness'],
     featured: true,
     author: 'Rabindra Sahu',
-    slug: 'life-beyond-the-uniform-curtains-coffee-calm'
+    slug: 'life-beyond-the-uniform-curtains-coffee-calm',
+    views: 1923,
+    likes: 89,
+    comments: 15,
+    difficulty: 'Beginner',
+    location: 'Home Base, India'
   },
   {
     id: 3,
@@ -143,8 +168,32 @@ export default function BlogPage() {
 
   return (
     <div className="pt-20">
-      {/* Hero Section */}
-      <section className="relative h-96 flex items-center justify-center overflow-hidden">
+      {/* Enhanced Hero Section */}
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        {/* Animated Background Particles */}
+        <div className="absolute inset-0 z-0">
+          {[...Array(30)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-white rounded-full opacity-30"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -30, 0],
+                opacity: [0.3, 0.8, 0.3],
+                scale: [1, 1.5, 1],
+              }}
+              transition={{
+                duration: 3 + Math.random() * 2,
+                repeat: Infinity,
+                delay: Math.random() * 2,
+              }}
+            />
+          ))}
+        </div>
+
         <Image
           src="/images/optimized/hero-main.jpg"
           alt="Travel blog"
@@ -152,66 +201,243 @@ export default function BlogPage() {
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-orange-500/80 via-pink-500/80 to-purple-600/80" />
-        
-        <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-500/70 via-pink-500/70 to-purple-600/70" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
+        <div className="relative z-20 text-center text-white px-6 max-w-6xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="space-y-8"
           >
-            <BookOpenIcon className="w-16 h-16 mx-auto mb-6 opacity-80" />
-            <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6">
+            {/* Badge */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-md rounded-full px-6 py-3 border border-white/30"
+            >
+              <SparklesIcon className="w-5 h-5 text-yellow-400" />
+              <span className="text-sm font-semibold tracking-wide">
+                Travel Chronicles
+              </span>
+            </motion.div>
+
+            {/* Main Title */}
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-6xl md:text-8xl lg:text-9xl font-bold mb-6 text-shadow-xl bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent leading-tight"
+            >
               Travel Stories
-            </h1>
-            <p className="text-xl md:text-2xl max-w-3xl mx-auto opacity-90">
-              Authentic travel experiences, practical tips, and inspiring stories from around the world
-            </p>
+            </motion.h1>
+
+            {/* Subtitle */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="text-xl md:text-2xl lg:text-3xl mb-10 text-shadow-lg max-w-4xl mx-auto leading-relaxed text-gray-100"
+            >
+              Authentic travel experiences, practical tips, and inspiring stories from a soldier's journey around the world
+            </motion.p>
+
+            {/* Stats */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="grid grid-cols-3 gap-6 max-w-2xl mx-auto mb-10"
+            >
+              {[
+                { number: '150+', label: 'Stories' },
+                { number: '47+', label: 'Countries' },
+                { number: '10K+', label: 'Readers' }
+              ].map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 1 + index * 0.1 }}
+                  className="text-center"
+                >
+                  <div className="text-2xl md:text-3xl font-bold text-yellow-400 mb-1">
+                    {stat.number}
+                  </div>
+                  <div className="text-sm md:text-base text-gray-300">
+                    {stat.label}
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.2 }}
+              className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+            >
+              <button
+                onClick={() => document.getElementById('featured-stories')?.scrollIntoView({ behavior: 'smooth' })}
+                className="btn-primary group"
+              >
+                <BookOpenIcon className="mr-3 w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
+                Read Latest Stories
+                <ArrowRightIcon className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
+              </button>
+              <Link href="/destinations" className="btn-outline group">
+                <GlobeAltIcon className="mr-3 w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
+                Explore Destinations
+              </Link>
+            </motion.div>
           </motion.div>
         </div>
-      </section>
 
-      {/* Search & Filter Section */}
-      <section className="section-padding bg-gray-50 dark:bg-gray-800">
-        <div className="container-custom">
-          <div className="max-w-4xl mx-auto">
-            {/* Search Bar */}
-            <div className="relative mb-8">
-              <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 icon-md text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search stories, destinations, or topics..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-4 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors duration-200"
+        {/* Scroll Down Indicator */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 2 }}
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30"
+        >
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="flex flex-col items-center text-white/70 hover:text-white transition-colors duration-300 cursor-pointer"
+            onClick={() => document.getElementById('search-section')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            <span className="text-sm mb-2">Discover Stories</span>
+            <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
+              <motion.div
+                animate={{ y: [0, 12, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="w-1 h-3 bg-white/50 rounded-full mt-2"
               />
             </div>
+          </motion.div>
+        </motion.div>
+      </section>
 
-            {/* Category Filter */}
-            <div className="flex items-center space-x-4 mb-8">
-              <FunnelIcon className="icon-md text-gray-600 dark:text-gray-400" />
-              <div className="flex flex-wrap gap-3">
-                {categories.map((category) => (
-                  <button
+      {/* Enhanced Search & Filter Section */}
+      <section id="search-section" className="relative section-padding bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_25%,rgba(59,130,246,0.3),transparent_50%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_75%,rgba(236,72,153,0.3),transparent_50%)]" />
+        </div>
+
+        <div className="container-custom relative">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="max-w-5xl mx-auto"
+          >
+            {/* Section Header */}
+            <div className="text-center mb-12">
+              <motion.div
+                initial={{ scale: 0.8 }}
+                whileInView={{ scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="inline-flex items-center space-x-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full px-6 py-3 mb-6 border border-gray-200/50 dark:border-gray-700/50"
+              >
+                <MagnifyingGlassIcon className="w-5 h-5 text-blue-500" />
+                <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Find Your Adventure</span>
+              </motion.div>
+
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                Discover Stories That Inspire
+              </h2>
+              <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                Search through our collection of travel adventures, cultural insights, and life lessons from around the globe.
+              </p>
+            </div>
+
+            {/* Enhanced Search Bar */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="relative mb-10"
+            >
+              <div className="relative group">
+                <MagnifyingGlassIcon className="absolute left-6 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400 group-focus-within:text-orange-500 transition-colors duration-200" />
+                <input
+                  type="text"
+                  placeholder="Search stories, destinations, adventures, or topics..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-16 pr-6 py-6 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border-2 border-gray-200/50 dark:border-gray-700/50 rounded-2xl text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-orange-500/20 focus:border-orange-500 transition-all duration-300 text-lg shadow-xl hover:shadow-2xl"
+                />
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-500/10 to-pink-500/10 opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none" />
+              </div>
+            </motion.div>
+
+            {/* Enhanced Category Filter */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="mb-10"
+            >
+              <div className="flex items-center justify-center mb-6">
+                <FunnelIcon className="w-5 h-5 text-gray-600 dark:text-gray-400 mr-3" />
+                <span className="text-lg font-semibold text-gray-700 dark:text-gray-300">Filter by Category</span>
+              </div>
+
+              <div className="flex flex-wrap justify-center gap-4">
+                {categories.map((category, index) => (
+                  <motion.button
                     key={category}
+                    initial={{ opacity: 0, scale: 0 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={() => setSelectedCategory(category)}
-                    className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                    className={`relative px-6 py-3 rounded-2xl font-semibold transition-all duration-300 overflow-hidden ${
                       selectedCategory === category
-                        ? 'bg-orange-500 text-white shadow-lg'
-                        : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-orange-100 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600'
+                        ? 'bg-gradient-to-r from-orange-500 to-pink-500 text-white shadow-xl'
+                        : 'bg-white/90 dark:bg-gray-800/90 text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700 border-2 border-gray-200/50 dark:border-gray-700/50 shadow-lg hover:shadow-xl'
                     }`}
                   >
-                    {category}
-                  </button>
+                    {selectedCategory === category && (
+                      <motion.div
+                        layoutId="activeCategory"
+                        className="absolute inset-0 bg-gradient-to-r from-orange-500 to-pink-500"
+                        transition={{ duration: 0.3 }}
+                      />
+                    )}
+                    <span className="relative z-10">{category}</span>
+                  </motion.button>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
-            {/* Results Count */}
-            <div className="text-sm text-gray-600 dark:text-gray-400 mb-8">
-              {filteredPosts.length} {filteredPosts.length === 1 ? 'story' : 'stories'} found
-            </div>
-          </div>
+            {/* Enhanced Results Count */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="text-center"
+            >
+              <div className="inline-flex items-center space-x-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full px-6 py-3 border border-gray-200/50 dark:border-gray-700/50">
+                <BookOpenIcon className="w-5 h-5 text-orange-500" />
+                <span className="text-lg font-semibold text-gray-700 dark:text-gray-300">
+                  {filteredPosts.length} {filteredPosts.length === 1 ? 'story' : 'stories'} found
+                </span>
+              </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
