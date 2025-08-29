@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -177,9 +177,26 @@ const testimonials = [
   }
 ]
 
+// Generate stable particle positions to avoid hydration mismatch
+const generateParticles = (count: number) => {
+  return Array.from({ length: count }, (_, i) => ({
+    id: i,
+    left: (i * 37 + 23) % 100, // Pseudo-random but stable
+    top: (i * 47 + 31) % 100,
+    duration: 3 + (i % 3),
+    delay: (i * 0.5) % 2,
+  }))
+}
+
 export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
+
+  // Generate stable particles to avoid hydration mismatch
+  const heroParticles = useMemo(() => generateParticles(50), [])
+  const aboutParticles = useMemo(() => generateParticles(30), [])
+  const testimonialParticles = useMemo(() => generateParticles(20), [])
+  const ctaParticles = useMemo(() => generateParticles(15), [])
   const [showScrollTop, setShowScrollTop] = useState(false)
 
   // Auto-advance carousel
@@ -217,13 +234,13 @@ export default function HomePage() {
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         {/* Animated Background Particles */}
         <div className="absolute inset-0 z-0">
-          {[...Array(50)].map((_, i) => (
+          {heroParticles.map((particle) => (
             <motion.div
-              key={i}
+              key={particle.id}
               className="absolute w-1 h-1 bg-white rounded-full opacity-20"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: `${particle.left}%`,
+                top: `${particle.top}%`,
               }}
               animate={{
                 y: [0, -30, 0],
@@ -231,9 +248,9 @@ export default function HomePage() {
                 scale: [1, 1.5, 1],
               }}
               transition={{
-                duration: 3 + Math.random() * 2,
+                duration: particle.duration,
                 repeat: Infinity,
-                delay: Math.random() * 2,
+                delay: particle.delay,
               }}
             />
           ))}
@@ -556,22 +573,22 @@ export default function HomePage() {
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.2),transparent_50%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(147,51,234,0.2),transparent_50%)]" />
-          {[...Array(30)].map((_, i) => (
+          {aboutParticles.map((particle) => (
             <motion.div
-              key={i}
+              key={particle.id}
               className="absolute w-1 h-1 bg-white rounded-full opacity-30"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: `${particle.left}%`,
+                top: `${particle.top}%`,
               }}
               animate={{
                 y: [0, -20, 0],
                 opacity: [0.3, 0.8, 0.3],
               }}
               transition={{
-                duration: 3 + Math.random() * 2,
+                duration: particle.duration,
                 repeat: Infinity,
-                delay: Math.random() * 2,
+                delay: particle.delay,
               }}
             />
           ))}
@@ -746,7 +763,7 @@ export default function HomePage() {
                               <div key={i} className="w-6 h-6 rounded-full bg-white/30 border border-white/50" />
                             ))}
                           </div>
-                          <span className="text-sm text-white/80">+{Math.floor(Math.random() * 50) + 10} stories</span>
+                          <span className="text-sm text-white/80">+{25 + (index * 7)} stories</span>
                         </div>
                       </div>
                     </motion.div>
@@ -777,13 +794,13 @@ export default function HomePage() {
       <section className="relative section-padding bg-gradient-to-br from-orange-500 via-pink-500 to-purple-600 overflow-hidden">
         {/* Background Animation */}
         <div className="absolute inset-0">
-          {[...Array(20)].map((_, i) => (
+          {testimonialParticles.map((particle) => (
             <motion.div
-              key={i}
+              key={particle.id}
               className="absolute w-2 h-2 bg-white rounded-full opacity-20"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: `${particle.left}%`,
+                top: `${particle.top}%`,
               }}
               animate={{
                 y: [0, -30, 0],
@@ -791,9 +808,9 @@ export default function HomePage() {
                 scale: [1, 1.5, 1],
               }}
               transition={{
-                duration: 4 + Math.random() * 2,
+                duration: particle.duration + 1,
                 repeat: Infinity,
-                delay: Math.random() * 2,
+                delay: particle.delay,
               }}
             />
           ))}
@@ -1078,22 +1095,22 @@ export default function HomePage() {
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(59,130,246,0.3),transparent_70%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(147,51,234,0.3),transparent_70%)]" />
-          {[...Array(15)].map((_, i) => (
+          {ctaParticles.map((particle) => (
             <motion.div
-              key={i}
+              key={particle.id}
               className="absolute w-1 h-1 bg-white rounded-full opacity-40"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: `${particle.left}%`,
+                top: `${particle.top}%`,
               }}
               animate={{
                 y: [0, -20, 0],
                 opacity: [0.4, 0.8, 0.4],
               }}
               transition={{
-                duration: 3 + Math.random() * 2,
+                duration: particle.duration,
                 repeat: Infinity,
-                delay: Math.random() * 2,
+                delay: particle.delay,
               }}
             />
           ))}
