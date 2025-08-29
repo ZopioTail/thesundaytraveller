@@ -32,7 +32,7 @@ import {
 } from '@heroicons/react/24/solid'
 import CountUpAnimation from '@/components/ui/CountUpAnimation'
 import StatsChart from '@/components/ui/StatsChart'
-import TravelPath from '@/components/TravelPath'
+import SimpleTravelStats from '@/components/SimpleTravelStats'
 
 // Enhanced Hero carousel images with more data
 const heroImages = [
@@ -611,7 +611,7 @@ export default function HomePage() {
             viewport={{ once: true }}
             transition={{ duration: 1, delay: 0.3 }}
           >
-            <TravelPath />
+            <SimpleTravelStats />
           </motion.div>
 
           {/* Journey Highlights */}
