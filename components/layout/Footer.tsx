@@ -159,7 +159,7 @@ export default function Footer() {
               whileHover={{ scale: 1.05 }}
               className="mb-8"
             >
-              <Logo variant="light" size="xl" className="mb-6" />
+              <Logo variant="light" size="lg" className="mb-6" />
             </motion.div>
             <p className="text-gray-300 mb-8 max-w-md text-lg leading-relaxed">
               Exploring the world one destination at a time. Join me on incredible journeys filled with adventure, culture, and unforgettable experiences.

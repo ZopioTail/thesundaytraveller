@@ -202,7 +202,7 @@ export default function NewsArticlePage({ params }: { params: { id: string } }) 
     if (!foundArticle) {
       notFound()
     }
-    setArticle(foundArticle)
+    setArticle(foundArticle as NewsArticle)
     setLoading(false)
   }, [params.id])
 

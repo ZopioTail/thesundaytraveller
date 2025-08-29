@@ -771,7 +771,6 @@ export default function HomePage() {
             </Link>
           </motion.div>
         </div>
-        </div>
       </section>
 
       {/* Enhanced Testimonials Section */}
@@ -936,8 +935,138 @@ export default function HomePage() {
             ))}
           </motion.div>
         </div>
+      </section>
+
+      {/* Enhanced Testimonials Section */}
+      <section className="relative section-padding bg-gradient-to-br from-orange-500 via-pink-500 to-purple-600 overflow-hidden">
+        {/* Background Animation */}
+        <div className="absolute inset-0">
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 bg-white rounded-full opacity-20"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -30, 0],
+                opacity: [0.2, 0.6, 0.2],
+                scale: [1, 1.5, 1],
+              }}
+              transition={{
+                duration: 4 + Math.random() * 2,
+                repeat: Infinity,
+                delay: Math.random() * 2,
+              }}
+            />
+          ))}
+        </div>
+
+        <div className="container-custom relative">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <motion.div
+              initial={{ scale: 0.8 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-sm rounded-full px-6 py-3 mb-8 border border-white/30"
+            >
+              <HeartIconSolid className="w-5 h-5 text-pink-400" />
+              <span className="text-white font-semibold">What Travelers Say</span>
+            </motion.div>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              Stories That <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-pink-400">Inspire</span>
+            </h2>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="max-w-5xl mx-auto"
+          >
+            <div className="glass-card p-8 md:p-16 relative overflow-hidden">
+              {/* Decorative elements */}
+              <div className="absolute top-8 left-8 text-6xl text-white/20 font-serif">"</div>
+              <div className="absolute bottom-8 right-8 text-6xl text-white/20 font-serif rotate-180">"</div>
+
+              <div className="flex justify-center mb-8">
+                {[...Array(5)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ scale: 0, rotate: -180 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    transition={{ duration: 0.5, delay: i * 0.1 }}
+                  >
+                    <StarIconSolid className="w-8 h-8 text-yellow-400 mx-1" />
+                  </motion.div>
+                ))}
+              </div>
+
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentTestimonial}
+                  initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -30, scale: 1.1 }}
+                  transition={{ duration: 0.6 }}
+                  className="text-center"
+                >
+                  <blockquote className="text-2xl md:text-3xl font-light text-white mb-12 italic leading-relaxed">
+                    "{testimonials[currentTestimonial].quote}"
+                  </blockquote>
+
+                  <div className="flex items-center justify-center space-x-6">
+                    <motion.div
+                      whileHover={{ scale: 1.1 }}
+                      className="relative"
+                    >
+                      <Image
+                        src={testimonials[currentTestimonial].avatar}
+                        alt={testimonials[currentTestimonial].author}
+                        width={64}
+                        height={64}
+                        className="rounded-full border-4 border-white/30 shadow-lg"
+                      />
+                      <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white" />
+                    </motion.div>
+                    <div className="text-left">
+                      <div className="text-xl font-bold text-white mb-1">
+                        {testimonials[currentTestimonial].author}
+                      </div>
+                      <div className="text-white/80 text-base flex items-center">
+                        <MapPinIcon className="w-4 h-4 mr-2" />
+                        {testimonials[currentTestimonial].location}
+                      </div>
+                    </div>
+                  </div>
                 </motion.div>
               </AnimatePresence>
+
+              {/* Testimonial Navigation */}
+              <div className="flex justify-center mt-12 space-x-3">
+                {testimonials.map((_, index) => (
+                  <motion.button
+                    key={index}
+                    onClick={() => setCurrentTestimonial(index)}
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.8 }}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      index === currentTestimonial
+                        ? 'bg-white scale-125'
+                        : 'bg-white/50 hover:bg-white/70'
+                    }`}
+                  />
+                ))}
+              </div>
             </div>
           </motion.div>
         </div>
