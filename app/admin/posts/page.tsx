@@ -55,7 +55,7 @@ export default function PostsPage() {
           status: 'published',
           author: {
             name: 'Rabindra Sahu',
-            avatar: '/images/avatar.jpg'
+            avatar: '/images/20230813_131727.jpg'
           },
           categories: [
             { name: 'Profession', color: '#8b5cf6' }
@@ -73,7 +73,7 @@ export default function PostsPage() {
           status: 'published',
           author: {
             name: 'Rabindra Sahu',
-            avatar: '/images/avatar.jpg'
+            avatar: '/images/20230813_131727.jpg'
           },
           categories: [
             { name: 'Art & Lifestyle', color: '#f59e0b' }
@@ -91,7 +91,7 @@ export default function PostsPage() {
           status: 'draft',
           author: {
             name: 'Rabindra Sahu',
-            avatar: '/images/avatar.jpg'
+            avatar: '/images/20230813_131727.jpg'
           },
           categories: [
             { name: 'Profession', color: '#8b5cf6' }

@@ -21,7 +21,7 @@ const adventures = [
     location: 'Himalayas, Nepal',
     difficulty: 'Extreme',
     duration: '21 days',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: '/images/20230811_135723_HDR.jpg',
     description: 'Solo trek through the world\'s highest mountain range, pushing physical and mental limits while discovering profound life lessons.',
     highlights: ['Everest Base Camp', 'High altitude acclimatization', 'Solo trekking', 'Mountain photography'],
     category: 'Mountain',
@@ -38,7 +38,7 @@ const adventures = [
     location: 'Western Ghats, India',
     difficulty: 'Hard',
     duration: '1 day',
-    image: 'https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: '/images/20230816_105822_HDR.jpg',
     description: 'Standing at the edge of a 200-foot cliff, rope in hand, teaches you everything about calculated risk and trusting your preparation.',
     highlights: ['200-foot cliff descent', 'Technical rope work', 'Fear management', 'Safety protocols'],
     category: 'Rock',
@@ -55,7 +55,7 @@ const adventures = [
     location: 'Rishikesh, India',
     difficulty: 'Moderate',
     duration: '2 days',
-    image: 'https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: '/images/20230816_105822_HDR.jpg',
     description: 'Complete presence and mindfulness required as you navigate Grade IV rapids on the sacred Ganges River.',
     highlights: ['Grade IV rapids', 'Team coordination', 'River camping', 'Mindfulness practice'],
     category: 'Trekking',
@@ -67,7 +67,7 @@ const adventures = [
     location: 'Morocco, Africa',
     difficulty: 'Moderate',
     duration: '4 days',
-    image: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: '/images/20230824_173714.jpg',
     description: 'Camel trekking through golden dunes with Berber guides and desert camping.',
     highlights: ['Camel trekking', 'Desert camping', 'Star gazing', 'Berber culture'],
     category: 'Desert',
@@ -88,7 +88,7 @@ export default function AdventurePage() {
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
+          src="/images/20230811_131626_HDR.jpg"
           alt="Adventure landscape"
           fill
           className="object-cover"

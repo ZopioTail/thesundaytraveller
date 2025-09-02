@@ -34,7 +34,7 @@ const blogPosts = [
     id: 1,
     title: 'What Adventure Sports Taught This Soldier About Life',
     excerpt: 'The crisp salute, the well-creased uniform, the structured life of the armed forces – these have been my constants for years. But beyond the discipline and duty, there\'s another side to my story that involves adrenaline, risk, and the raw beauty of pushing human limits.',
-    image: '/images/optimized/gallery-2.jpg',
+    image: '/images/20230811_131626_HDR.jpg',
     category: 'Adventure',
     readTime: 8,
     createdAt: new Date('2025-08-28'),
@@ -52,7 +52,7 @@ const blogPosts = [
     id: 2,
     title: 'Life Beyond the Uniform: Curtains, Coffee & Calm',
     excerpt: 'They say a uniform defines you. It speaks of duty, discipline, and perhaps a certain seriousness that comes with the responsibility of serving your nation. But what happens when you step out of that uniform? What defines you then?',
-    image: '/images/optimized/gallery-8.jpg',
+    image: '/images/20230816_105822_HDR.jpg',
     category: 'Culture',
     readTime: 6,
     createdAt: new Date('2025-08-26'),
@@ -70,7 +70,7 @@ const blogPosts = [
     id: 3,
     title: 'Flying Drones, Teaching Peace & Trading Stocks',
     excerpt: 'Most days, you\'ll find me in uniform, focused on the critical responsibilities that come with serving in the armed forces. But life has taught me that passion projects and diverse interests don\'t just enrich your personal life – they make you a better professional.',
-    image: '/images/optimized/drone-photography.jpg',
+    image: '/images/20230808_133228_HDR.jpg',
     category: 'Food & Lifestyle',
     readTime: 10,
     createdAt: new Date('2025-08-24'),
@@ -83,7 +83,7 @@ const blogPosts = [
     id: 4,
     title: 'Exploring Portugal: A Digital Nomad\'s Paradise',
     excerpt: 'From the cobblestone streets of Lisbon to the dramatic cliffs of the Algarve, Portugal has become my temporary home base. Here\'s why this country is perfect for digital nomads and remote workers.',
-    image: 'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: '/images/20230803_175302.jpg',
     category: 'Destinations',
     readTime: 7,
     createdAt: new Date('2025-08-22'),
@@ -96,7 +96,7 @@ const blogPosts = [
     id: 5,
     title: 'The Art of Military Photography: Capturing Stories Beyond Combat',
     excerpt: 'Military photography is about more than documenting operations. It\'s about capturing the human stories, the quiet moments, and the profound experiences that shape those who serve.',
-    image: '/images/optimized/gallery-6.jpg',
+    image: '/images/20230824_173714.jpg',
     category: 'Culture',
     readTime: 9,
     createdAt: new Date('2025-08-20'),
@@ -109,7 +109,7 @@ const blogPosts = [
     id: 6,
     title: 'Himalayan Trek: Lessons from 18,000 Feet',
     excerpt: 'The thin air at high altitude teaches you things about yourself that sea-level living never could. Here are the profound lessons learned during my solo trek through the Himalayas.',
-    image: '/images/optimized/gallery-1.jpg',
+    image: '/images/20230813_131727.jpg',
     category: 'Adventure',
     readTime: 12,
     createdAt: new Date('2025-08-18'),
@@ -122,7 +122,7 @@ const blogPosts = [
     id: 7,
     title: 'Building Bridges: Military Diplomacy in Action',
     excerpt: 'Sometimes the most important battles are won not with weapons, but with words, understanding, and the ability to find common ground even in the most challenging circumstances.',
-    image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: '/images/20230813_131727.jpg',
     category: 'Culture',
     readTime: 8,
     createdAt: new Date('2025-08-16'),
@@ -135,7 +135,7 @@ const blogPosts = [
     id: 8,
     title: 'The Minimalist Soldier: Living with Less, Experiencing More',
     excerpt: 'Military life teaches you to carry only what you need. This philosophy extends far beyond the battlefield and can transform how you approach life, travel, and happiness.',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: '/images/20230808_133228_HDR.jpg',
     category: 'Food & Lifestyle',
     readTime: 7,
     createdAt: new Date('2025-08-14'),
@@ -195,7 +195,7 @@ export default function BlogPage() {
         </div>
 
         <Image
-          src="/images/optimized/hero-main.jpg"
+          src="/images/20230802_094830_HDR.jpg"
           alt="Travel blog"
           fill
           className="object-cover"

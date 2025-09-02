@@ -27,37 +27,37 @@ const timeline = [
     year: '2018',
     title: 'The Journey Begins',
     description: 'Started my first solo backpacking trip across Southeast Asia, discovering my passion for travel photography and storytelling.',
-    image: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    image: '/images/20230802_094830_HDR.jpg'
   },
   {
     year: '2019',
     title: 'First Travel Blog',
     description: 'Launched The Sunday Traveller blog, sharing authentic travel experiences and practical tips with fellow adventurers.',
-    image: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    image: '/images/20230811_143440_HDR.jpg'
   },
   {
     year: '2020',
     title: 'Digital Nomad Life',
     description: 'Embraced remote work and became a full-time digital nomad, exploring 15 countries while building my online presence.',
-    image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    image: '/images/20230816_105822_HDR.jpg'
   },
   {
     year: '2021',
     title: 'Travel Photography Awards',
     description: 'Won multiple international travel photography competitions and started offering photography workshops.',
-    image: 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    image: '/images/20230824_173714.jpg'
   },
   {
     year: '2022',
     title: 'Published Travel Guide',
     description: 'Released my first comprehensive travel guide book, becoming a bestseller in the travel category.',
-    image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    image: '/images/20230813_131727.jpg'
   },
   {
     year: '2023',
     title: 'Global Recognition',
     description: 'Featured in major travel publications and invited as a keynote speaker at international travel conferences.',
-    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    image: '/images/20230811_135723_HDR.jpg'
   },
 ]
 
@@ -76,7 +76,7 @@ export default function AboutPage() {
           className="absolute inset-0 z-0"
         >
           <Image
-            src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
+            src="/images/20230802_094830_HDR.jpg"
             alt="Travel landscape"
             fill
             className="object-cover"
@@ -94,7 +94,7 @@ export default function AboutPage() {
             className="mb-8"
           >
             <Image
-              src="/images/optimized/author-profile.jpg"
+              src="/images/20230811_135723_HDR.jpg"
               alt="Vineet Kumar - The Sunday Traveller"
               width={160}
               height={160}
@@ -303,7 +303,7 @@ export default function AboutPage() {
             >
               <div className="relative">
                 <Image
-                  src="/images/optimized/author-profile.jpg"
+                  src="/images/20230811_135723_HDR.jpg"
                   alt="Vineet Kumar - Travel Author"
                   width={600}
                   height={400}
