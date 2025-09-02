@@ -241,7 +241,7 @@ export default function BlogPage() {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="text-xl md:text-2xl lg:text-3xl mb-10 text-shadow-lg max-w-4xl mx-auto leading-relaxed text-gray-100"
             >
-              Authentic travel experiences, practical tips, and inspiring stories from a soldier's journey around the world
+              Authentic travel experiences, practical tips, and inspiring stories from a soldier&apos;s journey around the world
             </motion.p>
 
             {/* Stats */}

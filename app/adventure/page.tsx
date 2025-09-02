@@ -107,7 +107,7 @@ export default function AdventurePage() {
               Adventure Awaits
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-shadow max-w-3xl mx-auto">
-              Push your limits and discover what you're truly capable of through epic adventures around the globe
+              Push your limits and discover what you&apos;re truly capable of through epic adventures around the globe
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="#adventures" className="btn-primary">

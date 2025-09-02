@@ -198,7 +198,7 @@ export default function AboutPage() {
               My Travel <span className="gradient-text">Timeline</span>
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-              From my first solo adventure to becoming a recognized travel expert, here's how my journey unfolded.
+              From my first solo adventure to becoming a recognized travel expert, here&apos;s how my journey unfolded.
             </p>
           </motion.div>
 
@@ -273,10 +273,10 @@ export default function AboutPage() {
               </h2>
               <div className="space-y-6 text-lg">
                 <p>
-                  Travel isn't just about visiting new places—it's about connecting with people, understanding different cultures, and discovering parts of yourself you never knew existed.
+                  Travel isn&apos;t just about visiting new places—it&apos;s about connecting with people, understanding different cultures, and discovering parts of yourself you never knew existed.
                 </p>
                 <p>
-                  Every journey teaches me something new, whether it's learning to cook traditional dishes with local families, navigating ancient temples, or simply sharing stories with fellow travelers around a campfire.
+                  Every journey teaches me something new, whether it&apos;s learning to cook traditional dishes with local families, navigating ancient temples, or simply sharing stories with fellow travelers around a campfire.
                 </p>
                 <p>
                   Through my blog and photography, I aim to inspire others to step out of their comfort zones and experience the transformative power of travel.
@@ -424,10 +424,10 @@ export default function AboutPage() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Let's Explore Together
+              Let&apos;s Explore Together
             </h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
-              Ready to plan your next adventure? I'd love to help you create unforgettable travel experiences.
+              Ready to plan your next adventure? I&apos;d love to help you create unforgettable travel experiences.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/contact" className="btn-primary">

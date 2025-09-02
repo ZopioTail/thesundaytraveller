@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import {
   PlusIcon,
@@ -220,10 +221,12 @@ export default function PostsPage() {
               className="p-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
             >
               <div className="flex items-start space-x-4">
-                <img
+                <Image
                   src={post.featuredImage}
                   alt={post.title}
-                  className="w-20 h-20 object-cover rounded-lg flex-shrink-0"
+                  width={80}
+                  height={80}
+                  className="object-cover rounded-lg flex-shrink-0"
                 />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between">
@@ -236,10 +239,12 @@ export default function PostsPage() {
                       </p>
                       <div className="mt-3 flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
                         <div className="flex items-center">
-                          <img
+                          <Image
                             src={post.author.avatar}
                             alt={post.author.name}
-                            className="w-5 h-5 rounded-full mr-2"
+                            width={20}
+                            height={20}
+                            className="rounded-full mr-2"
                           />
                           {post.author.name}
                         </div>

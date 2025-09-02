@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import {
   CloudArrowUpIcon,
@@ -272,10 +273,11 @@ export default function MediaPage() {
             >
               <div className="aspect-square relative">
                 {file.mimeType.startsWith('image/') ? (
-                  <img
+                  <Image
                     src={file.thumbnailUrl || file.url}
                     alt={file.alt || file.originalName}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-700">

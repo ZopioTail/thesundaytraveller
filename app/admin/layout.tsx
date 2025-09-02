@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -169,10 +170,12 @@ export default function AdminLayout({
               {/* Profile dropdown */}
               <div className="relative ml-3">
                 <div className="flex items-center space-x-3">
-                  <img
+                  <Image
                     className="h-8 w-8 rounded-full object-cover"
                     src={user.avatar}
                     alt={user.name}
+                    width={32}
+                    height={32}
                   />
                   <div className="hidden md:block">
                     <div className="text-sm font-medium text-gray-700 dark:text-gray-200">{user.name}</div>
