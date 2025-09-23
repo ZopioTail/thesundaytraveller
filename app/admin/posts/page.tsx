@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { useSession } from 'next-auth/react'
 import {
   PlusIcon,
   MagnifyingGlassIcon,
@@ -14,7 +15,10 @@ import {
   CalendarIcon,
   TagIcon,
   DocumentTextIcon,
+  ArrowDownTrayIcon,
+  ArrowUpTrayIcon,
 } from '@heroicons/react/24/outline'
+import { hasPermission, PERMISSIONS } from '@/lib/rbac'
 
 interface Post {
   id: string
@@ -42,6 +46,14 @@ export default function PostsPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
   const [categoryFilter, setCategoryFilter] = useState('all')
+  const [selectedPosts, setSelectedPosts] = useState<string[]>([])
+  const { data: session, status } = useSession()
+
+  // Check permissions
+  const canCreate = hasPermission(session?.user as any, PERMISSIONS.POST_CREATE)
+  const canUpdate = hasPermission(session?.user as any, PERMISSIONS.POST_UPDATE)
+  const canDelete = hasPermission(session?.user as any, PERMISSIONS.POST_DELETE)
+  const canPublish = hasPermission(session?.user as any, PERMISSIONS.POST_PUBLISH)
 
   useEffect(() => {
     // Simulate API call
@@ -123,11 +135,82 @@ export default function PostsPage() {
     const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          post.excerpt.toLowerCase().includes(searchQuery.toLowerCase())
     const matchesStatus = statusFilter === 'all' || post.status === statusFilter
-    const matchesCategory = categoryFilter === 'all' || 
+    const matchesCategory = categoryFilter === 'all' ||
                            post.categories.some(cat => cat.name.toLowerCase() === categoryFilter.toLowerCase())
-    
+
     return matchesSearch && matchesStatus && matchesCategory
   })
+
+  const handleBulkDelete = async () => {
+    if (!canDelete) return
+
+    if (confirm(`Are you sure you want to delete ${selectedPosts.length} posts?`)) {
+      try {
+        // Implement bulk delete API call
+        console.log('Deleting posts:', selectedPosts)
+        setSelectedPosts([])
+      } catch (error) {
+        console.error('Error deleting posts:', error)
+      }
+    }
+  }
+
+  const handleBulkPublish = async () => {
+    if (!canPublish) return
+
+    try {
+      // Implement bulk publish API call
+      console.log('Publishing posts:', selectedPosts)
+      setSelectedPosts([])
+    } catch (error) {
+      console.error('Error publishing posts:', error)
+    }
+  }
+
+  const handleExport = async () => {
+    try {
+      const dataToExport = filteredPosts.map(post => ({
+        title: post.title,
+        excerpt: post.excerpt,
+        status: post.status,
+        author: post.author.name,
+        publishedAt: post.publishedAt,
+        viewCount: post.viewCount,
+        categories: post.categories.map(cat => cat.name).join(', ')
+      }))
+
+      const csvContent = [
+        Object.keys(dataToExport[0]).join(','),
+        ...dataToExport.map(row => Object.values(row).join(','))
+      ].join('\n')
+
+      const blob = new Blob([csvContent], { type: 'text/csv' })
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `posts-export-${new Date().toISOString().split('T')[0]}.csv`
+      a.click()
+      window.URL.revokeObjectURL(url)
+    } catch (error) {
+      console.error('Error exporting posts:', error)
+    }
+  }
+
+  const handlePostSelect = (postId: string, checked: boolean) => {
+    if (checked) {
+      setSelectedPosts([...selectedPosts, postId])
+    } else {
+      setSelectedPosts(selectedPosts.filter(id => id !== postId))
+    }
+  }
+
+  const handleSelectAll = (checked: boolean) => {
+    if (checked) {
+      setSelectedPosts(filteredPosts.map(post => post.id))
+    } else {
+      setSelectedPosts([])
+    }
+  }
 
   if (loading) {
     return (
@@ -157,19 +240,68 @@ export default function PostsPage() {
             Manage your blog posts and articles
           </p>
         </div>
-        <div className="mt-4 sm:mt-0">
-          <Link
-            href="/admin/posts/new"
-            className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-orange-500 to-pink-600 hover:from-orange-600 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200"
-          >
-            <PlusIcon className="w-4 h-4 mr-2" />
-            New Post
-          </Link>
+        <div className="mt-4 sm:mt-0 flex space-x-3">
+          {selectedPosts.length > 0 && (
+            <div className="flex space-x-2">
+              {canDelete && (
+                <button
+                  onClick={() => handleBulkDelete()}
+                  className="inline-flex items-center px-3 py-2 border border-red-300 rounded-md text-sm font-medium text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                >
+                  <TrashIcon className="w-4 h-4 mr-2" />
+                  Delete ({selectedPosts.length})
+                </button>
+              )}
+              {canPublish && (
+                <button
+                  onClick={() => handleBulkPublish()}
+                  className="inline-flex items-center px-3 py-2 border border-green-300 rounded-md text-sm font-medium text-green-700 bg-white hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                >
+                  <ArrowUpTrayIcon className="w-4 h-4 mr-2" />
+                  Publish ({selectedPosts.length})
+                </button>
+              )}
+              <button
+                onClick={() => handleExport()}
+                className="inline-flex items-center px-3 py-2 border border-blue-300 rounded-md text-sm font-medium text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              >
+                <ArrowDownTrayIcon className="w-4 h-4 mr-2" />
+                Export
+              </button>
+            </div>
+          )}
+          {canCreate && (
+            <Link
+              href="/admin/posts/new"
+              className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-orange-500 to-pink-600 hover:from-orange-600 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200"
+            >
+              <PlusIcon className="w-4 h-4 mr-2" />
+              New Post
+            </Link>
+          )}
         </div>
       </div>
 
-      {/* Filters */}
+      {/* Bulk Select All */}
       <div className="bg-white dark:bg-gray-800 shadow rounded-lg mb-6">
+        <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <input
+                type="checkbox"
+                checked={selectedPosts.length === filteredPosts.length && filteredPosts.length > 0}
+                onChange={(e) => handleSelectAll(e.target.checked)}
+                className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded"
+              />
+              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                Select All
+              </span>
+            </div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">
+              {filteredPosts.length} post{filteredPosts.length !== 1 ? 's' : ''} found
+            </div>
+          </div>
+        </div>
         <div className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="relative">
@@ -211,6 +343,23 @@ export default function PostsPage() {
 
       {/* Posts List */}
       <div className="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
+        {/* Bulk Actions Header */}
+        {selectedPosts.length > 0 && (
+          <div className="bg-blue-50 dark:bg-blue-900/20 border-b border-blue-200 dark:border-blue-800 px-6 py-3">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-blue-700 dark:text-blue-300">
+                {selectedPosts.length} post{selectedPosts.length !== 1 ? 's' : ''} selected
+              </span>
+              <button
+                onClick={() => setSelectedPosts([])}
+                className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200"
+              >
+                Clear selection
+              </button>
+            </div>
+          </div>
+        )}
+
         <div className="divide-y divide-gray-200 dark:divide-gray-700">
           {filteredPosts.map((post, index) => (
             <motion.div
@@ -221,6 +370,14 @@ export default function PostsPage() {
               className="p-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
             >
               <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0">
+                  <input
+                    type="checkbox"
+                    checked={selectedPosts.includes(post.id)}
+                    onChange={(e) => handlePostSelect(post.id, e.target.checked)}
+                    className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded"
+                  />
+                </div>
                 <Image
                   src={post.featuredImage}
                   alt={post.title}

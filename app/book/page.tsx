@@ -118,7 +118,7 @@ export default function BookPage() {
                       The Sunday Traveller
                     </h3>
                     <p className="text-sm opacity-90">
-                      A Soldier's Journey Through Life and Adventure
+                      A Soldier&apos;s Journey Through Life and Adventure
                     </p>
                   </div>
                 </div>
@@ -230,7 +230,7 @@ export default function BookPage() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              What's <span className="gradient-text">Inside</span>
+              What&apos;s <span className="gradient-text">Inside</span>
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
               Everything you need to become a confident, savvy traveler who creates meaningful experiences around the world.
@@ -341,7 +341,7 @@ export default function BookPage() {
                     ))}
                   </div>
                   <blockquote className="text-gray-600 dark:text-gray-400 mb-6 italic">
-                    "{testimonial.quote}"
+                    &ldquo;{testimonial.quote}&rdquo;
                   </blockquote>
                   <div className="flex items-center space-x-3">
                     <Image

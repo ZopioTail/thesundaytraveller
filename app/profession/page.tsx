@@ -370,7 +370,7 @@ export default function ProfessionPage() {
               Ready to <span className="gradient-text">Connect?</span>
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-3xl mx-auto">
-              Whether you're looking for leadership insights, military perspectives, or professional collaboration, I'm here to help.
+              Whether you&apos;re looking for leadership insights, military perspectives, or professional collaboration, I&apos;m here to help.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a href="/contact" className="btn-primary">

@@ -1,75 +1,85 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
+import { ThemeManager, ThemeConfig } from '@/lib/themes'
 
-type Theme = 'dark' | 'light' | 'system'
-
-type ThemeProviderProps = {
-  children: React.ReactNode
-  defaultTheme?: Theme
-  storageKey?: string
+interface ThemeContextType {
+  currentTheme: ThemeConfig
+  availableThemes: { name: string; config: ThemeConfig; isCustom: boolean }[]
+  setTheme: (themeName: string) => boolean
+  createCustomTheme: (name: string, baseTheme?: string, overrides?: Partial<ThemeConfig>) => ThemeConfig
+  deleteCustomTheme: (name: string) => boolean
+  updateTheme: (updates: Partial<ThemeConfig>) => void
 }
 
-type ThemeProviderState = {
-  theme: Theme
-  setTheme: (theme: Theme) => void
-}
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
-const initialState: ThemeProviderState = {
-  theme: 'system',
-  setTheme: () => null,
-}
-
-const ThemeProviderContext = createContext<ThemeProviderState>(initialState)
-
-export function ThemeProvider({
-  children,
-  defaultTheme = 'system',
-  storageKey = 'ui-theme',
-  ...props
-}: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(
-    () => (typeof window !== 'undefined' && localStorage.getItem(storageKey)) as Theme || defaultTheme
-  )
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const [currentTheme, setCurrentTheme] = useState<ThemeConfig>(ThemeManager.getCurrentTheme())
+  const [availableThemes, setAvailableThemes] = useState(ThemeManager.getAvailableThemes())
 
   useEffect(() => {
-    const root = window.document.documentElement
-
-    root.classList.remove('light', 'dark')
-
-    if (theme === 'system') {
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
-        .matches
-        ? 'dark'
-        : 'light'
-
-      root.classList.add(systemTheme)
-      return
+    const handleThemeChange = (theme: ThemeConfig) => {
+      setCurrentTheme(theme)
+      setAvailableThemes(ThemeManager.getAvailableThemes())
     }
 
-    root.classList.add(theme)
-  }, [theme])
+    ThemeManager.addChangeListener(handleThemeChange)
 
-  const value = {
-    theme,
-    setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme)
-      setTheme(theme)
-    },
+    return () => {
+      ThemeManager.removeChangeListener(handleThemeChange)
+    }
+  }, [])
+
+  const setTheme = (themeName: string): boolean => {
+    const success = ThemeManager.setTheme(themeName)
+    if (success) {
+      setCurrentTheme(ThemeManager.getCurrentTheme())
+      setAvailableThemes(ThemeManager.getAvailableThemes())
+    }
+    return success
+  }
+
+  const createCustomTheme = (name: string, baseTheme: string = 'default', overrides: Partial<ThemeConfig> = {}): ThemeConfig => {
+    const customTheme = ThemeManager.createCustomTheme(name, baseTheme, overrides)
+    setAvailableThemes(ThemeManager.getAvailableThemes())
+    return customTheme
+  }
+
+  const deleteCustomTheme = (name: string): boolean => {
+    const success = ThemeManager.deleteCustomTheme(name)
+    if (success) {
+      setAvailableThemes(ThemeManager.getAvailableThemes())
+    }
+    return success
+  }
+
+  const updateTheme = (updates: Partial<ThemeConfig>) => {
+    const updatedTheme = { ...currentTheme, ...updates }
+    setCurrentTheme(updatedTheme)
+    ThemeManager.applyTheme(updatedTheme)
+  }
+
+  const value: ThemeContextType = {
+    currentTheme,
+    availableThemes,
+    setTheme,
+    createCustomTheme,
+    deleteCustomTheme,
+    updateTheme
   }
 
   return (
-    <ThemeProviderContext.Provider {...props} value={value}>
+    <ThemeContext.Provider value={value}>
       {children}
-    </ThemeProviderContext.Provider>
+    </ThemeContext.Provider>
   )
 }
 
-export const useTheme = () => {
-  const context = useContext(ThemeProviderContext)
-
-  if (context === undefined)
+export function useTheme() {
+  const context = useContext(ThemeContext)
+  if (context === undefined) {
     throw new Error('useTheme must be used within a ThemeProvider')
-
+  }
   return context
 }

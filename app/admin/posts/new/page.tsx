@@ -1,351 +1,436 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
+import { useSession } from 'next-auth/react'
+import RichTextEditor from '@/components/ui/RichTextEditor'
+import { Button } from '@/components/ui/Button'
 import {
   ArrowLeftIcon,
-  PhotoIcon,
+  DocumentIcon,
   EyeIcon,
-  DocumentDuplicateIcon,
-  CalendarIcon,
+  PhotoIcon,
   TagIcon,
   FolderIcon,
+  GlobeAltIcon,
 } from '@heroicons/react/24/outline'
-import Link from 'next/link'
+import { hasPermission, PERMISSIONS } from '@/lib/rbac'
+
+interface Category {
+  id: number
+  name: string
+  slug: string
+  color: string
+}
+
+interface Tag {
+  id: number
+  name: string
+  slug: string
+  color: string
+}
 
 export default function NewPostPage() {
-  const [post, setPost] = useState({
-    title: '',
-    slug: '',
-    excerpt: '',
-    content: '',
-    featuredImage: '',
-    gallery: [],
-    status: 'draft',
-    categories: [],
-    tags: [],
-    seoTitle: '',
-    seoDescription: '',
-    publishedAt: '',
-  })
+  const router = useRouter()
+  const { data: session } = useSession()
+  const [loading, setLoading] = useState(false)
+  const [categories, setCategories] = useState<Category[]>([])
+  const [tags, setTags] = useState<Tag[]>([])
 
-  const [activeTab, setActiveTab] = useState('content')
-  const [saving, setSaving] = useState(false)
+  // Form state
+  const [title, setTitle] = useState('')
+  const [excerpt, setExcerpt] = useState('')
+  const [content, setContent] = useState('')
+  const [featuredImage, setFeaturedImage] = useState('')
+  const [status, setStatus] = useState<'draft' | 'published'>('draft')
+  const [selectedCategories, setSelectedCategories] = useState<number[]>([])
+  const [selectedTags, setSelectedTags] = useState<number[]>([])
+  const [seoTitle, setSeoTitle] = useState('')
+  const [seoDescription, setSeoDescription] = useState('')
+  const [seoKeywords, setSeoKeywords] = useState('')
 
-  const categories = [
-    { id: '1', name: 'Travel', slug: 'travel', color: '#3b82f6' },
-    { id: '2', name: 'Art & Lifestyle', slug: 'art-lifestyle', color: '#f59e0b' },
-    { id: '3', name: 'Profession', slug: 'profession', color: '#8b5cf6' },
-    { id: '4', name: 'Adventure', slug: 'adventure', color: '#ef4444' },
-  ]
+  // Check permissions
+  const canCreate = hasPermission(session?.user as any, PERMISSIONS.POST_CREATE)
+  const canPublish = hasPermission(session?.user as any, PERMISSIONS.POST_PUBLISH)
 
-  const handleSave = async (status = 'draft') => {
-    setSaving(true)
-    // Simulate API call
-    setTimeout(() => {
-      setSaving(false)
-      console.log('Post saved:', { ...post, status })
-    }, 1000)
+  useEffect(() => {
+    if (!canCreate) {
+      router.push('/admin')
+      return
+    }
+    fetchCategoriesAndTags()
+  }, [canCreate, router])
+
+  const fetchCategoriesAndTags = async () => {
+    try {
+      const [categoriesRes, tagsRes] = await Promise.all([
+        fetch('/api/admin/categories'),
+        fetch('/api/admin/tags')
+      ])
+
+      if (categoriesRes.ok) {
+        const categoriesData = await categoriesRes.json()
+        setCategories(categoriesData)
+      }
+
+      if (tagsRes.ok) {
+        const tagsData = await tagsRes.json()
+        setTags(tagsData)
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error)
+    }
   }
 
-  const generateSlug = (title: string) => {
-    return title
-      .toLowerCase()
-      .replace(/[^a-z0-9 -]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-')
-      .trim()
+  const handleSubmit = async (publish = false) => {
+    if (!title.trim() || !content.trim()) {
+      alert('Title and content are required')
+      return
+    }
+
+    setLoading(true)
+    try {
+      const postData = {
+        title: title.trim(),
+        excerpt: excerpt.trim(),
+        content,
+        featuredImage,
+        categories: selectedCategories,
+        tags: selectedTags,
+        status: publish ? 'published' : 'draft',
+        seoTitle: seoTitle.trim() || title.trim(),
+        seoDescription: seoDescription.trim() || excerpt.trim(),
+        seoKeywords: seoKeywords.trim(),
+        publishedAt: publish ? new Date().toISOString() : null,
+      }
+
+      const response = await fetch('/api/admin/posts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postData),
+      })
+
+      if (response.ok) {
+        const newPost = await response.json()
+        router.push(`/admin/posts/${newPost.id}/edit`)
+      } else {
+        const error = await response.json()
+        alert(`Error: ${error.error}`)
+      }
+    } catch (error) {
+      console.error('Error creating post:', error)
+      alert('Error creating post')
+    } finally {
+      setLoading(false)
+    }
   }
 
-  const handleTitleChange = (title: string) => {
-    setPost(prev => ({
-      ...prev,
-      title,
-      slug: generateSlug(title)
-    }))
+  const handleImageUpload = async (file: File) => {
+    const formData = new FormData()
+    formData.append('file', file)
+    formData.append('folder', 'blog')
+
+    try {
+      const response = await fetch('/api/admin/media', {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (response.ok) {
+        const result = await response.json()
+        return result.media.url
+      } else {
+        throw new Error('Upload failed')
+      }
+    } catch (error) {
+      console.error('Image upload error:', error)
+      throw error
+    }
+  }
+
+  const toggleCategory = (categoryId: number) => {
+    setSelectedCategories(prev =>
+      prev.includes(categoryId)
+        ? prev.filter(id => id !== categoryId)
+        : [...prev, categoryId]
+    )
+  }
+
+  const toggleTag = (tagId: number) => {
+    setSelectedTags(prev =>
+      prev.includes(tagId)
+        ? prev.filter(id => id !== tagId)
+        : [...prev, tagId]
+    )
+  }
+
+  if (!canCreate) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            Access Denied
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400">
+            You don't have permission to create posts.
+          </p>
+        </div>
+      </div>
+    )
   }
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8">
+    <div className="max-w-7xl mx-auto px-4 py-8">
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
-        <div className="flex items-center space-x-4">
-          <Link
-            href="/admin/posts"
-            className="p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 transition-colors duration-200"
-          >
-            <ArrowLeftIcon className="w-5 h-5" />
-          </Link>
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">New Post</h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              Create a new blog post
-            </p>
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center space-x-4">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => router.back()}
+            >
+              <ArrowLeftIcon className="h-4 w-4 mr-2" />
+              Back
+            </Button>
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+                Create New Post
+              </h1>
+              <p className="text-gray-600 dark:text-gray-400 mt-1">
+                Write and publish your content
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="flex items-center space-x-3">
-          <button
-            onClick={() => handleSave('draft')}
-            disabled={saving}
-            className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50"
-          >
-            {saving ? 'Saving...' : 'Save Draft'}
-          </button>
-          <button className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">
-            <EyeIcon className="w-4 h-4 mr-2 inline" />
-            Preview
-          </button>
-          <button
-            onClick={() => handleSave('published')}
-            disabled={saving}
-            className="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-orange-500 to-pink-600 rounded-md hover:from-orange-600 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50"
-          >
-            Publish
-          </button>
+
+          <div className="flex items-center space-x-3">
+            <Button
+              variant="outline"
+              onClick={() => handleSubmit(false)}
+              disabled={loading}
+            >
+              <DocumentIcon className="h-4 w-4 mr-2" />
+              Save Draft
+            </Button>
+            {canPublish && (
+              <Button
+                onClick={() => handleSubmit(true)}
+                disabled={loading}
+              >
+                <GlobeAltIcon className="h-4 w-4 mr-2" />
+                Publish
+              </Button>
+            )}
+          </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Main Content */}
-        <div className="lg:col-span-3">
-          <div className="bg-white dark:bg-gray-800 shadow rounded-lg">
-            {/* Tabs */}
-            <div className="border-b border-gray-200 dark:border-gray-700">
-              <nav className="-mb-px flex space-x-8 px-6">
-                {[
-                  { id: 'content', name: 'Content' },
-                  { id: 'seo', name: 'SEO' },
-                  { id: 'media', name: 'Media' },
-                ].map((tab) => (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200 ${
-                      activeTab === tab.id
-                        ? 'border-orange-500 text-orange-600 dark:text-orange-400'
-                        : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
-                    }`}
-                  >
-                    {tab.name}
-                  </button>
-                ))}
-              </nav>
+        <div className="lg:col-span-3 space-y-6">
+          {/* Title */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Title *
+            </label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-white"
+              placeholder="Enter post title..."
+            />
+          </div>
+
+          {/* Excerpt */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Excerpt
+            </label>
+            <textarea
+              value={excerpt}
+              onChange={(e) => setExcerpt(e.target.value)}
+              rows={3}
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-white"
+              placeholder="Brief description of your post..."
+            />
+          </div>
+
+          {/* Featured Image */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Featured Image URL
+            </label>
+            <div className="flex space-x-2">
+              <input
+                type="url"
+                value={featuredImage}
+                onChange={(e) => setFeaturedImage(e.target.value)}
+                className="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-white"
+                placeholder="https://example.com/image.jpg"
+              />
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={() => {
+                  // Open media library modal
+                  alert('Media library integration coming soon!')
+                }}
+              >
+                <PhotoIcon className="h-5 w-5" />
+              </Button>
             </div>
+          </div>
 
-            <div className="p-6">
-              {activeTab === 'content' && (
-                <div className="space-y-6">
-                  {/* Title */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Title
-                    </label>
-                    <input
-                      type="text"
-                      value={post.title}
-                      onChange={(e) => handleTitleChange(e.target.value)}
-                      placeholder="Enter post title..."
-                      className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-orange-500 focus:border-orange-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                    />
-                  </div>
-
-                  {/* Slug */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Slug
-                    </label>
-                    <input
-                      type="text"
-                      value={post.slug}
-                      onChange={(e) => setPost(prev => ({ ...prev, slug: e.target.value }))}
-                      placeholder="post-slug"
-                      className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-orange-500 focus:border-orange-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                    />
-                  </div>
-
-                  {/* Excerpt */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Excerpt
-                    </label>
-                    <textarea
-                      value={post.excerpt}
-                      onChange={(e) => setPost(prev => ({ ...prev, excerpt: e.target.value }))}
-                      rows={3}
-                      placeholder="Brief description of the post..."
-                      className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-orange-500 focus:border-orange-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                    />
-                  </div>
-
-                  {/* Content */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Content
-                    </label>
-                    <textarea
-                      value={post.content}
-                      onChange={(e) => setPost(prev => ({ ...prev, content: e.target.value }))}
-                      rows={20}
-                      placeholder="Write your post content here..."
-                      className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-orange-500 focus:border-orange-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white font-mono text-sm"
-                    />
-                    <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                      You can use Markdown syntax for formatting.
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {activeTab === 'seo' && (
-                <div className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      SEO Title
-                    </label>
-                    <input
-                      type="text"
-                      value={post.seoTitle}
-                      onChange={(e) => setPost(prev => ({ ...prev, seoTitle: e.target.value }))}
-                      placeholder="SEO optimized title..."
-                      className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-orange-500 focus:border-orange-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                    />
-                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                      {post.seoTitle.length}/60 characters
-                    </p>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Meta Description
-                    </label>
-                    <textarea
-                      value={post.seoDescription}
-                      onChange={(e) => setPost(prev => ({ ...prev, seoDescription: e.target.value }))}
-                      rows={3}
-                      placeholder="SEO meta description..."
-                      className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-orange-500 focus:border-orange-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                    />
-                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                      {post.seoDescription.length}/160 characters
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {activeTab === 'media' && (
-                <div className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Featured Image
-                    </label>
-                    <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-md hover:border-gray-400 dark:hover:border-gray-500 transition-colors duration-200">
-                      <div className="space-y-1 text-center">
-                        <PhotoIcon className="mx-auto h-12 w-12 text-gray-400" />
-                        <div className="flex text-sm text-gray-600 dark:text-gray-400">
-                          <label className="relative cursor-pointer bg-white dark:bg-gray-800 rounded-md font-medium text-orange-600 hover:text-orange-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-orange-500">
-                            <span>Upload a file</span>
-                            <input type="file" className="sr-only" accept="image/*" />
-                          </label>
-                          <p className="pl-1">or drag and drop</p>
-                        </div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
-                          PNG, JPG, GIF up to 10MB
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Gallery Images
-                    </label>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                      <div className="aspect-square border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-lg flex items-center justify-center hover:border-gray-400 dark:hover:border-gray-500 transition-colors duration-200 cursor-pointer">
-                        <PhotoIcon className="w-8 h-8 text-gray-400" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
+          {/* Content Editor */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Content *
+            </label>
+            <RichTextEditor
+              content={content}
+              onChange={setContent}
+              placeholder="Start writing your content..."
+              showWordCount={true}
+              autoSave={true}
+              autoSaveDelay={5000}
+              onImageUpload={handleImageUpload}
+            />
           </div>
         </div>
 
         {/* Sidebar */}
-        <div className="space-y-6">
-          {/* Publish Settings */}
-          <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Publish</h3>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Status
-                </label>
-                <select
-                  value={post.status}
-                  onChange={(e) => setPost(prev => ({ ...prev, status: e.target.value }))}
-                  className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                >
-                  <option value="draft">Draft</option>
-                  <option value="published">Published</option>
-                  <option value="archived">Archived</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  <CalendarIcon className="w-4 h-4 inline mr-1" />
-                  Publish Date
-                </label>
+        <div className="lg:col-span-1 space-y-6">
+          {/* Status */}
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+              Status
+            </h3>
+            <div className="space-y-2">
+              <label className="flex items-center">
                 <input
-                  type="datetime-local"
-                  value={post.publishedAt}
-                  onChange={(e) => setPost(prev => ({ ...prev, publishedAt: e.target.value }))}
-                  className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  type="radio"
+                  value="draft"
+                  checked={status === 'draft'}
+                  onChange={(e) => setStatus(e.target.value as 'draft')}
+                  className="text-orange-600 focus:ring-orange-500"
                 />
-              </div>
+                <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">
+                  Draft
+                </span>
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  value="published"
+                  checked={status === 'published'}
+                  onChange={(e) => setStatus(e.target.value as 'published')}
+                  disabled={!canPublish}
+                  className="text-orange-600 focus:ring-orange-500"
+                />
+                <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">
+                  Published
+                </span>
+              </label>
             </div>
           </div>
 
           {/* Categories */}
-          <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
             <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
-              <FolderIcon className="w-5 h-5 inline mr-2" />
               Categories
             </h3>
-            <div className="space-y-2">
+            <div className="space-y-2 max-h-48 overflow-y-auto">
               {categories.map((category) => (
                 <label key={category.id} className="flex items-center">
                   <input
                     type="checkbox"
-                    className="rounded border-gray-300 dark:border-gray-600 text-orange-600 shadow-sm focus:border-orange-500 focus:ring-orange-500"
+                    checked={selectedCategories.includes(category.id)}
+                    onChange={() => toggleCategory(category.id)}
+                    className="text-orange-600 focus:ring-orange-500"
                   />
-                  <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">
+                  <span
+                    className="ml-2 text-sm text-gray-700 dark:text-gray-300"
+                    style={{ color: category.color }}
+                  >
                     {category.name}
                   </span>
-                  <div
-                    className="ml-2 w-3 h-3 rounded-full"
-                    style={{ backgroundColor: category.color }}
-                  />
                 </label>
               ))}
             </div>
           </div>
 
           {/* Tags */}
-          <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
             <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
-              <TagIcon className="w-5 h-5 inline mr-2" />
               Tags
             </h3>
-            <input
-              type="text"
-              placeholder="Add tags separated by commas..."
-              className="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-orange-500 focus:border-orange-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-            />
-            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-              Separate tags with commas
-            </p>
+            <div className="space-y-2 max-h-48 overflow-y-auto">
+              {tags.map((tag) => (
+                <label key={tag.id} className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={selectedTags.includes(tag.id)}
+                    onChange={() => toggleTag(tag.id)}
+                    className="text-orange-600 focus:ring-orange-500"
+                  />
+                  <span
+                    className="ml-2 text-sm text-gray-700 dark:text-gray-300"
+                    style={{ color: tag.color }}
+                  >
+                    {tag.name}
+                  </span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          {/* SEO Settings */}
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+              SEO Settings
+            </h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  SEO Title
+                </label>
+                <input
+                  type="text"
+                  value={seoTitle}
+                  onChange={(e) => setSeoTitle(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-white"
+                  placeholder="SEO optimized title"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  SEO Description
+                </label>
+                <textarea
+                  value={seoDescription}
+                  onChange={(e) => setSeoDescription(e.target.value)}
+                  rows={3}
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-white"
+                  placeholder="SEO description"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Keywords
+                </label>
+                <input
+                  type="text"
+                  value={seoKeywords}
+                  onChange={(e) => setSeoKeywords(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-gray-700 dark:text-white"
+                  placeholder="keyword1, keyword2, keyword3"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

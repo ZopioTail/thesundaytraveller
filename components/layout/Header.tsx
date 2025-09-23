@@ -11,8 +11,10 @@ import {
   MoonIcon,
 } from '@heroicons/react/24/outline'
 import { useTheme } from '@/components/providers/ThemeProvider'
+import { useSession } from 'next-auth/react'
 import Logo from '@/components/Logo'
 import { cn } from '@/lib/utils'
+import { NotificationDropdown } from '@/components/ui/Notification'
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -27,7 +29,8 @@ const navigation = [
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const { theme, setTheme } = useTheme()
+  const { currentTheme, setTheme } = useTheme()
+  const { data: session } = useSession()
   const pathname = usePathname()
 
   // Determine header style based on page and scroll position
@@ -57,10 +60,10 @@ export default function Header() {
 
   const headerStyle = getHeaderStyle()
 
-  const isDark = theme === 'dark'
+  const isDark = currentTheme.name === 'dark'
 
   const toggleTheme = () => {
-    setTheme(isDark ? 'light' : 'dark')
+    setTheme(isDark ? 'default' : 'dark')
   }
 
   useEffect(() => {
@@ -150,6 +153,11 @@ export default function Header() {
 
           {/* Right Side Controls */}
           <div className="flex items-center space-x-3">
+            {/* Notifications - Only show when authenticated */}
+            {session && (
+              <NotificationDropdown />
+            )}
+
             {/* Theme Toggle */}
             <motion.button
               onClick={toggleTheme}

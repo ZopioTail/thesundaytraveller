@@ -2,6 +2,10 @@ import type { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
+import SessionProvider from '@/components/providers/SessionProvider'
+import { CSRFProvider } from '@/components/providers/CSRFProvider'
+import { AnalyticsProvider } from '@/lib/analytics'
+import { NotificationProvider } from '@/lib/notifications'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 
@@ -64,18 +68,29 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  // Get Google Analytics ID from environment variables
+  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body className="font-sans antialiased">
-        <ThemeProvider>
-          <div className="min-h-screen flex flex-col">
-            <Header />
-            <main className="flex-1">
-              {children}
-            </main>
-            <Footer />
-          </div>
-        </ThemeProvider>
+        <SessionProvider session={null}>
+          <ThemeProvider>
+            <CSRFProvider>
+              <AnalyticsProvider trackingId={gaId}>
+                <NotificationProvider>
+                  <div className="min-h-screen flex flex-col">
+                    <Header />
+                    <main className="flex-1">
+                      {children}
+                    </main>
+                    <Footer />
+                  </div>
+                </NotificationProvider>
+              </AnalyticsProvider>
+            </CSRFProvider>
+          </ThemeProvider>
+        </SessionProvider>
       </body>
     </html>
   )

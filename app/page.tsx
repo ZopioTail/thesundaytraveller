@@ -883,8 +883,8 @@ export default function HomePage() {
           >
             <div className="glass-card p-8 md:p-16 relative overflow-hidden">
               {/* Decorative elements */}
-              <div className="absolute top-8 left-8 text-6xl text-white/20 font-serif">"</div>
-              <div className="absolute bottom-8 right-8 text-6xl text-white/20 font-serif rotate-180">"</div>
+              <div className="absolute top-8 left-8 text-6xl text-white/20 font-serif">&ldquo;</div>
+              <div className="absolute bottom-8 right-8 text-6xl text-white/20 font-serif rotate-180">&rdquo;</div>
 
               <div className="flex justify-center mb-8">
                 {[...Array(5)].map((_, i) => (
@@ -909,7 +909,7 @@ export default function HomePage() {
                   className="text-center"
                 >
                   <blockquote className="text-2xl md:text-3xl font-light text-white mb-12 italic leading-relaxed">
-                    "{testimonials[currentTestimonial].quote}"
+                    &ldquo;{testimonials[currentTestimonial].quote}&rdquo;
                   </blockquote>
 
                   <div className="flex items-center justify-center space-x-6">
@@ -1046,8 +1046,8 @@ export default function HomePage() {
           >
             <div className="glass-card p-8 md:p-16 relative overflow-hidden">
               {/* Decorative elements */}
-              <div className="absolute top-8 left-8 text-6xl text-white/20 font-serif">"</div>
-              <div className="absolute bottom-8 right-8 text-6xl text-white/20 font-serif rotate-180">"</div>
+              <div className="absolute top-8 left-8 text-6xl text-white/20 font-serif">&ldquo;</div>
+              <div className="absolute bottom-8 right-8 text-6xl text-white/20 font-serif rotate-180">&rdquo;</div>
 
               <div className="flex justify-center mb-8">
                 {[...Array(5)].map((_, i) => (
@@ -1072,7 +1072,7 @@ export default function HomePage() {
                   className="text-center"
                 >
                   <blockquote className="text-2xl md:text-3xl font-light text-white mb-12 italic leading-relaxed">
-                    "{testimonials[currentTestimonial].quote}"
+                    &ldquo;{testimonials[currentTestimonial].quote}&rdquo;
                   </blockquote>
 
                   <div className="flex items-center justify-center space-x-6">

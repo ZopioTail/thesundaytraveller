@@ -11,6 +11,7 @@ import {
   UserGroupIcon,
   ArrowTrendingUpIcon,
   CalendarIcon,
+  ChartBarIcon,
 } from '@heroicons/react/24/outline'
 
 interface Stats {
@@ -321,9 +322,9 @@ export default function AdminDashboard() {
                 <MapPinIcon className="w-8 h-8 text-gray-400 mb-2" />
                 <span className="text-sm font-medium text-gray-900 dark:text-white">New Destination</span>
               </a>
-              <a href="/admin/media" className="flex flex-col items-center p-4 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg hover:border-orange-500 dark:hover:border-orange-400 transition-colors duration-200">
-                <PhotoIcon className="w-8 h-8 text-gray-400 mb-2" />
-                <span className="text-sm font-medium text-gray-900 dark:text-white">Upload Media</span>
+              <a href="/admin/analytics" className="flex flex-col items-center p-4 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg hover:border-orange-500 dark:hover:border-orange-400 transition-colors duration-200">
+                <ChartBarIcon className="w-8 h-8 text-gray-400 mb-2" />
+                <span className="text-sm font-medium text-gray-900 dark:text-white">Analytics</span>
               </a>
             </div>
           </div>

@@ -69,7 +69,7 @@ export default function ContactPage() {
               Get in Touch
             </h1>
             <p className="text-xl md:text-2xl max-w-3xl mx-auto opacity-90">
-              Have questions about travel? Want to collaborate? I'd love to hear from you!
+              Have questions about travel? Want to collaborate? I&apos;d love to hear from you!
             </p>
           </motion.div>
         </div>
@@ -103,7 +103,7 @@ export default function ContactPage() {
                         Message Sent!
                       </h3>
                       <p className="text-gray-600 dark:text-gray-400">
-                        Thank you for reaching out. I'll get back to you soon!
+                        Thank you for reaching out. I&apos;ll get back to you soon!
                       </p>
                     </motion.div>
                   ) : (
@@ -201,10 +201,10 @@ export default function ContactPage() {
             >
               <div>
                 <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
-                  Let's Connect
+                  Let&apos;s Connect
                 </h2>
                 <p className="text-gray-600 dark:text-gray-400 mb-8">
-                  Whether you're planning your next adventure, looking for travel advice, or interested in collaboration opportunities, I'm here to help!
+                  Whether you&apos;re planning your next adventure, looking for travel advice, or interested in collaboration opportunities, I&apos;m here to help!
                 </p>
               </div>
 
@@ -351,7 +351,7 @@ export default function ContactPage() {
                 Stay Connected!
               </h3>
               <p className="text-gray-600 dark:text-gray-400">
-                Have questions about travel, adventure, or military life? I'd love to help!
+                Have questions about travel, adventure, or military life? I&apos;d love to help!
               </p>
             </div>
 
@@ -374,7 +374,7 @@ export default function ContactPage() {
             </div>
 
             <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-4">
-              This popup won't show again during this session
+              This popup won&apos;t show again during this session
             </p>
           </motion.div>
         </div>

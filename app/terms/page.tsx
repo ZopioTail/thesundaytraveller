@@ -30,7 +30,7 @@ export default function TermsPage() {
               </h2>
               <p className="text-gray-600 dark:text-gray-400">
                 Permission is granted to temporarily download one copy of the materials on 
-                The Sunday Traveller's website for personal, non-commercial transitory viewing only.
+                The Sunday Traveller&apos;s website for personal, non-commercial transitory viewing only.
               </p>
             </section>
             
@@ -39,7 +39,7 @@ export default function TermsPage() {
                 Disclaimer
               </h2>
               <p className="text-gray-600 dark:text-gray-400">
-                The materials on The Sunday Traveller's website are provided on an 'as is' basis. 
+                The materials on The Sunday Traveller&apos;s website are provided on an &apos;as is&apos; basis. 
                 The Sunday Traveller makes no warranties, expressed or implied.
               </p>
             </section>

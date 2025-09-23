@@ -72,7 +72,7 @@ export default function MayanRouteJourney() {
             Journey Highlights
           </h3>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
-            From India to the Mayan World and Back – a journey captured in 'Mayan Routes, Indian Roots.'
+            From India to the Mayan World and Back – a journey captured in &apos;Mayan Routes, Indian Roots.&apos;
           </p>
         </motion.div>
 
