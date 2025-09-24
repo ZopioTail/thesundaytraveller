@@ -10,7 +10,6 @@
     "export": "next export"
   },
   "dependencies": {
-    "@auth/prisma-adapter": "^2.10.0",
     "@heroicons/react": "^2.0.18",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.7",
@@ -44,7 +43,6 @@
     "clsx": "^2.0.0",
     "drizzle-kit": "^0.31.4",
     "drizzle-orm": "^0.44.5",
-    "firebase": "^10.7.1",
     "framer-motion": "^10.16.16",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.544.0",
