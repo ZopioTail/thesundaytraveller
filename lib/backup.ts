@@ -332,7 +332,7 @@ export class BackupManager {
       .replace(/</g, '<')
       .replace(/>/g, '>')
       .replace(/"/g, '"')
-      .replace(/'/g, ''')
+      .replace(/'/g, '\'')
   }
 
   static async getBackupList(): Promise<{ filename: string; size: number; createdAt: Date; type: string }[]> {

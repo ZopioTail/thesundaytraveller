@@ -157,11 +157,17 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     unsubscribeFromNotifications,
   }
 
-  return (
-    <NotificationContext.Provider value={contextValue}>
-      {children}
-    </NotificationContext.Provider>
-  )
+  return {
+    notifications,
+    unreadCount,
+    addNotification,
+    markAsRead,
+    markAllAsRead,
+    removeNotification,
+    clearAll,
+    subscribeToNotifications,
+    unsubscribeFromNotifications,
+  }
 }
 
 // Hook to use notifications
