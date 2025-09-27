@@ -77,7 +77,9 @@ export default function AdminLayout({
   }
 
   if (!session) {
-    router.push('/admin/login')
+    if (typeof window !== 'undefined') {
+      router.push('/admin/login')
+    }
     return null
   }
 

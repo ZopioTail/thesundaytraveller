@@ -98,7 +98,7 @@ export default function NewPagePage() {
             Access Denied
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
-            You don't have permission to create pages.
+            You don&#39;t have permission to create pages.
           </p>
         </div>
       </div>

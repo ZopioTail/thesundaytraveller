@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import {
   GlobeAltIcon,
@@ -86,22 +86,6 @@ export default function SEOOptimizer({
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [activeTab, setActiveTab] = useState<'basic' | 'social' | 'advanced' | 'analysis'>('basic')
 
-  // Analyze SEO when content or SEO data changes
-  useEffect(() => {
-    analyzeSEO()
-  }, [content, seoData])
-
-  const analyzeSEO = async () => {
-    setIsAnalyzing(true)
-
-    // Simulate SEO analysis
-    setTimeout(() => {
-      const newAnalysis = performSEOAnalysis(content, seoData)
-      setAnalysis(newAnalysis)
-      setIsAnalyzing(false)
-    }, 1000)
-  }
-
   const performSEOAnalysis = (content: string, seoData: SEOData): SEOAnalysis => {
     const issues: string[] = []
     const suggestions: string[] = []
@@ -149,6 +133,22 @@ export default function SEOOptimizer({
       }
     }
   }
+
+  const analyzeSEO = useCallback(() => {
+    setIsAnalyzing(true)
+
+    // Simulate SEO analysis
+    setTimeout(() => {
+      const newAnalysis = performSEOAnalysis(content, seoData)
+      setAnalysis(newAnalysis)
+      setIsAnalyzing(false)
+    }, 1000)
+  }, [content, seoData, performSEOAnalysis])
+
+  // Analyze SEO when content or SEO data changes
+  useEffect(() => {
+    analyzeSEO()
+  }, [analyzeSEO])
 
   const analyzeTitle = (title: string): number => {
     if (!title) return 0

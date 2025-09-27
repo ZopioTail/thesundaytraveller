@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { useSession } from 'next-auth/react'
 import {
@@ -42,11 +42,7 @@ export default function SettingsPage() {
   // Check permissions
   const canUpdate = hasPermission(session?.user as any, PERMISSIONS.SETTINGS_UPDATE)
 
-  useEffect(() => {
-    fetchSettings()
-  }, [])
-
-  const fetchSettings = async () => {
+  const fetchSettings = useCallback(async () => {
     try {
       const response = await fetch('/api/admin/settings')
       if (response.ok) {
@@ -62,9 +58,14 @@ export default function SettingsPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
-  const initializeDefaultSettings = () => {
+ // Initialize settings on component mount
+ useEffect(() => {
+   fetchSettings()
+ }, [fetchSettings])
+
+ const initializeDefaultSettings = () => {
     const defaultSettings: SettingsGroup[] = [
       {
         id: 'general',

@@ -1,6 +1,7 @@
 'use client'
 
 import { ReactNode } from 'react'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
@@ -239,13 +240,14 @@ export function ProductCard({
     >
       {image && (
         <div className="relative h-48 bg-gray-200 dark:bg-gray-700 mb-4">
-          <img
+          <Image
             src={image}
             alt={title}
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
           />
           {badge && (
-            <div className="absolute top-2 left-2">
+            <div className="absolute top-2 left-2 z-10">
               <span className="px-2 py-1 bg-orange-500 text-white text-xs font-medium rounded">
                 {badge}
               </span>
