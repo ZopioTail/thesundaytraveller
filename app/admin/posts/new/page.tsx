@@ -175,7 +175,7 @@ export default function NewPostPage() {
             Access Denied
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
-            You don't have permission to create posts.
+            You don&apos;t have permission to create posts.
           </p>
         </div>
       </div>

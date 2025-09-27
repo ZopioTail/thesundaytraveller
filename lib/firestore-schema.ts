@@ -10,7 +10,7 @@ export interface User {
   lastName?: string
   avatar?: string
   bio?: string
-  role: 'admin' | 'editor' | 'author' | 'user'
+  role: 'super_admin' | 'admin' | 'editor' | 'author' | 'user'
   isActive: boolean
   lastLogin?: Date
   createdAt: Date

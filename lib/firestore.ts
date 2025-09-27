@@ -364,12 +364,83 @@ export async function getCategories() {
   })
 }
 
+export async function getCategoryById(id: string) {
+  return await getDocumentById('categories', id)
+}
+
+export async function createCategory(data: any) {
+  return await createDocument('categories', data)
+}
+
+export async function updateCategory(id: string, data: any) {
+  return await updateDocument('categories', id, data)
+}
+
+export async function deleteCategory(id: string) {
+  return await deleteDocument('categories', id)
+}
+
 export async function getTags() {
   return await getDocuments('tags', {
     orderBy: 'usageCount',
     orderDirection: 'desc',
     limit: 50
   })
+}
+
+export async function getMediaById(id: string) {
+  return await getDocumentById('media', id)
+}
+
+export async function updateMedia(id: string, data: any) {
+  return await updateDocument('media', id, data)
+}
+
+export async function deleteMedia(id: string) {
+  return await deleteDocument('media', id)
+}
+
+export async function getTagById(id: string) {
+  return await getDocumentById('tags', id)
+}
+
+export async function updateTag(id: string, data: any) {
+  return await updateDocument('tags', id, data)
+}
+
+export async function deleteTag(id: string) {
+  return await deleteDocument('tags', id)
+}
+
+export async function getActiveUsers() {
+  return await getDocuments('users', {
+    where: [{ field: 'isActive', operator: '==', value: true }],
+    orderBy: 'createdAt',
+    orderDirection: 'desc'
+  })
+}
+
+export async function createNotification(data: any) {
+  return await createDocument('notifications', data)
+}
+
+export async function getNotificationsByUser(userId: string, options: FirestoreOptions = {}) {
+  const whereConditions: Array<{ field: string; operator: WhereFilterOp; value: any }> = [
+    { field: 'recipientId', operator: '==', value: userId }
+  ]
+
+  if (options.where) {
+    whereConditions.push(...options.where)
+  }
+
+  return await getDocuments('notifications', {
+    ...options,
+    where: whereConditions
+  })
+}
+
+export async function updateUser(id: string, data: any) {
+  return await updateDocument('users', id, data)
 }
 
 // Settings
@@ -394,6 +465,118 @@ export async function setSetting(key: string, value: any, description?: string) 
       isPublic: false
     })
   }
+}
+
+// Advanced search functionality
+export async function searchPostsAdvanced(options: {
+  query?: string
+  categoryId?: string
+  tagIds?: string[]
+  status?: string
+  authorId?: string
+  dateFrom?: Date
+  dateTo?: Date
+  sortBy?: 'createdAt' | 'updatedAt' | 'publishedAt' | 'title' | 'relevance'
+  sortOrder?: 'asc' | 'desc'
+  limit?: number
+  offset?: number
+}) {
+  const {
+    query,
+    categoryId,
+    tagIds,
+    status,
+    authorId,
+    dateFrom,
+    dateTo,
+    sortBy = 'relevance',
+    sortOrder = 'desc',
+    limit: limitCount = 20,
+    offset = 0
+  } = options
+
+  // Build where conditions
+  const whereConditions: Array<{ field: string; operator: WhereFilterOp; value: any }> = []
+
+  if (status) {
+    whereConditions.push({ field: 'status', operator: '==', value: status })
+  }
+
+  if (authorId) {
+    whereConditions.push({ field: 'authorId', operator: '==', value: authorId })
+  }
+
+  if (categoryId) {
+    whereConditions.push({ field: 'categoryId', operator: '==', value: categoryId })
+  }
+
+  if (dateFrom) {
+    whereConditions.push({ field: 'publishedAt', operator: '>=', value: Timestamp.fromDate(dateFrom) })
+  }
+
+  if (dateTo) {
+    whereConditions.push({ field: 'publishedAt', operator: '<=', value: Timestamp.fromDate(dateTo) })
+  }
+
+  // Get posts with basic filtering
+  let posts = await getDocuments('posts', {
+    where: whereConditions.length > 0 ? whereConditions : undefined,
+    orderBy: sortBy === 'relevance' ? 'publishedAt' : sortBy,
+    orderDirection: sortOrder,
+    limit: limitCount + offset
+  })
+
+  // Apply text search filtering (client-side for now)
+  if (query) {
+    const searchTerm = query.toLowerCase()
+    posts = posts.filter((post: any) =>
+      post.title?.toLowerCase().includes(searchTerm) ||
+      post.excerpt?.toLowerCase().includes(searchTerm) ||
+      post.content?.toLowerCase().includes(searchTerm)
+    )
+  }
+
+  // Apply tag filtering (client-side for now)
+  if (tagIds && tagIds.length > 0) {
+    posts = posts.filter((post: any) =>
+      post.tagIds && post.tagIds.some((tagId: string) => tagIds.includes(tagId))
+    )
+  }
+
+  // Apply pagination
+  const paginatedPosts = posts.slice(offset, offset + limitCount)
+
+  return paginatedPosts
+}
+
+export async function getSearchSuggestions(query: string, limitCount = 10) {
+  if (!query || query.length < 2) {
+    return []
+  }
+
+  const searchTerm = query.toLowerCase()
+
+  // Get posts that match the query for suggestions
+  const posts = await getDocuments('posts', {
+    where: [{ field: 'status', operator: '==', value: 'published' }],
+    limit: 50
+  })
+
+  const suggestions = new Set<string>()
+
+  // Extract suggestions from titles
+  posts.forEach((post: any) => {
+    if (post.title?.toLowerCase().includes(searchTerm)) {
+      const words = post.title.toLowerCase().split(' ')
+      words.forEach((word: string) => {
+        if (word.includes(searchTerm) && word.length > 2) {
+          suggestions.add(word)
+        }
+      })
+    }
+  })
+
+  return Array.from(suggestions).slice(0, limitCount)
 }
 
 // Export Firebase services for direct use

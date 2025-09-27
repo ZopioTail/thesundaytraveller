@@ -1,9 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import { getDocumentById, updatePost, deletePost } from '@/lib/db'
 import { hasPermission, PERMISSIONS, User } from '@/lib/rbac'
 import { generateSlug } from '@/lib/auth-utils'
+import {
+  doc,
+  getDoc,
+  updateDoc,
+  deleteDoc,
+  Timestamp
+} from 'firebase/firestore'
+import { db as firestoreDb } from '@/lib/firebase'
 
 // GET /api/admin/posts/[id] - Get single post
 export async function GET(
@@ -17,15 +24,18 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const post = await getDocumentById('posts', params.id)
+    const postRef = doc(firestoreDb, 'posts', params.id)
+    const postSnap = await getDoc(postRef)
 
-    if (!post) {
+    if (!postSnap.exists()) {
       return NextResponse.json({ error: 'Post not found' }, { status: 404 })
     }
 
+    const post = postSnap.data()
+
     // Transform post to match expected format
     const transformedPost = {
-      id: post.id,
+      id: postSnap.id,
       title: post.title,
       slug: post.slug,
       excerpt: post.excerpt,
@@ -91,11 +101,14 @@ export async function PUT(
     } = body
 
     // Check if post exists
-    const existingPost = await getDocumentById('posts', params.id)
+    const postRef = doc(firestoreDb, 'posts', params.id)
+    const postSnap = await getDoc(postRef)
 
-    if (!existingPost) {
+    if (!postSnap.exists()) {
       return NextResponse.json({ error: 'Post not found' }, { status: 404 })
     }
+
+    const existingPost = postSnap.data()
 
     // Generate new slug if title changed
     let slug = existingPost.slug
@@ -105,7 +118,7 @@ export async function PUT(
     }
 
     const updateData: any = {
-      updatedAt: new Date(),
+      updatedAt: Timestamp.now(),
     }
 
     if (title !== undefined) updateData.title = title
@@ -117,13 +130,13 @@ export async function PUT(
     if (seoTitle !== undefined) updateData.seoTitle = seoTitle
     if (seoDescription !== undefined) updateData.seoDescription = seoDescription
     if (seoKeywords !== undefined) updateData.seoKeywords = seoKeywords
-    if (publishedAt !== undefined) updateData.publishedAt = status === 'published' ? new Date(publishedAt) : null
+    if (publishedAt !== undefined) updateData.publishedAt = status === 'published' ? Timestamp.fromDate(new Date(publishedAt)) : null
     if (isFeatured !== undefined) updateData.isFeatured = isFeatured
     if (readingTime !== undefined) updateData.readingTime = readingTime
     if (difficulty !== undefined) updateData.difficulty = difficulty
     if (location !== undefined) updateData.location = location
 
-    await updatePost(params.id, updateData)
+    await updateDoc(postRef, updateData)
 
     const updatedPost = {
       id: params.id,
@@ -151,14 +164,15 @@ export async function DELETE(
     }
 
     // Check if post exists
-    const existingPost = await getDocumentById('posts', params.id)
+    const postRef = doc(firestoreDb, 'posts', params.id)
+    const postSnap = await getDoc(postRef)
 
-    if (!existingPost) {
+    if (!postSnap.exists()) {
       return NextResponse.json({ error: 'Post not found' }, { status: 404 })
     }
 
     // Delete the post
-    await deletePost(params.id)
+    await deleteDoc(postRef)
 
     return NextResponse.json({ message: 'Post deleted successfully' })
   } catch (error) {

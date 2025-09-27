@@ -23,20 +23,19 @@ import {
   UserCircleIcon,
   GlobeAltIcon,
   SwatchIcon,
+  TagIcon,
 } from '@heroicons/react/24/outline'
 import { getAllowedNavItems, hasPermission, PERMISSIONS } from '@/lib/rbac'
 
 const allNavigation = [
   { name: 'Dashboard', href: '/admin', icon: HomeIcon, permission: PERMISSIONS.POST_READ },
   { name: 'Posts', href: '/admin/posts', icon: DocumentTextIcon, permission: PERMISSIONS.POST_READ },
-  { name: 'Search', href: '/admin/search', icon: MagnifyingGlassIcon, permission: PERMISSIONS.POST_READ },
-  { name: 'Media', href: '/admin/media', icon: PhotoIcon, permission: PERMISSIONS.MEDIA_UPLOAD },
-  { name: 'SEO', href: '/admin/seo', icon: GlobeAltIcon, permission: PERMISSIONS.SETTINGS_VIEW },
-  { name: 'Themes', href: '/admin/themes', icon: SwatchIcon, permission: PERMISSIONS.SETTINGS_VIEW },
-  { name: 'News', href: '/admin/news', icon: NewspaperIcon, permission: PERMISSIONS.POST_READ },
-  { name: 'Destinations', href: '/admin/destinations', icon: MapPinIcon, permission: PERMISSIONS.POST_READ },
-  { name: 'Analytics', href: '/admin/analytics', icon: ChartBarIcon, permission: PERMISSIONS.ANALYTICS_VIEW },
+  { name: 'Pages', href: '/admin/pages', icon: DocumentTextIcon, permission: PERMISSIONS.POST_READ },
   { name: 'Users', href: '/admin/users', icon: UserIcon, permission: PERMISSIONS.USER_READ },
+  { name: 'Media', href: '/admin/media', icon: PhotoIcon, permission: PERMISSIONS.MEDIA_UPLOAD },
+  { name: 'Categories', href: '/admin/categories', icon: TagIcon, permission: PERMISSIONS.POST_UPDATE },
+  { name: 'Tags', href: '/admin/tags', icon: TagIcon, permission: PERMISSIONS.POST_UPDATE },
+  { name: 'Analytics', href: '/admin/analytics', icon: ChartBarIcon, permission: PERMISSIONS.ANALYTICS_VIEW },
   { name: 'Settings', href: '/admin/settings', icon: CogIcon, permission: PERMISSIONS.SETTINGS_VIEW },
 ]
 
@@ -106,7 +105,7 @@ export default function AdminLayout({
             >
               <div className="flex h-16 items-center justify-between px-4 border-b border-gray-200 dark:border-gray-700">
                 <Link href="/admin" className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-pink-600 rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 bg-[#ff2031] rounded-lg flex items-center justify-center">
                     <span className="text-white font-bold text-sm">TS</span>
                   </div>
                   <span className="font-bold text-gray-900 dark:text-white">Admin</span>
@@ -148,7 +147,7 @@ export default function AdminLayout({
         <div className="flex min-h-0 flex-1 flex-col bg-white dark:bg-gray-800 shadow-lg">
           <div className="flex h-16 flex-shrink-0 items-center px-4 border-b border-gray-200 dark:border-gray-700">
             <Link href="/admin" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-pink-600 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-[#ff2031] rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">TS</span>
               </div>
               <span className="font-bold text-gray-900 dark:text-white">Admin Panel</span>

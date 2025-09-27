@@ -1,18 +1,12 @@
-import { db } from '../lib/db'
-import { users } from '../lib/schema'
+import { getUserByEmail, createUser } from '../lib/db'
 import { hashPassword, generateUsername } from '../lib/auth-utils'
-import { eq } from 'drizzle-orm'
 
 async function createAdminUser() {
   try {
     // Check if admin user already exists
-    const existingAdmin = await db
-      .select()
-      .from(users)
-      .where(eq(users.email, 'admin@thesundaytraveller.com'))
-      .limit(1)
+    const existingAdmin = await getUserByEmail('admin@thesundaytraveller.com')
 
-    if (existingAdmin.length > 0) {
+    if (existingAdmin) {
       console.log('Admin user already exists')
       return
     }
@@ -21,7 +15,7 @@ async function createAdminUser() {
     const adminPassword = await hashPassword('admin123')
     const adminUsername = generateUsername('admin@thesundaytraveller.com')
 
-    await db.insert(users).values({
+    await createUser({
       email: 'admin@thesundaytraveller.com',
       username: adminUsername,
       passwordHash: adminPassword,
@@ -37,17 +31,13 @@ async function createAdminUser() {
     console.log('Role: admin')
 
     // Create editor user
-    const existingEditor = await db
-      .select()
-      .from(users)
-      .where(eq(users.email, 'editor@thesundaytraveller.com'))
-      .limit(1)
+    const existingEditor = await getUserByEmail('editor@thesundaytraveller.com')
 
-    if (existingEditor.length === 0) {
+    if (!existingEditor) {
       const editorPassword = await hashPassword('editor123')
       const editorUsername = generateUsername('editor@thesundaytraveller.com')
 
-      await db.insert(users).values({
+      await createUser({
         email: 'editor@thesundaytraveller.com',
         username: editorUsername,
         passwordHash: editorPassword,
@@ -64,17 +54,13 @@ async function createAdminUser() {
     }
 
     // Create author user
-    const existingAuthor = await db
-      .select()
-      .from(users)
-      .where(eq(users.email, 'author@thesundaytraveller.com'))
-      .limit(1)
+    const existingAuthor = await getUserByEmail('author@thesundaytraveller.com')
 
-    if (existingAuthor.length === 0) {
+    if (!existingAuthor) {
       const authorPassword = await hashPassword('author123')
       const authorUsername = generateUsername('author@thesundaytraveller.com')
 
-      await db.insert(users).values({
+      await createUser({
         email: 'author@thesundaytraveller.com',
         username: authorUsername,
         passwordHash: authorPassword,

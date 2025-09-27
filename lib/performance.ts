@@ -179,12 +179,12 @@ export class PerformanceMonitor {
   static logSlowQueries(thresholdMs: number = 100): void {
     const slowQueries: string[] = []
 
-    for (const [label, measurements] of this.metrics) {
+    Array.from(this.metrics.entries()).forEach(([label, measurements]) => {
       const maxTime = Math.max(...measurements)
       if (maxTime > thresholdMs) {
         slowQueries.push(`${label}: ${maxTime.toFixed(2)}ms`)
       }
-    }
+    })
 
     if (slowQueries.length > 0) {
       console.warn('Slow queries detected:', slowQueries)

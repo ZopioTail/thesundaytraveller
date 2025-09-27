@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import { db } from '@/lib/db'
-import { notifications, users } from '@/lib/schema'
+import { getActiveUsers } from '@/lib/db'
 import { NotificationManager } from '@/lib/notifications'
-import { eq } from 'drizzle-orm'
+import {
+  collection,
+  addDoc,
+  Timestamp
+} from 'firebase/firestore'
+import { db as firestoreDb } from '@/lib/firebase'
 
 export async function POST(request: NextRequest) {
   try {
@@ -31,27 +35,30 @@ export async function POST(request: NextRequest) {
       metadata: metadata ? JSON.stringify(metadata) : null,
       userId: session.user.id,
       read: false,
-      createdAt: new Date(),
+      createdAt: Timestamp.now(),
     }
 
     // Save to database for all users (no recipientId means broadcast)
     const savedNotifications = []
 
     // Get all active users
-    const users = await db.select().from(require('@/lib/schema').users).where(
-      require('@/lib/schema').users.isActive.eq(true)
-    )
+    const users = await getActiveUsers()
 
     // Create notification for each user
+    const notificationsRef = collection(firestoreDb, 'notifications')
+
     for (const user of users) {
       const userNotification = {
         ...notificationData,
         recipientId: user.id,
-        userId: parseInt(session.user.id),
+        userId: session.user.id,
       }
 
-      const [savedNotification] = await db.insert(notifications).values(userNotification).returning()
-      savedNotifications.push(savedNotification)
+      const docRef = await addDoc(notificationsRef, userNotification)
+      savedNotifications.push({
+        id: docRef.id,
+        ...userNotification
+      })
     }
 
     // Send real-time notification to all users

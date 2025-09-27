@@ -1,8 +1,14 @@
-import { db } from '@/lib/db'
-import { users, posts, comments, categories, tags, media, newsletterSubscriptions, analytics } from '@/lib/schema'
-import { eq, desc, and, gte, lte } from 'drizzle-orm'
 import { writeFile, mkdir } from 'fs/promises'
 import path from 'path'
+import {
+  collection,
+  query,
+  where,
+  orderBy,
+  getDocs,
+  Timestamp
+} from 'firebase/firestore'
+import { db as firestoreDb } from '@/lib/firebase'
 
 export interface BackupOptions {
   includeAnalytics?: boolean
@@ -44,45 +50,61 @@ export class BackupManager {
       }
 
       // Backup users
-      const userRecords = await db.select().from(users)
+      const usersCollection = collection(firestoreDb, 'users')
+      const usersSnapshot = await getDocs(usersCollection)
+      const userRecords = usersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
       backupData.data.users = userRecords
       backupData.metadata.totalRecords += userRecords.length
 
       // Backup categories
-      const categoryRecords = await db.select().from(categories)
+      const categoriesCollection = collection(firestoreDb, 'categories')
+      const categoriesSnapshot = await getDocs(categoriesCollection)
+      const categoryRecords = categoriesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
       backupData.data.categories = categoryRecords
       backupData.metadata.totalRecords += categoryRecords.length
 
       // Backup tags
-      const tagRecords = await db.select().from(tags)
+      const tagsCollection = collection(firestoreDb, 'tags')
+      const tagsSnapshot = await getDocs(tagsCollection)
+      const tagRecords = tagsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
       backupData.data.tags = tagRecords
       backupData.metadata.totalRecords += tagRecords.length
 
-      // Backup posts with filters
-      const postRecords = await db.select().from(posts)
+      // Backup posts
+      const postsCollection = collection(firestoreDb, 'posts')
+      const postsSnapshot = await getDocs(postsCollection)
+      const postRecords = postsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
       backupData.data.posts = postRecords
       backupData.metadata.totalRecords += postRecords.length
 
       // Backup comments
-      const commentRecords = await db.select().from(comments)
+      const commentsCollection = collection(firestoreDb, 'comments')
+      const commentsSnapshot = await getDocs(commentsCollection)
+      const commentRecords = commentsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
       backupData.data.comments = commentRecords
       backupData.metadata.totalRecords += commentRecords.length
 
       // Backup media (metadata only, not actual files)
       if (options.includeMedia !== false) {
-        const mediaRecords = await db.select().from(media)
+        const mediaCollection = collection(firestoreDb, 'media')
+        const mediaSnapshot = await getDocs(mediaCollection)
+        const mediaRecords = mediaSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
         backupData.data.media = mediaRecords
         backupData.metadata.totalRecords += mediaRecords.length
       }
 
       // Backup newsletter subscriptions
-      const newsletterRecords = await db.select().from(newsletterSubscriptions)
+      const newsletterCollection = collection(firestoreDb, 'newsletterSubscriptions')
+      const newsletterSnapshot = await getDocs(newsletterCollection)
+      const newsletterRecords = newsletterSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
       backupData.data.newsletterSubscriptions = newsletterRecords
       backupData.metadata.totalRecords += newsletterRecords.length
 
       // Backup analytics (optional)
       if (options.includeAnalytics) {
-        const analyticsRecords = await db.select().from(analytics)
+        const analyticsCollection = collection(firestoreDb, 'analytics')
+        const analyticsSnapshot = await getDocs(analyticsCollection)
+        const analyticsRecords = analyticsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
         backupData.data.analytics = analyticsRecords
         backupData.metadata.totalRecords += analyticsRecords.length
       }
@@ -130,9 +152,19 @@ export class BackupManager {
       }
 
       // Get records created/modified since the last backup
-      const newUserRecords = await db.select().from(users).where(gte(users.createdAt, sinceDate))
-      const newPostRecords = await db.select().from(posts).where(gte(posts.createdAt, sinceDate))
-      const newCommentRecords = await db.select().from(comments).where(gte(comments.createdAt, sinceDate))
+      const usersCollection = collection(firestoreDb, 'users')
+      const postsCollection = collection(firestoreDb, 'posts')
+      const commentsCollection = collection(firestoreDb, 'comments')
+
+      const [usersSnapshot, postsSnapshot, commentsSnapshot] = await Promise.all([
+        getDocs(query(usersCollection, where('createdAt', '>=', Timestamp.fromDate(sinceDate)))),
+        getDocs(query(postsCollection, where('createdAt', '>=', Timestamp.fromDate(sinceDate)))),
+        getDocs(query(commentsCollection, where('createdAt', '>=', Timestamp.fromDate(sinceDate))))
+      ])
+
+      const newUserRecords = usersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+      const newPostRecords = postsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+      const newCommentRecords = commentsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
 
       backupData.metadata.totalRecords = newUserRecords.length + newPostRecords.length + newCommentRecords.length
 
@@ -189,42 +221,58 @@ export class BackupManager {
       // Build query based on entity type
       switch (options.entity) {
         case 'posts':
-          data = await db.select().from(posts)
+          const postsCollection = collection(firestoreDb, 'posts')
+          const postsSnapshot = await getDocs(postsCollection)
+          data = postsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
           headers = ['id', 'title', 'slug', 'excerpt', 'content', 'authorId', 'status', 'createdAt', 'updatedAt']
           break
 
         case 'users':
-          data = await db.select().from(users)
+          const usersCollection = collection(firestoreDb, 'users')
+          const usersSnapshot = await getDocs(usersCollection)
+          data = usersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
           headers = ['id', 'email', 'username', 'firstName', 'lastName', 'role', 'createdAt']
           break
 
         case 'comments':
-          data = await db.select().from(comments)
+          const commentsCollection = collection(firestoreDb, 'comments')
+          const commentsSnapshot = await getDocs(commentsCollection)
+          data = commentsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
           headers = ['id', 'content', 'authorName', 'authorEmail', 'postId', 'status', 'createdAt']
           break
 
         case 'categories':
-          data = await db.select().from(categories)
+          const categoriesCollection = collection(firestoreDb, 'categories')
+          const categoriesSnapshot = await getDocs(categoriesCollection)
+          data = categoriesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
           headers = ['id', 'name', 'slug', 'description', 'parentId', 'createdAt']
           break
 
         case 'tags':
-          data = await db.select().from(tags)
+          const tagsCollection = collection(firestoreDb, 'tags')
+          const tagsSnapshot = await getDocs(tagsCollection)
+          data = tagsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
           headers = ['id', 'name', 'slug', 'usageCount', 'createdAt']
           break
 
         case 'media':
-          data = await db.select().from(media)
+          const mediaCollection = collection(firestoreDb, 'media')
+          const mediaSnapshot = await getDocs(mediaCollection)
+          data = mediaSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
           headers = ['id', 'filename', 'originalName', 'url', 'mimeType', 'size', 'createdAt']
           break
 
         case 'newsletter':
-          data = await db.select().from(newsletterSubscriptions)
+          const newsletterCollection = collection(firestoreDb, 'newsletterSubscriptions')
+          const newsletterSnapshot = await getDocs(newsletterCollection)
+          data = newsletterSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
           headers = ['id', 'email', 'firstName', 'lastName', 'isActive', 'createdAt']
           break
 
         case 'analytics':
-          data = await db.select().from(analytics).limit(options.limit || 1000)
+          const analyticsCollection = collection(firestoreDb, 'analytics')
+          const analyticsSnapshot = await getDocs(query(analyticsCollection, orderBy('timestamp', 'desc')))
+          data = analyticsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })).slice(0, options.limit || 1000)
           headers = ['id', 'pageUrl', 'pageTitle', 'userId', 'deviceType', 'timestamp']
           break
       }

@@ -1,6 +1,6 @@
 // Role-Based Access Control utilities
 
-export type UserRole = 'admin' | 'editor' | 'author' | 'user'
+export type UserRole = 'super_admin' | 'admin' | 'editor' | 'author' | 'user'
 
 export interface User {
   id: string
@@ -46,6 +46,10 @@ export const PERMISSIONS = {
 
 // Role-based permissions mapping
 export const ROLE_PERMISSIONS: Record<UserRole, string[]> = {
+  super_admin: [
+    // All permissions
+    ...Object.values(PERMISSIONS),
+  ],
   admin: [
     // All permissions
     ...Object.values(PERMISSIONS),
@@ -105,7 +109,7 @@ export function getRolePermissions(role: UserRole): string[] {
 export function canAccessAdmin(user: User | null): boolean {
   if (!user) return false
 
-  const adminRoles: UserRole[] = ['admin', 'editor']
+  const adminRoles: UserRole[] = ['super_admin', 'admin', 'editor']
   return adminRoles.includes(user.role)
 }
 
@@ -146,6 +150,7 @@ export function getRoleLevel(role: UserRole): number {
     author: 2,
     editor: 3,
     admin: 4,
+    super_admin: 5,
   }
   return levels[role] || 0
 }

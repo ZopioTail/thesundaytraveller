@@ -1,9 +1,16 @@
 import { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import bcrypt from 'bcryptjs'
-import { db } from './db'
-import { users } from './schema'
-import { eq } from 'drizzle-orm'
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  doc,
+  updateDoc,
+  Timestamp
+} from 'firebase/firestore'
+import { db as firestoreDb } from './firebase'
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -19,19 +26,21 @@ export const authOptions: NextAuthOptions = {
         }
 
         try {
-          const user = await db
-            .select()
-            .from(users)
-            .where(eq(users.email, credentials.email))
-            .limit(1)
+          // Get user by email using direct Firestore query
+          const usersRef = collection(firestoreDb, 'users')
+          const q = query(usersRef, where('email', '==', credentials.email), where('isActive', '==', true))
+          const querySnapshot = await getDocs(q)
 
-          if (!user[0]) {
+          if (querySnapshot.empty) {
             return null
           }
 
+          const userDoc = querySnapshot.docs[0]
+          const user = userDoc.data()
+
           const isPasswordValid = await bcrypt.compare(
             credentials.password,
-            user[0].passwordHash
+            user.passwordHash
           )
 
           if (!isPasswordValid) {
@@ -39,18 +48,16 @@ export const authOptions: NextAuthOptions = {
           }
 
           // Update last login
-          await db
-            .update(users)
-            .set({ lastLogin: new Date() })
-            .where(eq(users.id, user[0].id))
+          const userRef = doc(firestoreDb, 'users', userDoc.id)
+          await updateDoc(userRef, { lastLogin: Timestamp.now() })
 
           return {
-            id: user[0].id.toString(),
-            email: user[0].email,
-            name: `${user[0].firstName} ${user[0].lastName}`,
-            username: user[0].username,
-            role: user[0].role,
-            avatar: user[0].avatar,
+            id: userDoc.id,
+            email: user.email,
+            name: `${user.firstName} ${user.lastName}`,
+            username: user.username,
+            role: user.role,
+            avatar: user.avatar,
           }
         } catch (error) {
           console.error('Auth error:', error)
