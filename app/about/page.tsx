@@ -82,7 +82,7 @@ export default function AboutPage() {
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-orange-500/80 via-pink-500/80 to-purple-600/80" />
+          <div className="absolute inset-0 bg-gradient-to-br from-teal-600/80 via-emerald-600/80 to-blue-600/80" />
         </motion.div>
 
         {/* Hero Content */}
@@ -168,7 +168,7 @@ export default function AboutPage() {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   className="text-center group"
                 >
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-orange-500 to-pink-500 rounded-full mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-teal-600 to-emerald-600 rounded-full mb-4 group-hover:scale-110 transition-transform duration-300">
                     <Icon className="icon-xl text-white" />
                   </div>
                   <div className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
@@ -204,7 +204,7 @@ export default function AboutPage() {
 
           <div className="relative">
             {/* Timeline Line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-orange-500 to-pink-500 rounded-full" />
+            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-teal-600 to-emerald-600 rounded-full" />
 
             <div className="space-y-16">
               {timeline.map((item, index) => (
@@ -230,7 +230,7 @@ export default function AboutPage() {
                         />
                       </div>
                       <div className="card-body">
-                        <div className="text-2xl font-bold text-orange-600 mb-2">
+                        <div className="text-2xl font-bold text-teal-600 mb-2">
                           {item.year}
                         </div>
                         <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white">
@@ -245,7 +245,7 @@ export default function AboutPage() {
 
                   {/* Timeline Dot */}
                   <div className="w-2/12 flex justify-center">
-                    <div className="w-4 h-4 bg-orange-500 rounded-full border-4 border-white dark:border-gray-900 shadow-lg" />
+                    <div className="w-4 h-4 bg-teal-600 rounded-full border-4 border-white dark:border-gray-900 shadow-lg" />
                   </div>
 
                   {/* Spacer */}
@@ -258,7 +258,7 @@ export default function AboutPage() {
       </section>
 
       {/* Personal Story Section */}
-      <section className="section-padding bg-gradient-to-br from-orange-500 via-pink-500 to-purple-600">
+      <section className="section-padding bg-gradient-to-br from-teal-600 via-emerald-600 to-blue-600">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -309,7 +309,7 @@ export default function AboutPage() {
                   height={400}
                   className="w-full rounded-2xl shadow-2xl"
                 />
-                <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-white rounded-full flex items-center justify-center text-orange-600 text-2xl font-bold shadow-xl">
+                <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-white rounded-full flex items-center justify-center text-teal-600 text-2xl font-bold shadow-xl">
                   6+
                   <span className="text-sm ml-1">Years</span>
                 </div>
@@ -387,7 +387,7 @@ export default function AboutPage() {
                   className="card card-hover"
                 >
                   <div className="card-body text-center">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-orange-500 to-pink-500 rounded-full mb-4">
+                    <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-teal-600 to-emerald-600 rounded-full mb-4">
                       <Icon className="icon-xl text-white" />
                     </div>
                     <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white">
@@ -400,7 +400,7 @@ export default function AboutPage() {
                       {expertise.skills.map((skill) => (
                         <span
                           key={skill}
-                          className="px-3 py-1 bg-orange-100 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 text-xs font-medium rounded-full"
+                          className="px-3 py-1 bg-teal-100 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400 text-xs font-medium rounded-full"
                         >
                           {skill}
                         </span>

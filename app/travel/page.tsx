@@ -69,7 +69,7 @@ const categories = [
   { name: 'Mountain', icon: MapIcon, color: 'from-green-500 to-emerald-600' },
   { name: 'Water', icon: GlobeAltIcon, color: 'from-blue-500 to-cyan-600' },
   { name: 'Desert', icon: FireIcon, color: 'from-yellow-500 to-orange-600' },
-  { name: 'Trekking', icon: BoltIcon, color: 'from-purple-500 to-pink-600' },
+  { name: 'Trekking', icon: BoltIcon, color: 'from-purple-500 to-emerald-600' },
 ]
 
 export default function AdventurePage() {
@@ -84,7 +84,7 @@ export default function AdventurePage() {
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-orange-500/80 via-pink-500/80 to-purple-600/80" />
+        <div className="absolute inset-0 bg-gradient-to-br from-teal-600/80 via-emerald-600/80 to-blue-600/80" />
         
         <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
           <motion.div
@@ -280,7 +280,7 @@ export default function AdventurePage() {
       </section>
 
       {/* Adventure Stats */}
-      <section className="section-padding bg-gradient-to-br from-orange-500 via-pink-500 to-purple-600">
+      <section className="section-padding bg-gradient-to-br from-teal-600 via-emerald-600 to-blue-600">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

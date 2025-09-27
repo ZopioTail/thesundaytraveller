@@ -157,17 +157,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     unsubscribeFromNotifications,
   }
 
-  return {
-    notifications,
-    unreadCount,
-    addNotification,
-    markAsRead,
-    markAllAsRead,
-    removeNotification,
-    clearAll,
-    subscribeToNotifications,
-    unsubscribeFromNotifications,
-  }
+  return React.createElement(NotificationContext.Provider, { value: contextValue }, children)
 }
 
 // Hook to use notifications

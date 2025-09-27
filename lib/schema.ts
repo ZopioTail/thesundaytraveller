@@ -1,15 +1,15 @@
-// Database schema - install dependencies first: npm install drizzle-orm pg @types/pg
+// Database schema - install dependencies first: npm install drizzle-orm mysql2 @types/mysql
 // Complete database schema for advanced blog management system
 
-import { pgTable, text, integer, timestamp, boolean, varchar, serial, jsonb, index, uniqueIndex } from 'drizzle-orm/pg-core'
+import { mysqlTable, text, int, timestamp, boolean, varchar, serial, json, index, uniqueIndex } from 'drizzle-orm/mysql-core'
 import { relations } from 'drizzle-orm'
-import { eq, desc, asc, and, or, ilike, sql } from 'drizzle-orm'
+import { eq, desc, asc, and, or, like, sql } from 'drizzle-orm'
 
 // Export query builders for use in other files
-export { eq, desc, asc, and, or, ilike, sql }
+export { eq, desc, asc, and, or, sql }
 
 // Users table with role-based access control
-export const users = pgTable('users', {
+export const users = mysqlTable('users', {
   id: serial('id').primaryKey(),
   email: varchar('email', { length: 255 }).notNull().unique(),
   username: varchar('username', { length: 100 }).notNull().unique(),
@@ -30,16 +30,16 @@ export const users = pgTable('users', {
 }))
 
 // Categories for organizing content
-export const categories: any = pgTable('categories', {
+export const categories = mysqlTable('categories', {
   id: serial('id').primaryKey(),
   name: varchar('name', { length: 100 }).notNull(),
   slug: varchar('slug', { length: 100 }).notNull().unique(),
   description: text('description'),
   color: varchar('color', { length: 7 }).default('#6366f1'), // hex color
   icon: varchar('icon', { length: 50 }),
-  parentId: integer('parent_id').references(() => categories.id),
+  parentId: int('parent_id').references((): any => categories.id, { onDelete: 'cascade' }),
   isActive: boolean('is_active').notNull().default(true),
-  sortOrder: integer('sort_order').default(0),
+  sortOrder: int('sort_order').default(0),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
 }, (table) => ({
@@ -48,12 +48,12 @@ export const categories: any = pgTable('categories', {
 }))
 
 // Tags for content tagging
-export const tags = pgTable('tags', {
+export const tags = mysqlTable('tags', {
   id: serial('id').primaryKey(),
   name: varchar('name', { length: 50 }).notNull(),
   slug: varchar('slug', { length: 50 }).notNull().unique(),
   color: varchar('color', { length: 7 }).default('#10b981'),
-  usageCount: integer('usage_count').default(0),
+  usageCount: int('usage_count').default(0),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 }, (table) => ({
   slugIdx: uniqueIndex('tags_slug_idx').on(table.slug),
@@ -61,14 +61,14 @@ export const tags = pgTable('tags', {
 }))
 
 // Posts/Blog articles
-export const posts = pgTable('posts', {
+export const posts = mysqlTable('posts', {
   id: serial('id').primaryKey(),
   title: varchar('title', { length: 255 }).notNull(),
   slug: varchar('slug', { length: 255 }).notNull().unique(),
   excerpt: text('excerpt'),
   content: text('content').notNull(),
   featuredImage: text('featured_image'),
-  authorId: integer('author_id').notNull().references(() => users.id),
+  authorId: int('author_id').notNull().references(() => users.id),
   status: varchar('status', { length: 20 }).notNull().default('draft'), // draft, published, archived
   isFeatured: boolean('is_featured').default(false),
   publishedAt: timestamp('published_at'),
@@ -77,10 +77,10 @@ export const posts = pgTable('posts', {
   seoTitle: varchar('seo_title', { length: 60 }),
   seoDescription: varchar('seo_description', { length: 160 }),
   seoKeywords: text('seo_keywords'),
-  viewCount: integer('view_count').default(0),
-  likeCount: integer('like_count').default(0),
-  commentCount: integer('comment_count').default(0),
-  readingTime: integer('reading_time'), // in minutes
+  viewCount: int('view_count').default(0),
+  likeCount: int('like_count').default(0),
+  commentCount: int('comment_count').default(0),
+  readingTime: int('reading_time'), // in minutes
   difficulty: varchar('difficulty', { length: 20 }), // beginner, intermediate, advanced
   location: varchar('location', { length: 255 }),
 }, (table) => ({
@@ -92,14 +92,14 @@ export const posts = pgTable('posts', {
 }))
 
 // News articles
-export const news = pgTable('news', {
+export const news = mysqlTable('news', {
   id: serial('id').primaryKey(),
   title: varchar('title', { length: 255 }).notNull(),
   slug: varchar('slug', { length: 255 }).notNull().unique(),
   excerpt: text('excerpt'),
   content: text('content').notNull(),
   featuredImage: text('featured_image'),
-  authorId: integer('author_id').notNull().references(() => users.id),
+  authorId: int('author_id').notNull().references(() => users.id),
   status: varchar('status', { length: 20 }).notNull().default('draft'),
   isBreaking: boolean('is_breaking').default(false),
   publishedAt: timestamp('published_at'),
@@ -107,7 +107,7 @@ export const news = pgTable('news', {
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
   seoTitle: varchar('seo_title', { length: 60 }),
   seoDescription: varchar('seo_description', { length: 160 }),
-  viewCount: integer('view_count').default(0),
+  viewCount: int('view_count').default(0),
 }, (table) => ({
   slugIdx: uniqueIndex('news_slug_idx').on(table.slug),
   authorIdx: index('news_author_idx').on(table.authorId),
@@ -116,7 +116,7 @@ export const news = pgTable('news', {
 }))
 
 // Destinations
-export const destinations = pgTable('destinations', {
+export const destinations = mysqlTable('destinations', {
   id: serial('id').primaryKey(),
   name: varchar('name', { length: 255 }).notNull(),
   slug: varchar('slug', { length: 255 }).notNull().unique(),
@@ -124,15 +124,15 @@ export const destinations = pgTable('destinations', {
   longDescription: text('long_description'),
   country: varchar('country', { length: 100 }).notNull(),
   region: varchar('region', { length: 100 }),
-  coordinates: jsonb('coordinates'), // {lat: number, lng: number}
+  coordinates: json('coordinates'), // {lat: number, lng: number}
   featuredImage: text('featured_image'),
-  images: jsonb('images'), // array of image URLs
+  images: json('images'), // array of image URLs
   bestTimeToVisit: varchar('best_time_to_visit', { length: 255 }),
   currency: varchar('currency', { length: 10 }),
   language: varchar('language', { length: 100 }),
   timezone: varchar('timezone', { length: 50 }),
   visaInfo: text('visa_info'),
-  authorId: integer('author_id').notNull().references(() => users.id),
+  authorId: int('author_id').notNull().references(() => users.id),
   status: varchar('status', { length: 20 }).notNull().default('draft'),
   isFeatured: boolean('is_featured').default(false),
   publishedAt: timestamp('published_at'),
@@ -141,8 +141,8 @@ export const destinations = pgTable('destinations', {
   seoTitle: varchar('seo_title', { length: 60 }),
   seoDescription: varchar('seo_description', { length: 160 }),
   seoKeywords: text('seo_keywords'),
-  viewCount: integer('view_count').default(0),
-  rating: integer('rating'), // 1-5 stars
+  viewCount: int('view_count').default(0),
+  rating: int('rating'), // 1-5 stars
 }, (table) => ({
   slugIdx: uniqueIndex('destinations_slug_idx').on(table.slug),
   authorIdx: index('destinations_author_idx').on(table.authorId),
@@ -151,20 +151,20 @@ export const destinations = pgTable('destinations', {
 }))
 
 // Media library
-export const media = pgTable('media', {
+export const media = mysqlTable('media', {
   id: serial('id').primaryKey(),
   filename: varchar('filename', { length: 255 }).notNull(),
   originalName: varchar('original_name', { length: 255 }).notNull(),
   url: text('url').notNull(),
   thumbnailUrl: text('thumbnail_url'),
   mimeType: varchar('mime_type', { length: 100 }).notNull(),
-  size: integer('size').notNull(), // in bytes
-  width: integer('width'),
-  height: integer('height'),
+  size: int('size').notNull(), // in bytes
+  width: int('width'),
+  height: int('height'),
   alt: text('alt'),
   caption: text('caption'),
   folder: varchar('folder', { length: 100 }).default('general'),
-  uploadedBy: integer('uploaded_by').notNull().references(() => users.id),
+  uploadedBy: int('uploaded_by').notNull().references(() => users.id),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 }, (table) => ({
   filenameIdx: index('media_filename_idx').on(table.filename),
@@ -173,15 +173,15 @@ export const media = pgTable('media', {
 }))
 
 // Comments system
-export const comments: any = pgTable('comments', {
+export const comments = mysqlTable('comments', {
   id: serial('id').primaryKey(),
   content: text('content').notNull(),
   authorName: varchar('author_name', { length: 100 }).notNull(),
   authorEmail: varchar('author_email', { length: 255 }).notNull(),
   authorWebsite: varchar('author_website', { length: 255 }),
-  postId: integer('post_id').references(() => posts.id),
-  newsId: integer('news_id').references(() => news.id),
-  parentId: integer('parent_id').references(() => comments.id), // for nested comments
+  postId: int('post_id').references(() => posts.id),
+  newsId: int('news_id').references(() => news.id),
+  parentId: int('parent_id').references((): any => comments.id), // for nested comments
   status: varchar('status', { length: 20 }).notNull().default('pending'), // pending, approved, spam
   isAnonymous: boolean('is_anonymous').default(false),
   ipAddress: varchar('ip_address', { length: 45 }),
@@ -196,14 +196,14 @@ export const comments: any = pgTable('comments', {
 }))
 
 // Newsletter subscriptions
-export const newsletterSubscriptions = pgTable('newsletter_subscriptions', {
+export const newsletterSubscriptions = mysqlTable('newsletter_subscriptions', {
   id: serial('id').primaryKey(),
   email: varchar('email', { length: 255 }).notNull().unique(),
   firstName: varchar('first_name', { length: 100 }),
   lastName: varchar('last_name', { length: 100 }),
   isActive: boolean('is_active').notNull().default(true),
   subscriptionSource: varchar('subscription_source', { length: 100 }).default('website'),
-  preferences: jsonb('preferences'), // {categories: string[], frequency: string}
+  preferences: json('preferences'), // {categories: string[], frequency: string}
   unsubscribedAt: timestamp('unsubscribed_at'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 }, (table) => ({
@@ -212,7 +212,7 @@ export const newsletterSubscriptions = pgTable('newsletter_subscriptions', {
 }))
 
 // Social media posts
-export const socialPosts = pgTable('social_posts', {
+export const socialPosts = mysqlTable('social_posts', {
   id: serial('id').primaryKey(),
   platform: varchar('platform', { length: 50 }).notNull(), // twitter, facebook, instagram, linkedin
   content: text('content').notNull(),
@@ -221,8 +221,8 @@ export const socialPosts = pgTable('social_posts', {
   scheduledAt: timestamp('scheduled_at'),
   publishedAt: timestamp('published_at'),
   status: varchar('status', { length: 20 }).notNull().default('draft'), // draft, scheduled, published, failed
-  engagement: jsonb('engagement'), // {likes: number, shares: number, comments: number}
-  createdBy: integer('created_by').notNull().references(() => users.id),
+  engagement: json('engagement'), // {likes: number, shares: number, comments: number}
+  createdBy: int('created_by').notNull().references(() => users.id),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 }, (table) => ({
   platformIdx: index('social_platform_idx').on(table.platform),
@@ -231,7 +231,7 @@ export const socialPosts = pgTable('social_posts', {
 }))
 
 // Analytics and tracking
-export const analytics = pgTable('analytics', {
+export const analytics = mysqlTable('analytics', {
   id: serial('id').primaryKey(),
   pageUrl: text('page_url').notNull(),
   pageTitle: varchar('page_title', { length: 255 }),
@@ -239,7 +239,7 @@ export const analytics = pgTable('analytics', {
   ipAddress: varchar('ip_address', { length: 45 }),
   referrer: text('referrer'),
   sessionId: varchar('session_id', { length: 255 }),
-  userId: integer('user_id').references(() => users.id),
+  userId: int('user_id').notNull().references(() => users.id),
   deviceType: varchar('device_type', { length: 20 }), // desktop, mobile, tablet
   browser: varchar('browser', { length: 50 }),
   country: varchar('country', { length: 100 }),
@@ -253,10 +253,10 @@ export const analytics = pgTable('analytics', {
 }))
 
 // Settings and configuration
-export const settings = pgTable('settings', {
+export const settings = mysqlTable('settings', {
   id: serial('id').primaryKey(),
   key: varchar('key', { length: 100 }).notNull().unique(),
-  value: jsonb('value'),
+  value: json('value'),
   description: text('description'),
   category: varchar('category', { length: 50 }).default('general'),
   isPublic: boolean('is_public').default(false),
@@ -268,7 +268,7 @@ export const settings = pgTable('settings', {
 }))
 
 // Notifications system
-export const notifications = pgTable('notifications', {
+export const notifications = mysqlTable('notifications', {
   id: serial('id').primaryKey(),
   type: varchar('type', { length: 50 }).notNull(), // comment, like, newsletter, system, admin, social, backup, security
   title: varchar('title', { length: 255 }).notNull(),
@@ -276,9 +276,9 @@ export const notifications = pgTable('notifications', {
   priority: varchar('priority', { length: 20 }).notNull().default('medium'), // low, medium, high, urgent
   read: boolean('read').notNull().default(false),
   actionUrl: text('action_url'),
-  metadata: jsonb('metadata'),
-  userId: integer('user_id').references(() => users.id), // sender
-  recipientId: integer('recipient_id').references(() => users.id), // receiver
+  metadata: json('metadata'),
+  userId: int('user_id').notNull().references(() => users.id), // sender
+  recipientId: int('recipient_id').notNull().references(() => users.id), // receiver
   createdAt: timestamp('created_at').notNull().defaultNow(),
   expiresAt: timestamp('expires_at'),
 }, (table) => ({
@@ -290,13 +290,13 @@ export const notifications = pgTable('notifications', {
 }))
 
 // Backup logs
-export const backups = pgTable('backups', {
+export const backups = mysqlTable('backups', {
   id: serial('id').primaryKey(),
   filename: varchar('filename', { length: 255 }).notNull(),
-  size: integer('size').notNull(), // in bytes
+  size: int('size').notNull(), // in bytes
   type: varchar('type', { length: 50 }).notNull(), // full, incremental, media
   status: varchar('status', { length: 20 }).notNull(), // success, failed, in_progress
-  createdBy: integer('created_by').notNull().references(() => users.id),
+  createdBy: int('created_by').notNull().references(() => users.id),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 }, (table) => ({
   statusIdx: index('backups_status_idx').on(table.status),
@@ -344,23 +344,23 @@ export const newsRelations = relations(news, ({ one, many }) => ({
 }))
 
 // Junction tables for many-to-many relationships
-export const postsToCategories = pgTable('posts_to_categories', {
-  postId: integer('post_id').notNull().references(() => posts.id),
-  categoryId: integer('category_id').notNull().references(() => categories.id),
+export const postsToCategories = mysqlTable('posts_to_categories', {
+  postId: int('post_id').notNull().references(() => posts.id),
+  categoryId: int('category_id').notNull().references(() => categories.id),
 }, (table) => ({
   pk: uniqueIndex('posts_to_categories_pk').on(table.postId, table.categoryId),
 }))
 
-export const postsToTags = pgTable('posts_to_tags', {
-  postId: integer('post_id').notNull().references(() => posts.id),
-  tagId: integer('tag_id').notNull().references(() => tags.id),
+export const postsToTags = mysqlTable('posts_to_tags', {
+  postId: int('post_id').notNull().references(() => posts.id),
+  tagId: int('tag_id').notNull().references(() => tags.id),
 }, (table) => ({
   pk: uniqueIndex('posts_to_tags_pk').on(table.postId, table.tagId),
 }))
 
-export const newsToCategories = pgTable('news_to_categories', {
-  newsId: integer('news_id').notNull().references(() => news.id),
-  categoryId: integer('category_id').notNull().references(() => categories.id),
+export const newsToCategories = mysqlTable('news_to_categories', {
+  newsId: int('news_id').notNull().references(() => news.id),
+  categoryId: int('category_id').notNull().references(() => categories.id),
 }, (table) => ({
   pk: uniqueIndex('news_to_categories_pk').on(table.newsId, table.categoryId),
 }))

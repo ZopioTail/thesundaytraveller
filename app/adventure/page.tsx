@@ -79,7 +79,7 @@ const categories = [
   { name: 'Extreme Sports', icon: BoltIcon, color: 'from-red-500 to-orange-600' },
   { name: 'Water Sports', icon: GlobeAltIcon, color: 'from-blue-500 to-cyan-600' },
   { name: 'Mountain Sports', icon: MapIcon, color: 'from-green-500 to-emerald-600' },
-  { name: 'Air Sports', icon: FireIcon, color: 'from-purple-500 to-pink-600' },
+  { name: 'Air Sports', icon: FireIcon, color: 'from-teal-500 to-emerald-600' },
 ]
 
 export default function AdventurePage() {
@@ -94,7 +94,7 @@ export default function AdventurePage() {
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-orange-500/80 via-pink-500/80 to-purple-600/80" />
+        <div className="absolute inset-0 bg-gradient-to-br from-teal-600/80 via-emerald-600/80 to-blue-600/80" />
         
         <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
           <motion.div
@@ -215,7 +215,7 @@ export default function AdventurePage() {
                       {/* Adventure Badges */}
                       <div className="absolute top-4 left-4 flex flex-col space-y-2">
                         {adventure.featured && (
-                          <span className="px-3 py-1 bg-orange-500 text-white text-xs font-semibold rounded-full">
+                          <span className="px-3 py-1 bg-teal-500 text-white text-xs font-semibold rounded-full">
                             Featured
                           </span>
                         )}
@@ -242,7 +242,7 @@ export default function AdventurePage() {
                     </div>
 
                     <div className="card-body">
-                      <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors duration-200">
+                      <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-200">
                         {adventure.title}
                       </h3>
                       <p className="text-gray-600 dark:text-gray-400 mb-4">
@@ -258,7 +258,7 @@ export default function AdventurePage() {
                           {adventure.highlights.slice(0, 3).map((highlight) => (
                             <span
                               key={highlight}
-                              className="px-2 py-1 bg-orange-100 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 text-xs rounded-full"
+                              className="px-2 py-1 bg-teal-100 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400 text-xs rounded-full"
                             >
                               {highlight}
                             </span>
@@ -273,7 +273,7 @@ export default function AdventurePage() {
                             {adventure.category}
                           </span>
                         </div>
-                        <div className="flex items-center text-orange-600 dark:text-orange-400 font-medium text-sm">
+                        <div className="flex items-center text-teal-600 dark:text-teal-400 font-medium text-sm">
                           Read More
                           <svg className="ml-2 icon-sm group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -290,7 +290,7 @@ export default function AdventurePage() {
       </section>
 
       {/* Adventure Stats */}
-      <section className="section-padding bg-gradient-to-br from-orange-500 via-pink-500 to-purple-600">
+      <section className="section-padding bg-gradient-to-br from-teal-600 via-emerald-600 to-blue-600">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

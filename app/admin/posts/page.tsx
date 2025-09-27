@@ -56,66 +56,26 @@ export default function PostsPage() {
   const canPublish = hasPermission(session?.user as any, PERMISSIONS.POST_PUBLISH)
 
   useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      setPosts([
-        {
-          id: '1',
-          title: 'What Adventure Sports Taught This Soldier About Life',
-          slug: 'what-adventure-sports-taught-this-soldier-about-life',
-          excerpt: 'The crisp salute, the well-creased uniform, the structured life of the armed forces – these have been my constants for years...',
-          status: 'published',
-          author: {
-            name: 'Rabindra Sahu',
-            avatar: '/images/20230813_131727.jpg'
-          },
-          categories: [
-            { name: 'Profession', color: '#8b5cf6' }
-          ],
-          featuredImage: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400',
-          viewCount: 1234,
-          publishedAt: '2025-08-28T10:00:00Z',
-          createdAt: '2025-08-27T15:30:00Z'
-        },
-        {
-          id: '2',
-          title: 'Life Beyond the Uniform: Curtains, Coffee & Calm',
-          slug: 'life-beyond-the-uniform-curtains-coffee-calm',
-          excerpt: 'They say a uniform defines you. It speaks of duty, discipline, and perhaps a certain seriousness...',
-          status: 'published',
-          author: {
-            name: 'Rabindra Sahu',
-            avatar: '/images/20230813_131727.jpg'
-          },
-          categories: [
-            { name: 'Art & Lifestyle', color: '#f59e0b' }
-          ],
-          featuredImage: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400',
-          viewCount: 892,
-          publishedAt: '2025-08-26T14:00:00Z',
-          createdAt: '2025-08-25T09:15:00Z'
-        },
-        {
-          id: '3',
-          title: 'Flying Drones, Teaching Peace & Trading Stocks',
-          slug: 'flying-drones-teaching-peace-trading-stocks',
-          excerpt: 'Most days, you\'ll find me in uniform, focused on the critical responsibilities that come with serving...',
-          status: 'draft',
-          author: {
-            name: 'Rabindra Sahu',
-            avatar: '/images/20230813_131727.jpg'
-          },
-          categories: [
-            { name: 'Profession', color: '#8b5cf6' }
-          ],
-          featuredImage: 'https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=400',
-          viewCount: 0,
-          publishedAt: '',
-          createdAt: '2025-08-28T08:45:00Z'
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch('/api/admin/posts')
+        if (response.ok) {
+          const data = await response.json()
+          setPosts(data)
+        } else {
+          // Show empty state if API fails
+          setPosts([])
         }
-      ])
-      setLoading(false)
-    }, 1000)
+      } catch (error) {
+        console.error('Failed to fetch posts:', error)
+        // Show empty state on error
+        setPosts([])
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchPosts()
   }, [])
 
   const getStatusBadge = (status: string) => {

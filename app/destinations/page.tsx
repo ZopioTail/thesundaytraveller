@@ -327,7 +327,7 @@ export default function DestinationsPage() {
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-orange-500/80 via-pink-500/80 to-purple-600/80" />
+        <div className="absolute inset-0 bg-gradient-to-br from-teal-600/80 via-emerald-600/80 to-blue-600/80" />
         
         <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
           <motion.div
@@ -389,8 +389,8 @@ export default function DestinationsPage() {
                 onClick={() => setFilterContinent(continent)}
                 className={`px-6 py-3 rounded-lg font-semibold transition-all duration-200 ${
                   filterContinent === continent
-                    ? 'bg-orange-500 text-white shadow-lg'
-                    : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-orange-100 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600'
+                    ? 'bg-teal-600 text-white shadow-lg'
+                    : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-teal-100 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600'
                 }`}
               >
                 {continent}
@@ -463,7 +463,7 @@ export default function DestinationsPage() {
                         {country.highlights.slice(0, 3).map((highlight) => (
                           <span
                             key={highlight}
-                            className="px-2 py-1 bg-orange-100 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 text-xs rounded-full"
+                            className="px-2 py-1 bg-teal-100 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400 text-xs rounded-full"
                           >
                             {highlight}
                           </span>
@@ -511,7 +511,7 @@ export default function DestinationsPage() {
                     </div>
 
                     {/* View Details Button */}
-                    <div className="mt-4 flex items-center text-orange-600 dark:text-orange-400 font-medium text-sm group-hover:text-orange-700 dark:group-hover:text-orange-300">
+                    <div className="mt-4 flex items-center text-teal-600 dark:text-teal-400 font-medium text-sm group-hover:text-teal-700 dark:group-hover:text-teal-300">
                       View Details
                       <svg className="ml-2 icon-sm group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -587,9 +587,9 @@ export default function DestinationsPage() {
                     {selectedCountry.highlights.map((highlight) => (
                       <div
                         key={highlight}
-                        className="flex items-center space-x-2 p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg"
+                        className="flex items-center space-x-2 p-3 bg-teal-50 dark:bg-teal-900/20 rounded-lg"
                       >
-                        <div className="w-2 h-2 bg-orange-500 rounded-full flex-shrink-0" />
+                        <div className="w-2 h-2 bg-teal-500 rounded-full flex-shrink-0" />
                         <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                           {highlight}
                         </span>
@@ -641,7 +641,7 @@ export default function DestinationsPage() {
       </AnimatePresence>
 
       {/* CTA Section */}
-      <section className="section-padding bg-gradient-to-br from-orange-500 via-pink-500 to-purple-600">
+      <section className="section-padding bg-gradient-to-br from-teal-600 via-emerald-600 to-blue-600">
         <div className="container-custom text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

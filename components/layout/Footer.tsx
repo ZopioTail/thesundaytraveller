@@ -87,7 +87,7 @@ export default function Footer() {
       {/* Animated background elements */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-10 left-10 w-32 h-32 bg-orange-500 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-20 right-20 w-40 h-40 bg-pink-500 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute bottom-20 right-20 w-40 h-40 bg-emerald-500 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
         <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-purple-500 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
       </div>
 
@@ -108,7 +108,7 @@ export default function Footer() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="mb-8"
             >
-              <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-orange-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
+              <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-teal-500 via-emerald-500 to-blue-500 bg-clip-text text-transparent">
                 Join the Journey
               </h2>
               <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
@@ -129,7 +129,7 @@ export default function Footer() {
                   placeholder="Enter your email address"
                   className="w-full px-6 py-4 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 focus:bg-white/20"
                 />
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-500/20 to-pink-500/20 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-teal-600/20 to-emerald-600/20 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
               </div>
               <motion.button
                 whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(249, 115, 22, 0.3)" }}
@@ -181,7 +181,7 @@ export default function Footer() {
                     boxShadow: "0 10px 30px rgba(249, 115, 22, 0.3)"
                   }}
                   whileTap={{ scale: 0.9 }}
-                  className="p-4 bg-gradient-to-br from-gray-800 to-gray-700 hover:from-orange-600 hover:to-pink-600 rounded-xl transition-all duration-300 shadow-lg hover:shadow-2xl border border-gray-700 hover:border-orange-500"
+                  className="p-4 bg-gradient-to-br from-gray-800 to-gray-700 hover:from-teal-600 hover:to-emerald-600 rounded-xl transition-all duration-300 shadow-lg hover:shadow-2xl border border-gray-700 hover:border-teal-500"
                   aria-label={social.name}
                 >
                   {social.icon}
@@ -203,7 +203,7 @@ export default function Footer() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 + sectionIndex * 0.1 }}
             >
-              <h3 className="text-xl font-bold mb-6 bg-gradient-to-r from-orange-400 to-pink-400 bg-clip-text text-transparent">
+              <h3 className="text-xl font-bold mb-6 bg-gradient-to-r from-teal-500 to-emerald-500 bg-clip-text text-transparent">
                 {section.title}
               </h3>
               <ul className="space-y-4">
@@ -219,7 +219,7 @@ export default function Footer() {
                       href={link.href}
                       className="group flex items-center text-gray-300 hover:text-white transition-all duration-300 text-base"
                     >
-                      <span className="w-2 h-2 bg-orange-500 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <span className="w-2 h-2 bg-teal-500 rounded-full mr-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       <span className="group-hover:translate-x-2 transition-transform duration-300">
                         {link.name}
                       </span>
@@ -283,7 +283,7 @@ export default function Footer() {
                 >
                   <Link
                     href={link.href}
-                    className="text-gray-400 hover:text-orange-400 text-base transition-all duration-300 hover:underline underline-offset-4"
+                    className="text-gray-400 hover:text-teal-400 text-base transition-all duration-300 hover:underline underline-offset-4"
                   >
                     {link.name}
                   </Link>

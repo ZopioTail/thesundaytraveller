@@ -65,10 +65,10 @@ const heroImages = [
     stats: { service: '10+ yrs', missions: '25+', awards: '8' }
   },
   {
-    url: 'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
-    alt: 'Portugal travel destination',
+    url: '/images/optimized/thailand-main.jpg',
+    alt: 'Thailand travel destination',
     title: 'Destinations That Transform',
-    subtitle: 'From Portugal\'s cobblestone streets to Nepal\'s towering peaks - each destination offers unique lessons in culture, adventure, and personal growth',
+    subtitle: 'From Thailand\'s bustling streets to Vietnam\'s serene landscapes - each destination offers unique lessons in culture, adventure, and personal growth',
     badge: 'Travel Guides',
     cta: 'Discover Places',
     stats: { continents: '6', cultures: '30+', photos: '2500+' }
@@ -89,7 +89,7 @@ const stats = [
     value: 2500,
     label: 'Photos Captured',
     suffix: '+',
-    color: 'from-purple-500 to-pink-500',
+    color: 'from-emerald-500 to-teal-500',
     description: 'Moments frozen in time'
   },
   {
@@ -130,29 +130,29 @@ const categories = [
   {
     name: 'Destinations',
     description: 'Explore breathtaking locations and hidden gems around the world',
-    image: 'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: '/images/optimized/thailand-main.jpg',
     href: '/destinations',
     color: 'from-blue-500 to-cyan-500'
   },
   {
     name: 'Adventure',
     description: 'Thrilling outdoor experiences and extreme sports that push boundaries',
-    image: 'https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: '/images/optimized/skydiving.jpg',
     href: '/adventure',
     color: 'from-orange-500 to-red-500'
   },
   {
     name: 'Culture',
     description: 'Deep dives into local traditions, art, and meaningful life experiences',
-    image: 'https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    image: '/images/optimized/vietnam-main.jpg',
     href: '/culture',
-    color: 'from-purple-500 to-pink-500'
+    color: 'from-emerald-500 to-teal-500'
   },
   {
     name: 'Food & Lifestyle',
     description: 'Culinary adventures, minimalist living, and intentional lifestyle choices',
-    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-    href: '/food-lifestyle',
+    image: '/images/optimized/mexico-main.jpg',
+    href: '/lifestyle',
     color: 'from-green-500 to-teal-500'
   }
 ]
@@ -162,19 +162,19 @@ const testimonials = [
     quote: "The Sunday Traveller's guides helped me discover hidden gems I never would have found on my own. Absolutely incredible insights!",
     author: "Sarah Johnson",
     location: "New York, USA",
-    avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80"
+    avatar: "/images/optimized/author-profile.jpg"
   },
   {
     quote: "Thanks to these detailed travel stories, I felt prepared and excited for every destination. The cultural insights were invaluable.",
     author: "Marco Rodriguez",
-    location: "Barcelona, Spain", 
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80"
+    location: "Barcelona, Spain",
+    avatar: "/images/optimized/gallery-1.jpg"
   },
   {
     quote: "The photography and storytelling transport you to each destination. I've planned my entire year of travel based on these guides!",
     author: "Emma Chen",
     location: "Singapore",
-    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80"
+    avatar: "/images/optimized/gallery-2.jpg"
   }
 ]
 
@@ -376,7 +376,7 @@ export default function HomePage() {
               >
                 <div className="flex -space-x-2">
                   {[1, 2, 3, 4, 5].map((i) => (
-                    <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-r from-orange-400 to-pink-400 border-2 border-white" />
+                    <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 border-2 border-white" />
                   ))}
                 </div>
                 <span className="ml-3">Trusted by 10,000+ travelers worldwide</span>
@@ -420,7 +420,7 @@ export default function HomePage() {
               {index === currentSlide && (
                 <motion.div
                   layoutId="activeIndicator"
-                  className="absolute inset-0 bg-gradient-to-r from-orange-400 to-pink-400 rounded-full"
+                  className="absolute inset-0 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full"
                 />
               )}
             </motion.button>
@@ -457,7 +457,7 @@ export default function HomePage() {
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_25%,rgba(59,130,246,0.3),transparent_50%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_75%,rgba(236,72,153,0.3),transparent_50%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_75%,rgba(13,148,136,0.3),transparent_50%)]" />
         </div>
 
         <div className="container-custom relative">
@@ -615,7 +615,7 @@ export default function HomePage() {
             </motion.div>
 
             <h2 className="text-5xl md:text-7xl font-bold mb-8 text-white">
-              My Global <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Journey</span>
+              My Global <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-emerald-400 bg-clip-text text-transparent">Journey</span>
             </h2>
             <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
               Follow the path of adventure across 47+ countries and 6 continents. Each flag represents a unique story,
@@ -719,7 +719,7 @@ export default function HomePage() {
             </motion.div>
 
             <h2 className="text-5xl md:text-7xl font-bold mb-8">
-              Explore by <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 bg-clip-text text-transparent">Category</span>
+              Explore by <span className="bg-gradient-to-r from-purple-600 via-emerald-600 to-teal-500 bg-clip-text text-transparent">Category</span>
             </h2>
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-4xl mx-auto leading-relaxed">
               Dive into different types of travel experiences, from adrenaline-pumping adventures to peaceful cultural immersions and everything in between.
@@ -824,172 +824,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Enhanced Testimonials Section */}
-      <section className="relative section-padding bg-gradient-to-br from-orange-500 via-pink-500 to-purple-600 overflow-hidden">
-        {/* Background Animation */}
-        <div className="absolute inset-0">
-          {testimonialParticles.map((particle) => (
-            <motion.div
-              key={particle.id}
-              className="absolute w-2 h-2 bg-white rounded-full opacity-20"
-              style={{
-                left: `${particle.left}%`,
-                top: `${particle.top}%`,
-              }}
-              animate={{
-                y: [0, -30, 0],
-                opacity: [0.2, 0.6, 0.2],
-                scale: [1, 1.5, 1],
-              }}
-              transition={{
-                duration: particle.duration + 1,
-                repeat: Infinity,
-                delay: particle.delay,
-              }}
-            />
-          ))}
-        </div>
-
-        <div className="container-custom relative">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <motion.div
-              initial={{ scale: 0.8 }}
-              whileInView={{ scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-sm rounded-full px-6 py-3 mb-8 border border-white/30"
-            >
-              <HeartIcon className="w-5 h-5 text-pink-200" />
-              <span className="text-sm font-semibold text-white">Traveler Reviews</span>
-            </motion.div>
-
-            <h2 className="text-5xl md:text-7xl font-bold mb-8 text-white">
-              What Travelers Say
-            </h2>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="max-w-5xl mx-auto"
-          >
-            <div className="glass-card p-8 md:p-16 relative overflow-hidden">
-              {/* Decorative elements */}
-              <div className="absolute top-8 left-8 text-6xl text-white/20 font-serif">&ldquo;</div>
-              <div className="absolute bottom-8 right-8 text-6xl text-white/20 font-serif rotate-180">&rdquo;</div>
-
-              <div className="flex justify-center mb-8">
-                {[...Array(5)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ scale: 0, rotate: -180 }}
-                    animate={{ scale: 1, rotate: 0 }}
-                    transition={{ duration: 0.5, delay: i * 0.1 }}
-                  >
-                    <StarIconSolid className="w-8 h-8 text-yellow-400 mx-1" />
-                  </motion.div>
-                ))}
-              </div>
-
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentTestimonial}
-                  initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -30, scale: 1.1 }}
-                  transition={{ duration: 0.6 }}
-                  className="text-center"
-                >
-                  <blockquote className="text-2xl md:text-3xl font-light text-white mb-12 italic leading-relaxed">
-                    &ldquo;{testimonials[currentTestimonial].quote}&rdquo;
-                  </blockquote>
-
-                  <div className="flex items-center justify-center space-x-6">
-                    <motion.div
-                      whileHover={{ scale: 1.1 }}
-                      className="relative"
-                    >
-                      <Image
-                        src={testimonials[currentTestimonial].avatar}
-                        alt={testimonials[currentTestimonial].author}
-                        width={64}
-                        height={64}
-                        className="rounded-full border-4 border-white/30 shadow-lg"
-                      />
-                      <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-400 rounded-full border-2 border-white" />
-                    </motion.div>
-
-                    <div className="text-left">
-                      <div className="text-xl font-bold text-white mb-1">
-                        {testimonials[currentTestimonial].author}
-                      </div>
-                      <div className="text-white/80 text-base flex items-center">
-                        <MapPinIcon className="w-4 h-4 mr-2" />
-                        {testimonials[currentTestimonial].location}
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-
-              {/* Testimonial Navigation */}
-              <div className="flex justify-center mt-12 space-x-3">
-                {testimonials.map((_, index) => (
-                  <motion.button
-                    key={index}
-                    onClick={() => setCurrentTestimonial(index)}
-                    whileHover={{ scale: 1.2 }}
-                    whileTap={{ scale: 0.8 }}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                      index === currentTestimonial
-                        ? 'bg-white scale-125'
-                        : 'bg-white/50 hover:bg-white/70'
-                    }`}
-                  />
-                ))}
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Trust Indicators */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white"
-          >
-            {[
-              { number: '10K+', label: 'Happy Travelers' },
-              { number: '4.9/5', label: 'Average Rating' },
-              { number: '500+', label: 'Reviews' },
-              { number: '47+', label: 'Countries Covered' }
-            ].map((item, index) => (
-              <motion.div
-                key={item.label}
-                initial={{ opacity: 0, scale: 0 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
-              >
-                <div className="text-3xl font-bold mb-2">{item.number}</div>
-                <div className="text-white/80">{item.label}</div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
 
       {/* Enhanced Testimonials Section */}
-      <section className="relative section-padding bg-gradient-to-br from-orange-500 via-pink-500 to-purple-600 overflow-hidden">
+      <section className="relative section-padding bg-gradient-to-br from-teal-600 via-emerald-600 to-blue-600 overflow-hidden">
         {/* Background Animation */}
         <div className="absolute inset-0">
           {[...Array(20)].map((_, i) => (
@@ -1029,11 +866,11 @@ export default function HomePage() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-sm rounded-full px-6 py-3 mb-8 border border-white/30"
             >
-              <HeartIconSolid className="w-5 h-5 text-pink-400" />
+              <HeartIconSolid className="w-5 h-5 text-emerald-400" />
               <span className="text-white font-semibold">What Travelers Say</span>
             </motion.div>
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Stories That <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-pink-400">Inspire</span>
+              Stories That <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-emerald-400">Inspire</span>
             </h2>
           </motion.div>
 
@@ -1174,7 +1011,7 @@ export default function HomePage() {
             >
               <div className="relative w-40 h-52 mx-auto">
                 {/* Book Cover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-orange-500 via-pink-500 to-purple-600 rounded-lg shadow-2xl transform-gpu">
+                <div className="absolute inset-0 bg-gradient-to-br from-teal-600 via-emerald-600 to-blue-600 rounded-lg shadow-2xl transform-gpu">
                   <div className="absolute inset-4 border-2 border-white/30 rounded-md flex flex-col items-center justify-center text-white">
                     <GlobeAltIcon className="w-12 h-12 mb-2" />
                     <div className="text-xs font-bold text-center leading-tight">
@@ -1287,7 +1124,7 @@ export default function HomePage() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             onClick={scrollToTop}
-            className="fixed bottom-8 right-8 z-50 p-3 bg-orange-600 hover:bg-orange-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+            className="fixed bottom-8 right-8 z-50 p-3 bg-teal-600 hover:bg-teal-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >

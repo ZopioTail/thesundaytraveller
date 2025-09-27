@@ -1,20 +1,16 @@
-import { drizzle } from 'drizzle-orm/postgres-js'
-import postgres from 'postgres'
+import { drizzle } from 'drizzle-orm/mysql2'
+import mysql from 'mysql2'
 import * as schema from './schema'
-import { eq, desc, asc, and, or, ilike, sql } from 'drizzle-orm'
+import { eq, desc, asc, and, or, like, sql } from 'drizzle-orm'
 
 // Database connection
-const connectionString = process.env.DATABASE_URL || 'postgresql://localhost:5432/thesundaytraveller'
+const connectionString = process.env.DATABASE_URL || 'mysql://root@localhost:3306/thesundaytraveller'
 
-// Create postgres client
-const client = postgres(connectionString, {
-  max: 10,
-  idle_timeout: 20,
-  connect_timeout: 60,
-})
+// Create mysql connection
+const connection = mysql.createConnection(connectionString)
 
 // Create drizzle instance
-export const db = drizzle(client, { schema })
+export const db = drizzle(connection, { schema, mode: 'default' })
 
 // Export schema types
 export * from './schema'
@@ -23,7 +19,8 @@ export * from './schema'
 export async function initializeDatabase() {
   try {
     // Test connection
-    await client`SELECT 1`
+    const connectionInstance = await connection
+    await connectionInstance.execute('SELECT 1')
     console.log('Database connected successfully')
     return true
   } catch (error) {
@@ -95,23 +92,27 @@ export async function getDestinations(limit = 20) {
 
 // Media operations
 export async function getMediaFiles(limit = 50, offset = 0, folder?: string) {
-  let query = db
-    .select()
-    .from(schema.media)
-    .orderBy(schema.desc(schema.media.createdAt))
-    .limit(limit)
-    .offset(offset)
-
   if (folder) {
-    query = query.where(schema.eq(schema.media.folder, folder))
+    return await db
+      .select()
+      .from(schema.media)
+      .where(schema.eq(schema.media.folder, folder))
+      .orderBy(schema.desc(schema.media.createdAt))
+      .limit(limit)
+      .offset(offset)
+  } else {
+    return await db
+      .select()
+      .from(schema.media)
+      .orderBy(schema.desc(schema.media.createdAt))
+      .limit(limit)
+      .offset(offset)
   }
-
-  return await query
 }
 
 // CRUD Operations
 export async function createPost(data: schema.NewPost) {
-  return await db.insert(schema.posts).values(data).returning()
+  return await db.insert(schema.posts).values(data)
 }
 
 export async function updatePost(id: number, data: Partial<schema.NewPost>) {
@@ -119,18 +120,16 @@ export async function updatePost(id: number, data: Partial<schema.NewPost>) {
     .update(schema.posts)
     .set({ ...data, updatedAt: new Date() })
     .where(schema.eq(schema.posts.id, id))
-    .returning()
 }
 
 export async function deletePost(id: number) {
   return await db
     .delete(schema.posts)
     .where(schema.eq(schema.posts.id, id))
-    .returning()
 }
 
 export async function createNews(data: schema.NewNews) {
-  return await db.insert(schema.news).values(data).returning()
+  return await db.insert(schema.news).values(data)
 }
 
 export async function updateNews(id: number, data: Partial<schema.NewNews>) {
@@ -138,11 +137,10 @@ export async function updateNews(id: number, data: Partial<schema.NewNews>) {
     .update(schema.news)
     .set(data)
     .where(schema.eq(schema.news.id, id))
-    .returning()
 }
 
 export async function createDestination(data: schema.NewDestination) {
-  return await db.insert(schema.destinations).values(data).returning()
+  return await db.insert(schema.destinations).values(data)
 }
 
 export async function updateDestination(id: number, data: Partial<schema.NewDestination>) {
@@ -150,16 +148,15 @@ export async function updateDestination(id: number, data: Partial<schema.NewDest
     .update(schema.destinations)
     .set(data)
     .where(schema.eq(schema.destinations.id, id))
-    .returning()
 }
 
 export async function uploadMedia(data: schema.NewMedia) {
-  return await db.insert(schema.media).values(data).returning()
+  return await db.insert(schema.media).values(data)
 }
 
 // Analytics
 export async function trackPageView(data: schema.NewAnalytic) {
-  return await db.insert(schema.analytics).values(data).returning()
+  return await db.insert(schema.analytics).values(data)
 }
 
 export async function getStats() {
@@ -212,10 +209,10 @@ export async function searchContent(query: string, type?: 'posts' | 'news' | 'de
       .select()
       .from(schema.posts)
       .where(
-        schema.or(
-          schema.ilike(schema.posts.title, `%${query}%`),
-          schema.ilike(schema.posts.excerpt, `%${query}%`),
-          schema.ilike(schema.posts.content, `%${query}%`)
+        or(
+          like(schema.posts.title, `%${query}%`),
+          like(schema.posts.excerpt, `%${query}%`),
+          like(schema.posts.content, `%${query}%`)
         )
       )
       .limit(20)
@@ -227,10 +224,10 @@ export async function searchContent(query: string, type?: 'posts' | 'news' | 'de
       .select()
       .from(schema.news)
       .where(
-        schema.or(
-          schema.ilike(schema.news.title, `%${query}%`),
-          schema.ilike(schema.news.excerpt, `%${query}%`),
-          schema.ilike(schema.news.content, `%${query}%`)
+        or(
+          like(schema.news.title, `%${query}%`),
+          like(schema.news.excerpt, `%${query}%`),
+          like(schema.news.content, `%${query}%`)
         )
       )
       .limit(20)
@@ -242,10 +239,10 @@ export async function searchContent(query: string, type?: 'posts' | 'news' | 'de
       .select()
       .from(schema.destinations)
       .where(
-        schema.or(
-          schema.ilike(schema.destinations.name, `%${query}%`),
-          schema.ilike(schema.destinations.description, `%${query}%`),
-          schema.ilike(schema.destinations.country, `%${query}%`)
+        or(
+          like(schema.destinations.name, `%${query}%`),
+          like(schema.destinations.description, `%${query}%`),
+          like(schema.destinations.country, `%${query}%`)
         )
       )
       .limit(20)
@@ -271,17 +268,16 @@ export async function searchPostsAdvanced(filters: {
 }) {
   const conditions = []
 
-  // Full-text search using PostgreSQL's built-in text search
+  // Simple text search using LIKE for MySQL
   if (filters.query) {
     const searchQuery = filters.query.trim()
 
-    // Create a tsvector for full-text search
-    const searchCondition = sql`
-      to_tsvector('english', COALESCE(${schema.posts.title}, '') || ' ' ||
-                 COALESCE(${schema.posts.excerpt}, '') || ' ' ||
-                 COALESCE(${schema.posts.content}, '')) @@
-      plainto_tsquery('english', ${searchQuery})
-    `
+    // Create a simple LIKE-based search condition for MySQL
+    const searchCondition = or(
+      like(schema.posts.title, `%${searchQuery}%`),
+      like(schema.posts.excerpt, `%${searchQuery}%`),
+      like(schema.posts.content, `%${searchQuery}%`)
+    )
     conditions.push(searchCondition)
   }
 
@@ -322,12 +318,7 @@ export async function searchPostsAdvanced(filters: {
     updatedAt: schema.posts.updatedAt,
     publishedAt: schema.posts.publishedAt,
     title: schema.posts.title,
-    relevance: filters.query ? sql`ts_rank(
-      to_tsvector('english', COALESCE(${schema.posts.title}, '') || ' ' ||
-                 COALESCE(${schema.posts.excerpt}, '') || ' ' ||
-                 COALESCE(${schema.posts.content}, '')),
-      plainto_tsquery('english', ${filters.query})
-    )` : schema.posts.createdAt
+    relevance: filters.query ? schema.posts.createdAt : schema.posts.createdAt
   }[filters.sortBy || 'createdAt']
 
   const orderByDirection = filters.sortOrder === 'asc' ? asc : desc
@@ -350,7 +341,8 @@ export async function searchPostsAdvanced(filters: {
       viewCount: schema.posts.viewCount,
       author: {
         id: schema.users.id,
-        name: schema.users.name,
+        firstName: schema.users.firstName,
+        lastName: schema.users.lastName,
         email: schema.users.email,
         avatar: schema.users.avatar
       },
@@ -362,26 +354,19 @@ export async function searchPostsAdvanced(filters: {
       },
       tags: sql`
         COALESCE(
-          JSON_AGG(
-            JSON_BUILD_OBJECT(
+          JSON_ARRAYAGG(
+            JSON_OBJECT(
               'id', ${schema.postsToTags.tagId},
               'name', ${schema.tags.name},
               'slug', ${schema.tags.slug},
               'color', ${schema.tags.color}
             )
-          ) FILTER (WHERE ${schema.postsToTags.tagId} IS NOT NULL),
-          '[]'::json
+          ),
+          JSON_ARRAY()
         )
       `,
-      // Add search relevance score
-      relevanceScore: filters.query ? sql`
-        ts_rank(
-          to_tsvector('english', COALESCE(${schema.posts.title}, '') || ' ' ||
-                     COALESCE(${schema.posts.excerpt}, '') || ' ' ||
-                     COALESCE(${schema.posts.content}, '')),
-          plainto_tsquery('english', ${filters.query})
-        )
-      ` : sql`0`
+      // Add search relevance score (simplified for MySQL)
+      relevanceScore: filters.query ? sql`1` : sql`0`
     })
     .from(schema.posts)
     .leftJoin(schema.users, eq(schema.posts.authorId, schema.users.id))
@@ -396,12 +381,7 @@ export async function searchPostsAdvanced(filters: {
     )
     .orderBy(
       filters.query && filters.sortBy === 'relevance'
-        ? desc(sql`ts_rank(
-            to_tsvector('english', COALESCE(${schema.posts.title}, '') || ' ' ||
-                       COALESCE(${schema.posts.excerpt}, '') || ' ' ||
-                       COALESCE(${schema.posts.content}, '')),
-            plainto_tsquery('english', ${filters.query})
-          )`)
+        ? desc(schema.posts.createdAt)
         : orderByDirection(orderByField)
     )
     .limit(filters.limit || 20)
@@ -428,9 +408,9 @@ export async function getSearchSuggestions(query: string, limit: number = 10) {
     .leftJoin(schema.categories, eq(schema.posts.categoryId, schema.categories.id))
     .where(
       or(
-        ilike(schema.posts.title, `%${query}%`),
-        ilike(schema.posts.excerpt, `%${query}%`),
-        ilike(schema.categories.name, `%${query}%`)
+        like(schema.posts.title, `%${query}%`),
+        like(schema.posts.excerpt, `%${query}%`),
+        like(schema.categories.name, `%${query}%`)
       )
     )
     .orderBy(desc(schema.posts.publishedAt))
@@ -447,8 +427,8 @@ export async function getSearchAnalytics(filters: {
 }) {
   const groupByClause = {
     day: sql`DATE(${schema.analytics.createdAt})`,
-    week: sql`DATE_TRUNC('week', ${schema.analytics.createdAt})`,
-    month: sql`DATE_TRUNC('month', ${schema.analytics.createdAt})`
+    week: sql`DATE_SUB(DATE(${schema.analytics.createdAt}), INTERVAL WEEKDAY(${schema.analytics.createdAt}) DAY)`,
+    month: sql`DATE_FORMAT(${schema.analytics.createdAt}, '%Y-%m-01')`
   }[filters.groupBy || 'day']
 
   const result = await db
@@ -481,7 +461,7 @@ export async function getSearchAnalytics(filters: {
 
 // Newsletter subscription
 export async function subscribeNewsletter(data: schema.NewNewsletterSubscription) {
-  return await db.insert(schema.newsletterSubscriptions).values(data).returning()
+  return await db.insert(schema.newsletterSubscriptions).values(data)
 }
 
 export async function unsubscribeNewsletter(email: string) {
@@ -492,12 +472,11 @@ export async function unsubscribeNewsletter(email: string) {
       unsubscribedAt: new Date()
     })
     .where(schema.eq(schema.newsletterSubscriptions.email, email))
-    .returning()
 }
 
 // Comments
 export async function createComment(data: schema.NewComment) {
-  return await db.insert(schema.comments).values(data).returning()
+  return await db.insert(schema.comments).values(data)
 }
 
 export async function getComments(postId?: number, newsId?: number, limit = 50) {
@@ -521,7 +500,7 @@ export async function getComments(postId?: number, newsId?: number, limit = 50) 
 
 // User operations
 export async function createUser(data: schema.NewUser) {
-  return await db.insert(schema.users).values(data).returning()
+  return await db.insert(schema.users).values(data)
 }
 
 export async function getUserByEmail(email: string) {
@@ -573,22 +552,31 @@ export async function getSetting(key: string) {
 }
 
 export async function setSetting(key: string, value: any, description?: string) {
-  return await db
-    .insert(schema.settings)
-    .values({
-      key,
-      value,
-      description: description || '',
-      isPublic: false,
-    })
-    .onConflictDoUpdate({
-      target: schema.settings.key,
-      set: {
+  // Try to update first
+  const existing = await db
+    .select()
+    .from(schema.settings)
+    .where(schema.eq(schema.settings.key, key))
+    .limit(1)
+
+  if (existing.length > 0) {
+    return await db
+      .update(schema.settings)
+      .set({
         value,
         updatedAt: new Date(),
-      },
-    })
-    .returning()
+      })
+      .where(schema.eq(schema.settings.key, key))
+  } else {
+    return await db
+      .insert(schema.settings)
+      .values({
+        key,
+        value,
+        description: description || '',
+        isPublic: false,
+      })
+  }
 }
 
 

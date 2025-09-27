@@ -85,7 +85,7 @@ export default function BookPage() {
   return (
     <div className="pt-20">
       {/* Hero Section */}
-      <section className="section-padding bg-gradient-to-br from-orange-500 via-pink-500 to-purple-600">
+      <section className="section-padding bg-gradient-to-br from-teal-600 via-emerald-600 to-blue-600">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Book Cover */}
@@ -287,7 +287,7 @@ export default function BookPage() {
               >
                 <div className="card-body">
                   <div className="flex items-start space-x-4">
-                    <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                    <div className="w-8 h-8 bg-gradient-to-br from-teal-600 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
                       {index + 1}
                     </div>
                     <div>
@@ -425,8 +425,8 @@ export default function BookPage() {
                   key={format}
                   className={`border-2 rounded-lg p-4 cursor-pointer transition-colors duration-200 ${
                     selectedFormat === format
-                      ? 'border-orange-500 bg-orange-50 dark:bg-orange-900/20'
-                      : 'border-gray-200 dark:border-gray-700 hover:border-orange-300 dark:hover:border-orange-600'
+                      ? 'border-teal-500 bg-teal-50 dark:bg-teal-900/20'
+                      : 'border-gray-200 dark:border-gray-700 hover:border-teal-300 dark:hover:border-teal-600'
                   }`}
                   onClick={() => setSelectedFormat(format)}
                 >
@@ -468,7 +468,7 @@ export default function BookPage() {
               >
                 Cancel
               </button>
-              <button className="flex-1 px-4 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors duration-200 font-semibold">
+              <button className="flex-1 px-4 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors duration-200 font-semibold">
                 <ShoppingCartIcon className="w-5 h-5 inline mr-2" />
                 Buy Now
               </button>
@@ -481,7 +481,7 @@ export default function BookPage() {
       <div className="fixed bottom-6 right-6 z-40">
         <button
           onClick={() => setShowBuyPopup(true)}
-          className="bg-orange-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-orange-700 transition-all duration-200 hover:scale-105"
+          className="bg-teal-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-teal-700 transition-all duration-200 hover:scale-105"
         >
           <ShoppingCartIcon className="w-5 h-5 inline mr-2" />
           Buy Book

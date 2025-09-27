@@ -46,54 +46,58 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      setStats({
-        posts: 24,
-        news: 12,
-        destinations: 45,
-        media: 156,
-        views: 12543,
-        visitors: 3421,
-      })
+    // Fetch real data from API
+    const fetchStats = async () => {
+      try {
+        const response = await fetch('/api/admin/stats')
+        if (response.ok) {
+          const data = await response.json()
+          setStats(data)
+        } else {
+          // Show empty state if API fails
+          setStats({
+            posts: 0,
+            news: 0,
+            destinations: 0,
+            media: 0,
+            views: 0,
+            visitors: 0,
+          })
+        }
+      } catch (error) {
+        console.error('Failed to fetch stats:', error)
+        // Show empty state on error
+        setStats({
+          posts: 0,
+          news: 0,
+          destinations: 0,
+          media: 0,
+          views: 0,
+          visitors: 0,
+        })
+      }
+    }
 
-      setRecentActivity([
-        {
-          id: '1',
-          type: 'post',
-          title: 'What Adventure Sports Taught This Soldier About Life',
-          action: 'published',
-          timestamp: '2 hours ago',
-          user: 'Rabindra Sahu',
-        },
-        {
-          id: '2',
-          type: 'news',
-          title: 'New Travel Guidelines for 2025',
-          action: 'created',
-          timestamp: '4 hours ago',
-          user: 'Rabindra Sahu',
-        },
-        {
-          id: '3',
-          type: 'destination',
-          title: 'Lisbon, Portugal',
-          action: 'updated',
-          timestamp: '1 day ago',
-          user: 'Rabindra Sahu',
-        },
-        {
-          id: '4',
-          type: 'media',
-          title: 'profession-img-2.jpg',
-          action: 'uploaded',
-          timestamp: '2 days ago',
-          user: 'Rabindra Sahu',
-        },
-      ])
+    const fetchRecentActivity = async () => {
+      try {
+        const response = await fetch('/api/admin/recent-activity')
+        if (response.ok) {
+          const data = await response.json()
+          setRecentActivity(data)
+        } else {
+          // Show empty state if API fails
+          setRecentActivity([])
+        }
+      } catch (error) {
+        console.error('Failed to fetch recent activity:', error)
+        // Show empty state on error
+        setRecentActivity([])
+      }
+    }
 
-      setLoading(false)
-    }, 1000)
+    fetchStats()
+    fetchRecentActivity()
+    setLoading(false)
   }, [])
 
   const statCards = [

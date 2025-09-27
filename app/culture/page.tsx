@@ -127,10 +127,10 @@ export default function CulturePage() {
   const regularStories = filteredStories.filter(story => !story.featured)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-white to-emerald-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-pink-600/20 dark:from-purple-900/30 dark:to-pink-900/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-teal-600/20 to-emerald-600/20 dark:from-teal-900/30 dark:to-emerald-900/30" />
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -139,8 +139,8 @@ export default function CulturePage() {
             className="text-center max-w-4xl mx-auto"
           >
             <div className="flex items-center justify-center space-x-3 mb-6">
-              <PaintBrushIcon className="w-12 h-12 text-purple-600 dark:text-purple-400" />
-              <MusicalNoteIcon className="w-8 h-8 text-pink-600 dark:text-pink-400" />
+              <PaintBrushIcon className="w-12 h-12 text-teal-600 dark:text-teal-400" />
+              <MusicalNoteIcon className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
             </div>
             <h1 className="text-5xl md:text-6xl font-serif font-bold text-gray-900 dark:text-white mb-6">
               Culture & Lifestyle
@@ -177,7 +177,7 @@ export default function CulturePage() {
                 placeholder="Search cultural stories..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
               />
             </div>
 
@@ -189,7 +189,7 @@ export default function CulturePage() {
                   onClick={() => setSelectedCategory(category)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
                     selectedCategory === category
-                      ? 'bg-purple-600 text-white'
+                      ? 'bg-teal-600 text-white'
                       : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                   }`}
                 >
@@ -239,7 +239,7 @@ export default function CulturePage() {
                     
                     {/* Category Badge */}
                     <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1 bg-purple-600 text-white text-xs font-semibold rounded-full">
+                      <span className="px-3 py-1 bg-teal-600 text-white text-xs font-semibold rounded-full">
                         {story.category}
                       </span>
                     </div>
@@ -289,7 +289,7 @@ export default function CulturePage() {
                     {/* Read More Button */}
                     <Link
                       href={`/blog/${story.slug}`}
-                      className="inline-flex items-center text-purple-600 dark:text-purple-400 font-medium hover:text-purple-700 dark:hover:text-purple-300 transition-colors duration-200"
+                      className="inline-flex items-center text-teal-600 dark:text-teal-400 font-medium hover:text-teal-700 dark:hover:text-teal-300 transition-colors duration-200"
                     >
                       Read Full Story
                       <svg className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -342,7 +342,7 @@ export default function CulturePage() {
                     
                     {/* Category */}
                     <div className="absolute top-3 left-3">
-                      <span className="px-2 py-1 bg-purple-600 text-white text-xs font-semibold rounded-full">
+                      <span className="px-2 py-1 bg-teal-600 text-white text-xs font-semibold rounded-full">
                         {story.category}
                       </span>
                     </div>
@@ -388,7 +388,7 @@ export default function CulturePage() {
                     {/* Read More Button */}
                     <Link
                       href={`/blog/${story.slug}`}
-                      className="inline-flex items-center text-purple-600 dark:text-purple-400 font-medium text-sm hover:text-purple-700 dark:hover:text-purple-300 transition-colors duration-200"
+                      className="inline-flex items-center text-teal-600 dark:text-teal-400 font-medium text-sm hover:text-teal-700 dark:hover:text-teal-300 transition-colors duration-200"
                     >
                       Read Story
                       <svg className="ml-1 w-3 h-3 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -419,7 +419,7 @@ export default function CulturePage() {
                 setSelectedCategory('All')
                 setSearchQuery('')
               }}
-              className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200"
+              className="px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors duration-200"
             >
               Clear Filters
             </button>

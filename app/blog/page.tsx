@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -29,142 +29,111 @@ import {
   BookmarkIcon as BookmarkIconSolid,
 } from '@heroicons/react/24/solid'
 
-const blogPosts = [
-  {
-    id: 1,
-    title: 'What Adventure Sports Taught This Soldier About Life',
-    excerpt: 'The crisp salute, the well-creased uniform, the structured life of the armed forces – these have been my constants for years. But beyond the discipline and duty, there\'s another side to my story that involves adrenaline, risk, and the raw beauty of pushing human limits.',
-    image: '/images/20230811_131626_HDR.jpg',
-    category: 'Adventure',
-    readTime: 8,
-    createdAt: new Date('2025-08-28'),
-    tags: ['Military', 'Adventure Sports', 'Life Lessons', 'Leadership', 'Resilience'],
-    featured: true,
-    author: 'Vineet Kumar',
-    slug: 'what-adventure-sports-taught-this-soldier-about-life',
-    views: 2847,
-    likes: 156,
-    comments: 23,
-    difficulty: 'Intermediate',
-    location: 'Himalayas, India'
-  },
-  {
-    id: 2,
-    title: 'Life Beyond the Uniform: Curtains, Coffee & Calm',
-    excerpt: 'They say a uniform defines you. It speaks of duty, discipline, and perhaps a certain seriousness that comes with the responsibility of serving your nation. But what happens when you step out of that uniform? What defines you then?',
-    image: '/images/20230816_105822_HDR.jpg',
-    category: 'Culture',
-    readTime: 6,
-    createdAt: new Date('2025-08-26'),
-    tags: ['Lifestyle', 'Personal', 'Home', 'Balance', 'Mindfulness'],
-    featured: true,
-    author: 'Vineet Kumar',
-    slug: 'life-beyond-the-uniform-curtains-coffee-calm',
-    views: 1923,
-    likes: 89,
-    comments: 15,
-    difficulty: 'Beginner',
-    location: 'Home Base, India'
-  },
-  {
-    id: 3,
-    title: 'Flying Drones, Teaching Peace & Trading Stocks',
-    excerpt: 'Most days, you\'ll find me in uniform, focused on the critical responsibilities that come with serving in the armed forces. But life has taught me that passion projects and diverse interests don\'t just enrich your personal life – they make you a better professional.',
-    image: '/images/20230808_133228_HDR.jpg',
-    category: 'Food & Lifestyle',
-    readTime: 10,
-    createdAt: new Date('2025-08-24'),
-    tags: ['Technology', 'Teaching', 'Finance', 'Drones', 'Peace-building', 'Trading'],
-    featured: false,
-    author: 'Vineet Kumar',
-    slug: 'flying-drones-teaching-peace-trading-stocks'
-  },
-  {
-    id: 4,
-    title: 'Exploring Portugal: A Digital Nomad\'s Paradise',
-    excerpt: 'From the cobblestone streets of Lisbon to the dramatic cliffs of the Algarve, Portugal has become my temporary home base. Here\'s why this country is perfect for digital nomads and remote workers.',
-    image: '/images/20230803_175302.jpg',
-    category: 'Destinations',
-    readTime: 7,
-    createdAt: new Date('2025-08-22'),
-    tags: ['Portugal', 'Digital Nomad', 'Remote Work', 'Europe', 'Lifestyle'],
-    featured: false,
-    author: 'Vineet Kumar',
-    slug: 'exploring-portugal-digital-nomad-paradise'
-  },
-  {
-    id: 5,
-    title: 'The Art of Military Photography: Capturing Stories Beyond Combat',
-    excerpt: 'Military photography is about more than documenting operations. It\'s about capturing the human stories, the quiet moments, and the profound experiences that shape those who serve.',
-    image: '/images/20230824_173714.jpg',
-    category: 'Culture',
-    readTime: 9,
-    createdAt: new Date('2025-08-20'),
-    tags: ['Photography', 'Military', 'Storytelling', 'Art', 'Documentation'],
-    featured: false,
-    author: 'Vineet Kumar',
-    slug: 'military-photography-capturing-stories-beyond-combat'
-  },
-  {
-    id: 6,
-    title: 'Himalayan Trek: Lessons from 18,000 Feet',
-    excerpt: 'The thin air at high altitude teaches you things about yourself that sea-level living never could. Here are the profound lessons learned during my solo trek through the Himalayas.',
-    image: '/images/20230813_131727.jpg',
-    category: 'Adventure',
-    readTime: 12,
-    createdAt: new Date('2025-08-18'),
-    tags: ['Himalayas', 'Trekking', 'Solo Travel', 'Mountain Climbing', 'Self-Discovery'],
-    featured: false,
-    author: 'Vineet Kumar',
-    slug: 'himalayan-trek-lessons-from-18000-feet'
-  },
-  {
-    id: 7,
-    title: 'Building Bridges: Military Diplomacy in Action',
-    excerpt: 'Sometimes the most important battles are won not with weapons, but with words, understanding, and the ability to find common ground even in the most challenging circumstances.',
-    image: '/images/20230813_131727.jpg',
-    category: 'Culture',
-    readTime: 8,
-    createdAt: new Date('2025-08-16'),
-    tags: ['Diplomacy', 'Military', 'Peace-building', 'International Relations', 'Leadership'],
-    featured: false,
-    author: 'Vineet Kumar',
-    slug: 'building-bridges-military-diplomacy-in-action'
-  },
-  {
-    id: 8,
-    title: 'The Minimalist Soldier: Living with Less, Experiencing More',
-    excerpt: 'Military life teaches you to carry only what you need. This philosophy extends far beyond the battlefield and can transform how you approach life, travel, and happiness.',
-    image: '/images/20230808_133228_HDR.jpg',
-    category: 'Food & Lifestyle',
-    readTime: 7,
-    createdAt: new Date('2025-08-14'),
-    tags: ['Minimalism', 'Military Life', 'Philosophy', 'Simple Living', 'Travel'],
-    featured: false,
-    author: 'Vineet Kumar',
-    slug: 'minimalist-soldier-living-with-less-experiencing-more'
-  }
-]
+interface BlogPost {
+  id: number
+  title: string
+  excerpt: string
+  image: string
+  category: string
+  readTime: number
+  createdAt: string
+  tags: string[]
+  featured: boolean
+  author: string
+  slug: string
+  views: number
+  likes: number
+  comments: number
+  difficulty: string
+  location: string
+}
 
 const categories = ['All', 'Destinations', 'Adventure', 'Culture', 'Food & Lifestyle']
 
 export default function BlogPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch('/api/posts')
+        if (response.ok) {
+          const data = await response.json()
+          setBlogPosts(data)
+        } else {
+          // Show empty state if API fails
+          setBlogPosts([])
+        }
+      } catch (error) {
+        console.error('Failed to fetch posts:', error)
+        // Fallback to mock data
+        setBlogPosts([
+          {
+            id: 1,
+            title: 'What Adventure Sports Taught This Soldier About Life',
+            excerpt: 'The crisp salute, the well-creased uniform, the structured life of the armed forces – these have been my constants for years. But beyond the discipline and duty, there\'s another side to my story that involves adrenaline, risk, and the raw beauty of pushing human limits.',
+            image: '/images/20230811_131626_HDR.jpg',
+            category: 'Adventure',
+            readTime: 8,
+            createdAt: new Date('2025-08-28').toISOString(),
+            tags: ['Military', 'Adventure Sports', 'Life Lessons', 'Leadership', 'Resilience'],
+            featured: true,
+            author: 'Vineet Kumar',
+            slug: 'what-adventure-sports-taught-this-soldier-about-life',
+            views: 2847,
+            likes: 156,
+            comments: 23,
+            difficulty: 'Intermediate',
+            location: 'Himalayas, India'
+          }
+        ])
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchPosts()
+  }, [])
 
   const filteredPosts = useMemo(() => {
     return blogPosts.filter(post => {
       const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
-      
+
       const matchesCategory = selectedCategory === 'All' || post.category === selectedCategory
-      
+
       return matchesSearch && matchesCategory
     })
-  }, [searchTerm, selectedCategory])
+  }, [searchTerm, selectedCategory, blogPosts])
 
   const featuredPosts = blogPosts.filter(post => post.featured)
+
+  if (loading) {
+    return (
+      <div className="pt-20">
+        <div className="section-padding">
+          <div className="container-custom">
+            <div className="animate-pulse">
+              <div className="h-8 bg-gray-200 rounded w-1/4 mb-6"></div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {[...Array(6)].map((_, i) => (
+                  <div key={i} className="bg-white rounded-lg shadow p-6">
+                    <div className="h-48 bg-gray-200 rounded mb-4"></div>
+                    <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                    <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="pt-20">
@@ -484,7 +453,7 @@ export default function BlogPage() {
                           <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400 mb-3">
                             <div className="flex items-center">
                               <CalendarIcon className="mr-1 icon-xs" />
-                              {post.createdAt.toLocaleDateString()}
+                              {new Date(post.createdAt).toLocaleDateString()}
                             </div>
                             <div className="flex items-center">
                               <ClockIcon className="mr-1 icon-xs" />
@@ -568,7 +537,7 @@ export default function BlogPage() {
                           <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400 mb-3">
                             <div className="flex items-center">
                               <CalendarIcon className="mr-1 icon-xs" />
-                              {post.createdAt.toLocaleDateString()}
+                              {new Date(post.createdAt).toLocaleDateString()}
                             </div>
                             <div className="flex items-center">
                               <ClockIcon className="mr-1 icon-xs" />
