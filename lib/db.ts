@@ -42,12 +42,65 @@ export async function getPublishedPosts(limit = 10, offset = 0) {
 
 export async function getPostBySlug(slug: string) {
   const result = await db
-    .select()
+    .select({
+      // Post fields
+      id: schema.posts.id,
+      title: schema.posts.title,
+      slug: schema.posts.slug,
+      excerpt: schema.posts.excerpt,
+      content: schema.posts.content,
+      featuredImage: schema.posts.featuredImage,
+      authorId: schema.posts.authorId,
+      status: schema.posts.status,
+      isFeatured: schema.posts.isFeatured,
+      publishedAt: schema.posts.publishedAt,
+      createdAt: schema.posts.createdAt,
+      updatedAt: schema.posts.updatedAt,
+      seoTitle: schema.posts.seoTitle,
+      seoDescription: schema.posts.seoDescription,
+      seoKeywords: schema.posts.seoKeywords,
+      viewCount: schema.posts.viewCount,
+      likeCount: schema.posts.likeCount,
+      commentCount: schema.posts.commentCount,
+      readingTime: schema.posts.readingTime,
+      difficulty: schema.posts.difficulty,
+      location: schema.posts.location,
+      // Author fields
+      author: {
+        id: schema.users.id,
+        firstName: schema.users.firstName,
+        lastName: schema.users.lastName,
+        email: schema.users.email,
+        avatar: schema.users.avatar,
+        username: schema.users.username
+      }
+    })
     .from(schema.posts)
+    .leftJoin(schema.users, schema.eq(schema.posts.authorId, schema.users.id))
     .where(schema.eq(schema.posts.slug, slug))
     .limit(1)
 
-  return result[0] || null
+  const post = result[0]
+  if (!post) return null
+
+  // Get the first category for this post
+  const categoryResult = await db
+    .select({
+      id: schema.categories.id,
+      name: schema.categories.name,
+      slug: schema.categories.slug,
+      color: schema.categories.color,
+      description: schema.categories.description
+    })
+    .from(schema.postsToCategories)
+    .leftJoin(schema.categories, schema.eq(schema.postsToCategories.categoryId, schema.categories.id))
+    .where(schema.eq(schema.postsToCategories.postId, post.id))
+    .limit(1)
+
+  return {
+    ...post,
+    category: categoryResult[0] || null
+  }
 }
 
 export async function getPostsByCategory(categorySlug: string, limit = 10) {
@@ -282,7 +335,11 @@ export async function searchPostsAdvanced(filters: {
   }
 
   if (filters.categoryId) {
-    conditions.push(eq(schema.posts.categoryId, filters.categoryId))
+    conditions.push(sql`EXISTS (
+      SELECT 1 FROM ${schema.postsToCategories}
+      WHERE ${schema.postsToCategories.postId} = ${schema.posts.id}
+      AND ${schema.postsToCategories.categoryId} = ${filters.categoryId}
+    )`)
   }
 
   if (filters.status) {
@@ -290,7 +347,7 @@ export async function searchPostsAdvanced(filters: {
   }
 
   if (filters.authorId) {
-    conditions.push(eq(schema.posts.authorId, filters.authorId))
+    conditions.push(eq(schema.posts.authorId, parseInt(filters.authorId)))
   }
 
   if (filters.dateFrom) {
@@ -334,7 +391,7 @@ export async function searchPostsAdvanced(filters: {
       createdAt: schema.posts.createdAt,
       updatedAt: schema.posts.updatedAt,
       authorId: schema.posts.authorId,
-      categoryId: schema.posts.categoryId,
+      // categoryId is handled through junction table
       featuredImage: schema.posts.featuredImage,
       seoTitle: schema.posts.seoTitle,
       seoDescription: schema.posts.seoDescription,
@@ -370,7 +427,7 @@ export async function searchPostsAdvanced(filters: {
     })
     .from(schema.posts)
     .leftJoin(schema.users, eq(schema.posts.authorId, schema.users.id))
-    .leftJoin(schema.categories, eq(schema.posts.categoryId, schema.categories.id))
+    // Category join is handled through junction table
     .leftJoin(schema.postsToTags, eq(schema.posts.id, schema.postsToTags.postId))
     .leftJoin(schema.tags, eq(schema.postsToTags.tagId, schema.tags.id))
     .where(and(...conditions))
@@ -405,7 +462,7 @@ export async function getSearchSuggestions(query: string, limit: number = 10) {
       publishedAt: schema.posts.publishedAt
     })
     .from(schema.posts)
-    .leftJoin(schema.categories, eq(schema.posts.categoryId, schema.categories.id))
+    // Category join is handled through junction table
     .where(
       or(
         like(schema.posts.title, `%${query}%`),
@@ -426,9 +483,9 @@ export async function getSearchAnalytics(filters: {
   groupBy?: 'day' | 'week' | 'month'
 }) {
   const groupByClause = {
-    day: sql`DATE(${schema.analytics.createdAt})`,
-    week: sql`DATE_SUB(DATE(${schema.analytics.createdAt}), INTERVAL WEEKDAY(${schema.analytics.createdAt}) DAY)`,
-    month: sql`DATE_FORMAT(${schema.analytics.createdAt}, '%Y-%m-01')`
+    day: sql`DATE(${schema.analytics.timestamp})`,
+    week: sql`DATE_SUB(DATE(${schema.analytics.timestamp}), INTERVAL WEEKDAY(${schema.analytics.timestamp}) DAY)`,
+    month: sql`DATE_FORMAT(${schema.analytics.timestamp}, '%Y-%m-01')`
   }[filters.groupBy || 'day']
 
   const result = await db
@@ -439,18 +496,18 @@ export async function getSearchAnalytics(filters: {
       topQueries: sql`
         JSON_AGG(
           JSON_BUILD_OBJECT(
-            'query', ${schema.analytics.metadata}->>'query',
-            'count', ${schema.analytics.metadata}->>'count'
+            'query', ${schema.analytics.pageUrl},
+            'count', 1
           )
-        ) FILTER (WHERE ${schema.analytics.metadata}->>'query' IS NOT NULL)
+        ) FILTER (WHERE ${schema.analytics.pageUrl} IS NOT NULL)
       `
     })
     .from(schema.analytics)
     .where(
       and(
-        eq(schema.analytics.type, 'search'),
-        filters.dateFrom ? sql`${schema.analytics.createdAt} >= ${filters.dateFrom}` : undefined,
-        filters.dateTo ? sql`${schema.analytics.createdAt} <= ${filters.dateTo}` : undefined
+        eq(schema.analytics.pageUrl, '/search'),
+        filters.dateFrom ? sql`${schema.analytics.timestamp} >= ${filters.dateFrom}` : undefined,
+        filters.dateTo ? sql`${schema.analytics.timestamp} <= ${filters.dateTo}` : undefined
       )
     )
     .groupBy(groupByClause)
