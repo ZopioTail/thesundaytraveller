@@ -689,7 +689,7 @@ export default function HomePage() {
                 <div className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r ${item.color} rounded-full mb-4 shadow-lg`}>
                   <item.icon className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{item.title}</h3>
                 <p className="text-gray-300">{item.desc}</p>
               </motion.div>
             ))}
