@@ -1,68 +1,55 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { db } from '@/lib/db'
-import { posts, news, destinations, media, users } from '@/lib/schema'
-import { desc, eq } from 'drizzle-orm'
+import { getPublishedPosts, getNews, getDestinations, getMediaFiles } from '@/lib/db'
+
+// Helper function to safely extract properties with defaults
+function getProperty(obj: any, property: string, defaultValue: string = ''): string {
+  return obj && obj[property] ? obj[property] : defaultValue
+}
 
 export async function GET(request: NextRequest) {
   try {
     // Fetch recent posts
-    const recentPosts = await db
-      .select()
-      .from(posts)
-      .orderBy(desc(posts.updatedAt))
-      .limit(2)
+    const recentPosts = await getPublishedPosts(2, 0)
 
     // Fetch recent news
-    const recentNews = await db
-      .select()
-      .from(news)
-      .orderBy(desc(news.updatedAt))
-      .limit(2)
+    const recentNews = await getNews(2, 0)
 
     // Fetch recent destinations
-    const recentDestinations = await db
-      .select()
-      .from(destinations)
-      .orderBy(desc(destinations.updatedAt))
-      .limit(2)
+    const recentDestinations = await getDestinations(2)
 
     // Fetch recent media
-    const recentMedia = await db
-      .select()
-      .from(media)
-      .orderBy(desc(media.createdAt))
-      .limit(2)
+    const recentMedia = await getMediaFiles(2, 0)
 
     // Combine and sort all activities
     const allActivities = [
       ...recentPosts.map(p => ({
-        id: p.id.toString(),
+        id: p.id || '',
         type: 'post' as const,
-        title: p.title,
-        action: p.status === 'published' ? 'published' : 'created',
+        title: getProperty(p, 'title', 'Untitled Post'),
+        action: getProperty(p, 'status') === 'published' ? 'published' : 'created',
         timestamp: formatTimeAgo(p.updatedAt),
         user: 'System'
       })),
       ...recentNews.map(n => ({
-        id: n.id.toString(),
+        id: n.id || '',
         type: 'news' as const,
-        title: n.title,
-        action: n.status === 'published' ? 'published' : 'created',
+        title: getProperty(n, 'title', 'Untitled News'),
+        action: getProperty(n, 'status') === 'published' ? 'published' : 'created',
         timestamp: formatTimeAgo(n.updatedAt),
         user: 'System'
       })),
       ...recentDestinations.map(d => ({
-        id: d.id.toString(),
+        id: d.id || '',
         type: 'destination' as const,
-        title: d.name,
-        action: d.status === 'published' ? 'published' : 'updated',
+        title: getProperty(d, 'name', 'Untitled Destination'),
+        action: getProperty(d, 'status') === 'published' ? 'published' : 'updated',
         timestamp: formatTimeAgo(d.updatedAt),
         user: 'System'
       })),
       ...recentMedia.map(m => ({
-        id: m.id.toString(),
+        id: m.id || '',
         type: 'media' as const,
-        title: m.originalName,
+        title: getProperty(m, 'originalName') || getProperty(m, 'filename', 'Untitled Media'),
         action: 'uploaded',
         timestamp: formatTimeAgo(m.createdAt),
         user: 'System'
