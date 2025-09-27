@@ -20,17 +20,17 @@ export async function GET(request: NextRequest) {
 
     // Transform posts to match the expected format
     const transformedPosts = posts.map((post: any) => ({
-      id: post.id,
-      title: post.title,
+      id: post.id || '',
+      title: post.title || '',
       excerpt: post.excerpt || '',
       image: post.featuredImage || '/images/placeholder.jpg',
-      category: post.category?.name || 'Uncategorized',
+      category: 'Uncategorized', // Will be updated when categories are implemented
       readTime: post.readingTime || 5,
       createdAt: post.publishedAt || post.createdAt,
-      tags: [], // Would need to fetch from junction table
+      tags: [], // Will be updated when tags are implemented
       featured: post.isFeatured || false,
-      author: 'Vineet Kumar', // Would need to join with users table
-      slug: post.slug,
+      author: 'Vineet Kumar', // Default author for now
+      slug: post.slug || '',
       views: post.viewCount || 0,
       likes: post.likeCount || 0,
       comments: post.commentCount || 0,

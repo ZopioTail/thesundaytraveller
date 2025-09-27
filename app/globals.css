@@ -62,11 +62,11 @@
   }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center px-8 py-4 text-base font-bold rounded-2xl text-teal-600 dark:text-teal-400 bg-transparent backdrop-blur-sm border-2 border-teal-600/70 dark:border-teal-400/70 hover:bg-teal-600 hover:text-white dark:hover:bg-teal-400 dark:hover:text-gray-900 focus:outline-none focus:ring-4 focus:ring-teal-300/50 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 shadow-xl hover:shadow-2xl relative overflow-hidden;
+    @apply inline-flex items-center justify-center px-8 py-4 text-base font-bold rounded-2xl text-teal-600 dark:text-teal-400 bg-transparent backdrop-blur-sm border-2 border-teal-600/80 dark:border-teal-400/80 hover:bg-teal-600 hover:text-white dark:hover:bg-teal-400 dark:hover:text-gray-900 focus:outline-none focus:ring-4 focus:ring-teal-300/50 transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 shadow-xl hover:shadow-2xl relative overflow-hidden;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-semibold rounded-lg text-gray-600 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-400 hover:bg-gray-100 dark:hover:bg-gray-800 border-2 border-transparent hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-200;
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-semibold rounded-lg text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 hover:bg-gray-100/80 dark:hover:bg-gray-800/80 border-2 border-transparent hover:border-gray-300/60 dark:hover:border-gray-600/60 transition-all duration-200;
   }
 
   /* Enhanced Card System */

@@ -869,7 +869,32 @@ export function Newsletter({
       case 'subscription':
         return onSubscribe ? (
           <SubscriptionForm
-            onSubmit={onSubscribe}
+            onSubmit={async (data) => {
+              try {
+                const response = await fetch('/api/newsletter', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(data),
+                })
+
+                if (!response.ok) {
+                  throw new Error('Failed to subscribe')
+                }
+
+                const result = await response.json()
+                console.log('Newsletter subscription successful:', result)
+
+                // Call the original onSubscribe if provided
+                if (onSubscribe) {
+                  await onSubscribe(data)
+                }
+              } catch (error) {
+                console.error('Newsletter subscription failed:', error)
+                throw error
+              }
+            }}
             showNameField={true}
             showPreferences={true}
             submitLabel="Subscribe to Newsletter"

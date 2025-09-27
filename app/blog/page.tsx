@@ -342,7 +342,7 @@ export default function BlogPage() {
                   placeholder="Search stories, destinations, adventures, or topics..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-16 pr-6 py-6 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border-2 border-gray-200/50 dark:border-gray-700/50 rounded-2xl text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-orange-500/20 focus:border-orange-500 transition-all duration-300 text-lg shadow-xl hover:shadow-2xl"
+                  className="w-full pl-16 pr-6 py-6 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm border-2 border-gray-300/60 dark:border-gray-600/60 rounded-2xl text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-orange-500/30 focus:border-orange-500 transition-all duration-300 text-lg shadow-xl hover:shadow-2xl"
                 />
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-500/10 to-pink-500/10 opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none" />
               </div>
@@ -622,7 +622,7 @@ export default function BlogPage() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 backdrop-blur-sm"
+                className="flex-1 px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/60 backdrop-blur-md"
               />
               <button className="btn-secondary whitespace-nowrap">
                 Subscribe

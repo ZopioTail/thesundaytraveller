@@ -127,7 +127,7 @@ export default function Footer() {
                 <input
                   type="email"
                   placeholder="Enter your email address"
-                  className="w-full px-6 py-4 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 focus:bg-white/20"
+                  className="w-full px-6 py-4 rounded-2xl bg-white/20 backdrop-blur-sm border border-white/30 text-white placeholder-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 focus:bg-white/30"
                 />
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-teal-600/20 to-emerald-600/20 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
               </div>

@@ -43,6 +43,7 @@
     "clsx": "^2.0.0",
     "drizzle-kit": "^0.31.4",
     "drizzle-orm": "^0.44.5",
+    "firebase": "^12.3.0",
     "framer-motion": "^10.16.16",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.544.0",

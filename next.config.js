@@ -44,6 +44,33 @@ const nextConfig = {
 
   // Webpack optimizations
   webpack: (config, { dev, isServer }) => {
+    // Handle Node.js modules properly
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      net: false,
+      tls: false,
+      crypto: false,
+      stream: false,
+      url: false,
+      zlib: false,
+      http: false,
+      https: false,
+      assert: false,
+      os: false,
+      path: false,
+      events: false,
+    }
+
+    // Externalize Node.js modules for server-side only
+    if (isServer) {
+      config.externals = config.externals || []
+      config.externals.push({
+        'mysql2': 'mysql2',
+        'drizzle-orm': 'drizzle-orm',
+      })
+    }
+
     // Optimize bundle size
     if (!dev && !isServer) {
       config.optimization = {

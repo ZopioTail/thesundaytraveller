@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import { db } from '@/lib/db'
-import { posts, categories, users, postsToCategories } from '@/lib/schema'
-import { eq, desc, and, sql } from 'drizzle-orm'
+import { getPublishedPosts, createPost } from '@/lib/db'
 import { hasPermission, PERMISSIONS, User } from '@/lib/rbac'
 import { generateSlug } from '@/lib/auth-utils'
 
@@ -20,91 +18,61 @@ export async function GET(request: NextRequest) {
     const page = parseInt(searchParams.get('page') || '1')
     const limit = parseInt(searchParams.get('limit') || '10')
     const status = searchParams.get('status')
-    const category = searchParams.get('category')
     const search = searchParams.get('search')
-    const author = searchParams.get('author')
 
-    const offset = (page - 1) * limit
+    // For now, get all posts and filter in memory
+    // In a production app, you'd want to implement proper filtering in Firestore
+    const allPosts = await getPublishedPosts(1000, 0)
 
-    let whereConditions = []
+    // Apply filters
+    let filteredPosts = allPosts
 
     if (status) {
-      whereConditions.push(eq(posts.status, status))
+      filteredPosts = filteredPosts.filter((post: any) => post.status === status)
     }
 
     if (search) {
-      whereConditions.push(
-        sql`${posts.title} ILIKE ${`%${search}%`} OR ${posts.excerpt} ILIKE ${`%${search}%`}`
+      const searchLower = search.toLowerCase()
+      filteredPosts = filteredPosts.filter((post: any) =>
+        post.title?.toLowerCase().includes(searchLower) ||
+        post.excerpt?.toLowerCase().includes(searchLower)
       )
     }
 
-    if (author) {
-      whereConditions.push(eq(posts.authorId, parseInt(author)))
-    }
+    // Apply pagination
+    const total = filteredPosts.length
+    const startIndex = (page - 1) * limit
+    const paginatedPosts = filteredPosts.slice(startIndex, startIndex + limit)
 
-    const whereClause = whereConditions.length > 0 ? and(...whereConditions) : undefined
-
-    const postsList = await db
-      .select({
-        id: posts.id,
-        title: posts.title,
-        slug: posts.slug,
-        excerpt: posts.excerpt,
-        status: posts.status,
-        featuredImage: posts.featuredImage,
-        publishedAt: posts.publishedAt,
-        createdAt: posts.createdAt,
-        updatedAt: posts.updatedAt,
-        viewCount: posts.viewCount,
-        likeCount: posts.likeCount,
-        author: {
-          id: users.id,
-          name: sql<string>`${users.firstName} || ' ' || ${users.lastName}`,
-          email: users.email,
-          avatar: users.avatar,
-        },
-      })
-      .from(posts)
-      .leftJoin(users, eq(posts.authorId, users.id))
-      .where(whereClause)
-      .orderBy(desc(posts.createdAt))
-      .limit(limit)
-      .offset(offset)
-
-    // Get total count for pagination
-    const [{ count }] = await db
-      .select({ count: sql<number>`count(*)` })
-      .from(posts)
-      .where(whereClause)
-
-    // Get categories for each post
-    const postsWithCategories = await Promise.all(
-      postsList.map(async (post) => {
-        const postCategories = await db
-          .select({
-            id: categories.id,
-            name: categories.name,
-            slug: categories.slug,
-            color: categories.color,
-          })
-          .from(postsToCategories)
-          .leftJoin(categories, eq(postsToCategories.categoryId, categories.id))
-          .where(eq(postsToCategories.postId, post.id))
-
-        return {
-          ...post,
-          categories: postCategories,
-        }
-      })
-    )
+    // Transform posts to match expected format
+    const transformedPosts = paginatedPosts.map((post: any) => ({
+      id: post.id,
+      title: post.title,
+      slug: post.slug,
+      excerpt: post.excerpt,
+      status: post.status,
+      featuredImage: post.featuredImage,
+      publishedAt: post.publishedAt,
+      createdAt: post.createdAt,
+      updatedAt: post.updatedAt,
+      viewCount: post.viewCount,
+      likeCount: post.likeCount,
+      author: {
+        id: post.authorId,
+        name: 'Vineet Kumar', // Default for now
+        email: 'admin@example.com',
+        avatar: null,
+      },
+      categories: [], // Will be implemented later
+    }))
 
     return NextResponse.json({
-      posts: postsWithCategories,
+      posts: transformedPosts,
       pagination: {
         page,
         limit,
-        total: count,
-        pages: Math.ceil(count / limit),
+        total,
+        pages: Math.ceil(total / limit),
       },
     })
   } catch (error) {
@@ -142,44 +110,44 @@ export async function POST(request: NextRequest) {
 
     const slug = generateSlug(title)
 
-    // Check if slug already exists
-    const existingPost = await db
-      .select()
-      .from(posts)
-      .where(eq(posts.slug, slug))
-      .limit(1)
+    // Check if slug already exists (simplified for Firestore)
+    const existingPosts = await getPublishedPosts(1000, 0)
+    const slugExists = existingPosts.some((post: any) => post.slug === slug)
 
-    if (existingPost.length > 0) {
+    if (slugExists) {
       return NextResponse.json({ error: 'Post with this title already exists' }, { status: 409 })
     }
 
-    const authorId = parseInt(session.user.id)
+    const authorId = session.user.id || 'default-user'
 
-    const [newPost] = await db
-      .insert(posts)
-      .values({
-        title,
-        slug,
-        excerpt,
-        content,
-        featuredImage,
-        authorId,
-        status,
-        seoTitle,
-        seoDescription,
-        seoKeywords,
-        publishedAt: status === 'published' && publishedAt ? new Date(publishedAt) : null,
-      })
-      .returning()
+    const newPostData = {
+      title,
+      slug,
+      excerpt,
+      content,
+      featuredImage,
+      authorId,
+      status,
+      seoTitle,
+      seoDescription,
+      seoKeywords,
+      publishedAt: status === 'published' && publishedAt ? new Date(publishedAt) : null,
+      viewCount: 0,
+      likeCount: 0,
+      commentCount: 0,
+      readingTime: 5,
+      difficulty: 'Beginner',
+      location: '',
+      isFeatured: false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }
 
-    // Add categories if provided
-    if (categoryIds && categoryIds.length > 0) {
-      const categoryRelations = categoryIds.map((categoryId: number) => ({
-        postId: newPost.id,
-        categoryId,
-      }))
+    const newPostId = await createPost(newPostData)
 
-      await db.insert(postsToCategories).values(categoryRelations)
+    const newPost = {
+      id: newPostId,
+      ...newPostData,
     }
 
     return NextResponse.json(newPost, { status: 201 })

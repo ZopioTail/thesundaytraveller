@@ -273,7 +273,7 @@ export default function NewsArticlePage({ params }: { params: { id: string } }) 
         {/* Back Button */}
         <Link
           href="/news"
-          className="absolute top-8 left-8 z-20 flex items-center space-x-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 text-white hover:bg-white/30 transition-colors duration-200"
+          className="absolute top-8 left-8 z-20 flex items-center space-x-2 bg-white/25 backdrop-blur-md rounded-full px-4 py-2 text-white border border-white/30 hover:bg-white/40 transition-colors duration-200"
         >
           <ArrowLeftIcon className="w-5 h-5" />
           <span>Back to News</span>

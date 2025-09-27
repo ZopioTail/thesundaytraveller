@@ -37,19 +37,19 @@ export default function Header() {
 
     if (isDarkHeroPage && !isScrolled) {
       return {
-        bg: 'bg-transparent',
+        bg: 'bg-gray-900/95 backdrop-blur-md',
         text: 'text-white',
-        border: 'border-white/20',
+        border: 'border-white/30',
         logo: 'text-white',
-        mobile: 'bg-black/95 backdrop-blur-md'
+        mobile: 'bg-gray-900/95 backdrop-blur-md'
       }
     } else {
       return {
         bg: 'bg-white/95 backdrop-blur-md',
         text: 'text-gray-900',
-        border: 'border-gray-200',
+        border: 'border-gray-200/50',
         logo: 'text-gray-900',
-        mobile: 'bg-white'
+        mobile: 'bg-white/95 backdrop-blur-md'
       }
     }
   }
@@ -126,8 +126,8 @@ export default function Header() {
                     isActive(item.href)
                       ? 'text-white bg-gradient-to-r from-teal-600 via-emerald-600 to-blue-600 shadow-lg scale-105'
                       : headerStyle.text.includes('white')
-                      ? 'text-white hover:text-orange-200 hover:bg-white/15 hover:scale-105'
-                      : 'text-gray-700 hover:text-teal-600 hover:bg-gradient-to-r hover:from-teal-50 hover:to-emerald-50 hover:scale-105'
+                      ? 'text-white hover:text-orange-200 hover:bg-white/20 hover:border-white/30 border border-transparent hover:scale-105'
+                      : 'text-gray-700 hover:text-teal-600 hover:bg-gray-100/80 hover:border-gray-200/50 border border-transparent hover:scale-105'
                   )}
                 >
                   {/* Animated background */}
@@ -167,8 +167,8 @@ export default function Header() {
               className={cn(
                 'lg:hidden p-4 rounded-2xl transition-all duration-300 group relative overflow-hidden shadow-lg',
                 headerStyle.text.includes('white')
-                  ? 'bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/20'
-                  : 'bg-gradient-to-r from-gray-100 to-gray-200 hover:from-teal-100 hover:to-emerald-100 hover:shadow-xl'
+                  ? 'bg-white/20 hover:bg-white/30 backdrop-blur-md border-2 border-white/30 hover:border-white/50'
+                  : 'bg-gray-100/90 hover:bg-gray-200/90 backdrop-blur-sm border-2 border-gray-300/50 hover:border-gray-400/70 hover:shadow-xl'
               )}
               aria-label="Toggle menu"
             >
@@ -204,7 +204,9 @@ export default function Header() {
               <div className={cn(
                 'p-8 space-y-4 rounded-3xl backdrop-blur-2xl border shadow-2xl relative',
                 headerStyle.mobile,
-                'bg-white/95 border-gray-200/60 shadow-black/10'
+                headerStyle.text.includes('white')
+                  ? 'bg-gray-900/95 border-gray-200/60 shadow-black/20'
+                  : 'bg-white/95 border-gray-200/60 shadow-black/10'
               )}>
                 {/* Enhanced background effects */}
                 <div className="absolute inset-0 bg-gradient-to-br from-teal-600/5 via-transparent to-emerald-600/5 rounded-3xl" />
@@ -223,7 +225,9 @@ export default function Header() {
                         'group flex items-center px-6 py-4 rounded-2xl text-base font-semibold transition-all duration-300 relative overflow-hidden',
                         isActive(item.href)
                           ? 'bg-gradient-to-r from-teal-600 via-emerald-600 to-blue-600 text-white shadow-lg scale-105'
-                          : 'text-gray-700 hover:bg-gradient-to-r hover:from-teal-50 hover:to-emerald-50 hover:text-teal-600 hover:scale-105'
+                          : headerStyle.text.includes('white')
+                          ? 'text-white hover:bg-white/10 hover:text-orange-200 hover:scale-105'
+                          : 'text-gray-700 hover:bg-gray-100/80 hover:text-teal-600 hover:scale-105'
                       )}
                     >
                       {/* Enhanced animated background */}

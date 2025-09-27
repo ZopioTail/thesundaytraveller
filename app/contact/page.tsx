@@ -31,11 +31,31 @@ export default function ContactPage() {
     return () => clearTimeout(timer)
   }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Simulate form submission
-    setIsSubmitted(true)
-    setTimeout(() => setIsSubmitted(false), 3000)
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const result = await response.json()
+
+      if (response.ok) {
+        setIsSubmitted(true)
+        setFormData({ name: '', email: '', subject: '', message: '' })
+        setTimeout(() => setIsSubmitted(false), 5000)
+      } else {
+        alert(result.error || 'Failed to send message. Please try again.')
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      alert('Failed to send message. Please try again later.')
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -151,7 +171,7 @@ export default function ContactPage() {
                           required
                           value={formData.subject}
                           onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors duration-200"
+                          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white/95 dark:bg-gray-700/95 text-gray-900 dark:text-white focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors duration-200"
                         >
                           <option value="">Select a topic</option>
                           <option value="travel-advice">Travel Advice</option>
