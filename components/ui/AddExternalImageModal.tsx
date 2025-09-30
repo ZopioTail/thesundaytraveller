@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { XMarkIcon, PhotoIcon, LinkIcon } from '@heroicons/react/24/outline'
+import Image from 'next/image'
 
 interface AddExternalImageModalProps {
   isOpen: boolean
@@ -135,9 +136,11 @@ export default function AddExternalImageModal({ isOpen, onClose, onSuccess }: Ad
                       Preview
                     </label>
                     <div className="border border-gray-300 dark:border-gray-600 rounded-md p-2 bg-gray-50 dark:bg-gray-700">
-                      <img
+                      <Image
                         src={previewUrl}
                         alt="Preview"
+                        width={400}
+                        height={128}
                         className="w-full h-32 object-cover rounded"
                         onError={() => setPreviewUrl('')}
                       />

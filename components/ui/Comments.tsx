@@ -2,6 +2,7 @@
 
 import { ReactNode, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 import {
   ChatBubbleLeftIcon,
   HeartIcon,
@@ -208,9 +209,11 @@ function CommentItem({
         {showAvatars && (
           <div className="flex-shrink-0">
             {comment.author.avatar ? (
-              <img
+              <Image
                 src={comment.author.avatar}
                 alt={comment.author.name}
+                width={32}
+                height={32}
                 className="w-8 h-8 rounded-full"
               />
             ) : (

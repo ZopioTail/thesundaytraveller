@@ -52,6 +52,10 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 
   const unreadCount = notifications.filter(n => !n.read).length
 
+  const removeNotification = useCallback((id: string) => {
+    setNotifications(prev => prev.filter(notification => notification.id !== id))
+  }, [])
+
   const addNotification = useCallback((notificationData: Omit<Notification, 'id' | 'createdAt' | 'read'>) => {
     const notification: Notification = {
       ...notificationData,
@@ -76,7 +80,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
         removeNotification(notification.id)
       }, 24 * 60 * 60 * 1000)
     }
-  }, [])
+  }, [removeNotification])
 
   const markAsRead = useCallback((id: string) => {
     setNotifications(prev =>

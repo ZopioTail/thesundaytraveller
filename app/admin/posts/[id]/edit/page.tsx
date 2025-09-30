@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import { ArrowLeftIcon, DocumentIcon, EyeIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { Button } from '@/components/ui/Button'
 import RichTextEditor from '@/components/ui/RichTextEditor'
@@ -34,27 +35,27 @@ export default function EditPostPage() {
   const [formData, setFormData] = useState<PostFormData | null>(null)
 
   useEffect(() => {
-    fetchPost()
-  }, [postId])
-
-  const fetchPost = async () => {
-    try {
-      const response = await fetch(`/api/admin/posts/${postId}`)
-      if (response.ok) {
-        const post = await response.json()
-        setFormData({
-          ...post,
-          publishedAt: new Date(post.publishedAt).toISOString().slice(0, 16)
-        })
-      } else {
-        throw new Error('Failed to fetch post')
+    const fetchPost = async () => {
+      try {
+        const response = await fetch(`/api/admin/posts/${postId}`)
+        if (response.ok) {
+          const post = await response.json()
+          setFormData({
+            ...post,
+            publishedAt: new Date(post.publishedAt).toISOString().slice(0, 16)
+          })
+        } else {
+          throw new Error('Failed to fetch post')
+        }
+      } catch (error) {
+        console.error('Error fetching post:', error)
+        alert('Error loading post. Please try again.')
+        router.push('/admin/posts')
       }
-    } catch (error) {
-      console.error('Error fetching post:', error)
-      alert('Error loading post. Please try again.')
-      router.push('/admin/posts')
     }
-  }
+
+    fetchPost()
+  }, [postId, router])
 
   const handleInputChange = (field: keyof PostFormData, value: any) => {
     if (!formData) return
@@ -162,9 +163,11 @@ export default function EditPostPage() {
             className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden"
           >
             {formData.featuredImage && (
-              <img
+              <Image
                 src={formData.featuredImage}
                 alt={formData.title}
+                width={800}
+                height={256}
                 className="w-full h-64 object-cover"
               />
             )}

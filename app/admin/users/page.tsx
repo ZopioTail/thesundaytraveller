@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useSession } from 'next-auth/react'
+import Image from 'next/image'
 import {
   UserPlusIcon,
   MagnifyingGlassIcon,
@@ -289,9 +290,11 @@ export default function UsersPage() {
                   <div className="flex-shrink-0">
                     <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-pink-600 rounded-full flex items-center justify-center">
                       {user.avatar ? (
-                        <img
+                        <Image
                           src={user.avatar}
                           alt={user.firstName}
+                          width={40}
+                          height={40}
                           className="w-10 h-10 rounded-full object-cover"
                         />
                       ) : (

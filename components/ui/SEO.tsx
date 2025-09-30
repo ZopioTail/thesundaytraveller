@@ -2,6 +2,7 @@
 
 import { ReactNode, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 import {
   GlobeAltIcon,
   DocumentTextIcon,
@@ -212,9 +213,11 @@ function SEOPreview({ metadata, url, className = '' }: SEOPreviewProps) {
           <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Facebook Share</h3>
           <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
             {metadata.ogImage && (
-              <img
+              <Image
                 src={metadata.ogImage}
                 alt="Open Graph preview"
+                width={400}
+                height={192}
                 className="w-full h-48 object-cover"
               />
             )}
@@ -234,9 +237,11 @@ function SEOPreview({ metadata, url, className = '' }: SEOPreviewProps) {
           <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Twitter Card</h3>
           <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
             {metadata.twitterImage && (
-              <img
+              <Image
                 src={metadata.twitterImage}
                 alt="Twitter card preview"
+                width={400}
+                height={128}
                 className="w-full h-32 object-cover"
               />
             )}

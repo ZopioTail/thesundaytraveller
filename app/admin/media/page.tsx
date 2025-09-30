@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useSession } from 'next-auth/react'
+import Image from 'next/image'
 import {
   PlusIcon,
   MagnifyingGlassIcon,
@@ -299,9 +300,11 @@ export default function MediaPage() {
                   >
                     <div className="aspect-square bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
                       {item.mimeType.startsWith('image/') ? (
-                        <img
+                        <Image
                           src={item.thumbnailUrl || item.url}
                           alt={item.alt || item.originalName}
+                          width={300}
+                          height={300}
                           className="w-full h-full object-cover"
                         />
                       ) : (
@@ -370,9 +373,11 @@ export default function MediaPage() {
                     <div className="flex-shrink-0">
                       <div className="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
                         {item.mimeType.startsWith('image/') ? (
-                          <img
+                          <Image
                             src={item.thumbnailUrl || item.url}
                             alt={item.alt || item.originalName}
+                            width={48}
+                            height={48}
                             className="w-12 h-12 rounded-lg object-cover"
                           />
                         ) : (

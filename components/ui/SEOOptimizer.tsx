@@ -86,64 +86,57 @@ export default function SEOOptimizer({
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [activeTab, setActiveTab] = useState<'basic' | 'social' | 'advanced' | 'analysis'>('basic')
 
-  const performSEOAnalysis = (content: string, seoData: SEOData): SEOAnalysis => {
-    const issues: string[] = []
-    const suggestions: string[] = []
-
-    // Title analysis
-    const titleScore = analyzeTitle(seoData.title)
-    const titleIssues = titleScore < 80 ? ['Title is too short or too long'] : []
-    const titleSuggestions = titleScore < 80 ? ['Optimize title length (50-60 characters)'] : []
-
-    // Description analysis
-    const descScore = analyzeDescription(seoData.metaDescription)
-    const descIssues = descScore < 80 ? ['Meta description is too short or too long'] : []
-    const descSuggestions = descScore < 80 ? ['Write compelling meta description (150-160 characters)'] : []
-
-    // Keywords analysis
-    const keywordScore = analyzeKeywords(seoData.keywords, content)
-    const keywordIssues = keywordScore < 80 ? ['Keywords not well optimized'] : []
-    const keywordSuggestions = keywordScore < 80 ? ['Include focus keyword in title and description'] : []
-
-    // URL analysis
-    const urlScore = analyzeURL(seoData.slug)
-    const urlIssues = urlScore < 80 ? ['URL structure could be improved'] : []
-    const urlSuggestions = urlScore < 80 ? ['Use SEO-friendly URL structure'] : []
-
-    // Images analysis
-    const imageScore = analyzeImages(content)
-    const imageIssues = imageScore < 80 ? ['Missing alt text or image optimization'] : []
-    const imageSuggestions = imageScore < 80 ? ['Add alt text to all images'] : []
-
-    // Overall score
-    const overallScore = Math.round((titleScore + descScore + keywordScore + urlScore + imageScore) / 5)
-    const grade = overallScore >= 90 ? 'A' : overallScore >= 80 ? 'B' : overallScore >= 70 ? 'C' : overallScore >= 60 ? 'D' : 'F'
-
-    return {
-      title: { score: titleScore, issues: titleIssues, suggestions: titleSuggestions },
-      description: { score: descScore, issues: descIssues, suggestions: descSuggestions },
-      keywords: { score: keywordScore, issues: keywordIssues, suggestions: keywordSuggestions },
-      url: { score: urlScore, issues: urlIssues, suggestions: urlSuggestions },
-      images: { score: imageScore, issues: imageIssues, suggestions: imageSuggestions },
-      overall: {
-        score: overallScore,
-        grade,
-        issues: [...titleIssues, ...descIssues, ...keywordIssues, ...urlIssues, ...imageIssues],
-        suggestions: [...titleSuggestions, ...descSuggestions, ...keywordSuggestions, ...urlSuggestions, ...imageSuggestions]
-      }
-    }
-  }
-
   const analyzeSEO = useCallback(() => {
     setIsAnalyzing(true)
 
     // Simulate SEO analysis
     setTimeout(() => {
-      const newAnalysis = performSEOAnalysis(content, seoData)
+      const titleScore = analyzeTitle(seoData.title)
+      const titleIssues = titleScore < 80 ? ['Title is too short or too long'] : []
+      const titleSuggestions = titleScore < 80 ? ['Optimize title length (50-60 characters)'] : []
+
+      // Description analysis
+      const descScore = analyzeDescription(seoData.metaDescription)
+      const descIssues = descScore < 80 ? ['Meta description is too short or too long'] : []
+      const descSuggestions = descScore < 80 ? ['Write compelling meta description (150-160 characters)'] : []
+
+      // Keywords analysis
+      const keywordScore = analyzeKeywords(seoData.keywords, content)
+      const keywordIssues = keywordScore < 80 ? ['Keywords not well optimized'] : []
+      const keywordSuggestions = keywordScore < 80 ? ['Include focus keyword in title and description'] : []
+
+      // URL analysis
+      const urlScore = analyzeURL(seoData.slug)
+      const urlIssues = urlScore < 80 ? ['URL structure could be improved'] : []
+      const urlSuggestions = urlScore < 80 ? ['Use SEO-friendly URL structure'] : []
+
+      // Images analysis
+      const imageScore = analyzeImages(content)
+      const imageIssues = imageScore < 80 ? ['Missing alt text or image optimization'] : []
+      const imageSuggestions = imageScore < 80 ? ['Add alt text to all images'] : []
+
+      // Overall score
+      const overallScore = Math.round((titleScore + descScore + keywordScore + urlScore + imageScore) / 5)
+      const grade = overallScore >= 90 ? 'A' : overallScore >= 80 ? 'B' : overallScore >= 70 ? 'C' : overallScore >= 60 ? 'D' : 'F'
+
+      const newAnalysis: SEOAnalysis = {
+        title: { score: titleScore, issues: titleIssues, suggestions: titleSuggestions },
+        description: { score: descScore, issues: descIssues, suggestions: descSuggestions },
+        keywords: { score: keywordScore, issues: keywordIssues, suggestions: keywordSuggestions },
+        url: { score: urlScore, issues: urlIssues, suggestions: urlSuggestions },
+        images: { score: imageScore, issues: imageIssues, suggestions: imageSuggestions },
+        overall: {
+          score: overallScore,
+          grade,
+          issues: [...titleIssues, ...descIssues, ...keywordIssues, ...urlIssues, ...imageIssues],
+          suggestions: [...titleSuggestions, ...descSuggestions, ...keywordSuggestions, ...urlSuggestions, ...imageSuggestions]
+        }
+      }
+
       setAnalysis(newAnalysis)
       setIsAnalyzing(false)
     }, 1000)
-  }, [content, seoData, performSEOAnalysis])
+  }, [content, seoData])
 
   // Analyze SEO when content or SEO data changes
   useEffect(() => {

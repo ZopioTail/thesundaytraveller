@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 import {
   XMarkIcon,
   MagnifyingGlassIcon,
@@ -325,9 +326,11 @@ export default function PhotoGallery({
                   )}
                   onClick={() => handleImageClick(index)}
                 >
-                  <img
+                  <Image
                     src={file.url}
                     alt={file.alt || file.originalName}
+                    width={300}
+                    height={300}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                   />
 

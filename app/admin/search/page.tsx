@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import {
@@ -106,7 +106,7 @@ export default function SearchPage() {
 
   // Debounced search function
   const debouncedSearch = useCallback(
-    debounce(async (searchFilters: SearchFilters) => {
+    (async (searchFilters: SearchFilters) => {
       if (!searchFilters.query.trim() && !searchFilters.categoryId && !searchFilters.status) {
         setResults([])
         setTotal(0)
@@ -138,13 +138,13 @@ export default function SearchPage() {
       } finally {
         setIsLoading(false)
       }
-    }, 300),
+    }),
     []
   )
 
   // Get search suggestions
   const getSuggestions = useCallback(
-    debounce(async (query: string) => {
+    (async (query: string) => {
       if (!query.trim() || query.length < 2) {
         setSuggestions([])
         return
@@ -161,22 +161,26 @@ export default function SearchPage() {
       } catch (error) {
         console.error('Suggestions error:', error)
       }
-    }, 200),
+    }),
     []
   )
 
+  // Create debounced versions
+  const debouncedSearchRef = useRef(debounce(debouncedSearch, 300))
+  const debouncedSuggestionsRef = useRef(debounce(getSuggestions, 200))
+
   useEffect(() => {
-    debouncedSearch(filters)
-  }, [filters, debouncedSearch])
+    debouncedSearchRef.current(filters)
+  }, [filters])
 
   useEffect(() => {
     if (filters.query) {
-      getSuggestions(filters.query)
+      debouncedSuggestionsRef.current(filters.query)
     } else {
       setSuggestions([])
       setShowSuggestions(false)
     }
-  }, [filters.query, getSuggestions])
+  }, [filters.query])
 
   const handleFilterChange = (key: keyof SearchFilters, value: any) => {
     setFilters(prev => ({ ...prev, [key]: value }))
