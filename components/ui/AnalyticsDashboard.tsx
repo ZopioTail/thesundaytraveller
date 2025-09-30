@@ -31,47 +31,39 @@ export function AnalyticsDashboard({ className }: AnalyticsDashboardProps) {
       setLoading(true)
       setError(null)
 
-      // In a real implementation, this would fetch from Google Analytics API
-      // For now, we'll use mock data
-      const mockData: AnalyticsData = {
-        totalVisitors: 15420,
-        totalPageViews: 45680,
-        averageSessionDuration: 180, // seconds
-        bounceRate: 0.32,
-        topPages: [
-          { page: '/blog', views: 12500, uniqueViews: 8900 },
-          { page: '/destinations', views: 8900, uniqueViews: 6700 },
-          { page: '/gallery', views: 5600, uniqueViews: 4200 },
-          { page: '/about', views: 3400, uniqueViews: 2800 },
-          { page: '/contact', views: 2100, uniqueViews: 1800 }
-        ],
-        topReferrers: [
-          { source: 'google', sessions: 8900 },
-          { source: 'facebook', sessions: 3400 },
-          { source: 'twitter', sessions: 2100 },
-          { source: 'instagram', sessions: 1200 },
-          { source: 'direct', sessions: 820 }
-        ],
-        deviceBreakdown: {
-          desktop: 0.65,
-          mobile: 0.30,
-          tablet: 0.05
-        },
-        geographicData: [
-          { country: 'United States', sessions: 4500 },
-          { country: 'United Kingdom', sessions: 2100 },
-          { country: 'Canada', sessions: 1800 },
-          { country: 'Australia', sessions: 1200 },
-          { country: 'Germany', sessions: 900 }
-        ],
+      // Fetch real data from our database
+      const [statsRes, analyticsRes, newsletterRes] = await Promise.all([
+        fetch('/api/admin/stats'),
+        fetch('/api/admin/analytics'),
+        fetch('/api/admin/newsletter-subscriptions')
+      ])
+
+      if (!statsRes.ok || !analyticsRes.ok || !newsletterRes.ok) {
+        throw new Error('Failed to fetch analytics data')
+      }
+
+      const stats = await statsRes.json()
+      const analytics = await analyticsRes.json()
+      const newsletterData = await newsletterRes.json()
+
+      // Transform the data to match AnalyticsData interface
+      const transformedData: AnalyticsData = {
+        totalVisitors: stats.visitors || 0,
+        totalPageViews: stats.views || 0,
+        averageSessionDuration: 180, // Default value - would need session tracking
+        bounceRate: 0.32, // Default value - would need bounce rate calculation
+        topPages: analytics.topPages || [],
+        topReferrers: analytics.topReferrers || [],
+        deviceBreakdown: analytics.deviceBreakdown || { desktop: 0.65, mobile: 0.30, tablet: 0.05 },
+        geographicData: analytics.geographicData || [],
         conversionData: {
-          newsletterSignups: 340,
-          contactForms: 89,
-          blogPostReads: 12500
+          newsletterSignups: newsletterData.total || 0,
+          contactForms: 0, // Would need contact form tracking
+          blogPostReads: stats.posts || 0
         }
       }
 
-      setAnalyticsData(mockData)
+      setAnalyticsData(transformedData)
     } catch (err) {
       setError('Failed to fetch analytics data')
       console.error('Analytics fetch error:', err)

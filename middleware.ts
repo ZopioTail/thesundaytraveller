@@ -76,8 +76,8 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Admin routes protection
-  if (pathname.startsWith('/admin/')) {
+  // Admin routes protection (exclude login page)
+  if (pathname.startsWith('/admin/') && pathname !== '/admin/login') {
     try {
       const token = await getToken({ req: request })
 
@@ -86,7 +86,7 @@ export async function middleware(request: NextRequest) {
       }
 
       // Check if user has admin role
-      if (token.role !== 'admin' && token.role !== 'editor') {
+      if (token.role !== 'admin' && token.role !== 'editor' && token.role !== 'super_admin') {
         return NextResponse.json(
           { error: 'Insufficient permissions' },
           { status: 403 }

@@ -248,15 +248,51 @@ export async function trackPageView(data: any) {
 }
 
 export async function getStats() {
-  // This would require aggregation queries or cloud functions
-  // For now, return basic structure
-  return {
-    posts: 0,
-    news: 0,
-    destinations: 0,
-    media: 0,
-    views: 0,
-    visitors: 0
+  try {
+    // Get counts from all collections
+    const [postsSnapshot, newsSnapshot, destinationsSnapshot, mediaSnapshot, analyticsSnapshot, usersSnapshot] = await Promise.all([
+      getDocs(query(collection(db, 'posts'))),
+      getDocs(query(collection(db, 'news'))),
+      getDocs(query(collection(db, 'destinations'))),
+      getDocs(query(collection(db, 'media'))),
+      getDocs(query(collection(db, 'analytics'), orderBy('timestamp', 'desc'), limit(1000))),
+      getDocs(query(collection(db, 'users'), where('isActive', '==', true)))
+    ])
+
+    // Calculate total views from recent analytics
+    const totalViews = analyticsSnapshot.docs.reduce((sum, doc) => {
+      const data = doc.data()
+      return sum + (data.pageViews || 1) // Default to 1 if not specified
+    }, 0)
+
+    // Get unique visitors (simplified - in production you'd use a more sophisticated method)
+    const uniqueIPs = new Set()
+    analyticsSnapshot.docs.forEach(doc => {
+      const data = doc.data()
+      if (data.ipAddress) {
+        uniqueIPs.add(data.ipAddress)
+      }
+    })
+
+    return {
+      posts: postsSnapshot.size,
+      news: newsSnapshot.size,
+      destinations: destinationsSnapshot.size,
+      media: mediaSnapshot.size,
+      views: totalViews,
+      visitors: uniqueIPs.size
+    }
+  } catch (error) {
+    console.error('Error calculating stats:', error)
+    // Return zeros as fallback
+    return {
+      posts: 0,
+      news: 0,
+      destinations: 0,
+      media: 0,
+      views: 0,
+      visitors: 0
+    }
   }
 }
 

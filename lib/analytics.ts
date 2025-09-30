@@ -50,7 +50,8 @@ class AnalyticsService {
       gtag('js', new Date());
       gtag('config', '${trackingId}', {
         send_page_view: false,
-        anonymize_ip: true
+        anonymize_ip: true,
+        cookie_flags: 'SameSite=None;Secure'
       });
     `
     document.head.appendChild(script2)

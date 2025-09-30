@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { signIn, getSession } from 'next-auth/react'
+import { signIn, getSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import {
@@ -43,7 +43,7 @@ export default function AdminLoginPage() {
         } else {
           setError('Access denied. Admin or editor role required.')
           // Sign out if user doesn't have proper role
-          await signIn('credentials', { redirect: false })
+          await signOut()
         }
       }
     } catch (error) {

@@ -62,40 +62,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Error fetching recent activity:', error)
     return NextResponse.json(
-      [
-        {
-          id: '1',
-          type: 'post',
-          title: 'What Adventure Sports Taught This Soldier About Life',
-          action: 'published',
-          timestamp: '2 hours ago',
-          user: 'Rabindra Sahu',
-        },
-        {
-          id: '2',
-          type: 'news',
-          title: 'New Travel Guidelines for 2025',
-          action: 'created',
-          timestamp: '4 hours ago',
-          user: 'Rabindra Sahu',
-        },
-        {
-          id: '3',
-          type: 'destination',
-          title: 'Lisbon, Portugal',
-          action: 'updated',
-          timestamp: '1 day ago',
-          user: 'Rabindra Sahu',
-        },
-        {
-          id: '4',
-          type: 'media',
-          title: 'profession-img-2.jpg',
-          action: 'uploaded',
-          timestamp: '2 days ago',
-          user: 'Rabindra Sahu',
-        },
-      ],
+      [],
       { status: 500 }
     )
   }
